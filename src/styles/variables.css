@@ -33,6 +33,11 @@
   --neutral-100: #f3f4f6;
   --neutral-50: #f9fafb;
 
+  /* Accent Colors */
+  --accent-orange: #f59e0b;
+  --accent-orange-light: #fde68a;
+  --accent-orange-dark: #d97706;
+
   /* Semantic Colors */
   --success: #059669;
   --success-light: #d1fae5;

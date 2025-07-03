@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export const useCountAnimation = (end, duration = 2000, start = 0) => {
   const [count, setCount] = useState(start);
