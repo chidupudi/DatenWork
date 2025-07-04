@@ -10,6 +10,8 @@
   text-decoration: none;
   position: relative;
   overflow: hidden;
+  font-family: inherit;
+  white-space: nowrap;
 }
 
 .btn::before {

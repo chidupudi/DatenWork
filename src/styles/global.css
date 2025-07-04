@@ -104,6 +104,8 @@ section {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 var(--space-6);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Global scroll-triggered animations */

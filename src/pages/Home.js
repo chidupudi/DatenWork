@@ -8,6 +8,7 @@ import ITConsultancy from '../components/sections/ITConsultancy';
 import Testimonials from '../components/sections/Testimonials';
 import Services from '../components/sections/Services';
 import Footer from '../components/sections/Footer';
+import './Home.css';
 
 const Home = () => {
   return (

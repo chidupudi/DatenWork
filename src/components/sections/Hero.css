@@ -1,11 +1,12 @@
 .hero {
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f766e 100%);
   color: white;
-  min-height: 90vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   position: relative;
   overflow: hidden;
+  width: 100%;
 }
 
 .hero::before {
@@ -190,6 +191,11 @@
 }
 
 @media (max-width: 768px) {
+  .hero {
+    min-height: 90vh;
+    padding: var(--space-8) 0;
+  }
+  
   .hero-container {
     grid-template-columns: 1fr;
     gap: var(--space-8);
@@ -208,6 +214,7 @@
   .hero-cta {
     flex-direction: column;
     align-items: center;
+    gap: var(--space-3);
   }
   
   .hero-visual {
