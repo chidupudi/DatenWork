@@ -232,7 +232,7 @@ const PlacementServices = () => {
         : '0 15px 35px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.2)',
       transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
       transform: isHovered ? 'translateY(-15px) scale(1.02)' : 'translateY(0) scale(1)',
-      minHeight: '200px',
+      minHeight: '460px',
       display: 'flex',
       flexDirection: 'column'
     }),

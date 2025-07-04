@@ -42,7 +42,8 @@ const Services = () => {
       description: 'Comprehensive courses in cutting-edge technologies with hands-on projects and industry mentorship.',
       icon: '🎓',
       buttonText: 'Learn More',
-      color: 'blue'
+      color: 'blue',
+      highlights: ['100+ Courses', '24/7 Support', 'Industry Certified']
     },
     {
       id: 2,
@@ -50,7 +51,8 @@ const Services = () => {
       description: 'Guaranteed job placements with top tech companies through our extensive partner network.',
       icon: '💼',
       buttonText: 'Find Jobs',
-      color: 'teal'
+      color: 'teal',
+      highlights: ['95% Success Rate', 'Top Companies', 'Career Support']
     },
     {
       id: 3,
@@ -58,29 +60,19 @@ const Services = () => {
       description: 'Strategic technology consulting to help businesses scale and optimize their digital infrastructure.',
       icon: '🚀',
       buttonText: 'Partner With Us',
-      color: 'orange'
+      color: 'orange',
+      highlights: ['Expert Team', 'Custom Solutions', 'ROI Focused']
     }
   ];
 
-  // Main section styles
+  // Main section styles - transparent background to show unified home background
   const servicesStyles = {
-    background: '#f9fafb',
+    background: 'transparent',
     padding: '80px 0',
     position: 'relative',
     zIndex: 1,
     opacity: 1,
     visibility: 'visible'
-  };
-
-  // Background overlay styles
-  const backgroundOverlayStyles = {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: 'linear-gradient(135deg, rgba(79, 70, 229, 0.02) 0%, rgba(0, 181, 165, 0.02) 100%)',
-    zIndex: 0
   };
 
   const servicesContainerStyles = {
@@ -101,7 +93,20 @@ const Services = () => {
     marginBottom: '16px',
     color: '#1f2937',
     fontWeight: '600',
-    fontFamily: "'Poppins', sans-serif"
+    fontFamily: "'Poppins', sans-serif",
+    position: 'relative',
+    display: 'inline-block'
+  };
+
+  const titleUnderlineStyles = {
+    position: 'absolute',
+    bottom: '-8px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    width: '80px',
+    height: '4px',
+    background: 'linear-gradient(90deg, #4f46e5, #14b8a6)',
+    borderRadius: '2px'
   };
 
   const servicesSubtitleStyles = {
@@ -122,123 +127,212 @@ const Services = () => {
 
   const serviceCardStyles = (service, isHovered) => ({
     textAlign: 'center',
-    padding: '32px',
+    padding: '0',
     position: 'relative',
     overflow: 'hidden',
-    background: 'white',
-    borderRadius: '16px',
+    background: 'rgba(255, 255, 255, 0.9)',
+    backdropFilter: 'blur(10px)',
+    borderRadius: '24px',
     boxShadow: isHovered 
-      ? '0 8px 12px rgba(0, 0, 0, 0.1), 0 20px 40px rgba(0, 0, 0, 0.12)'
-      : '0 4px 6px rgba(0, 0, 0, 0.05)',
-    border: '1px solid #e5e7eb',
-    transition: 'all 0.3s ease',
-    transform: isHovered ? 'translateY(-8px) scale(1.02)' : 'translateY(0) scale(1)'
+      ? '0 20px 40px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(79, 70, 229, 0.1)'
+      : '0 10px 25px rgba(0, 0, 0, 0.08)',
+    border: isHovered ? '1px solid rgba(79, 70, 229, 0.2)' : '1px solid rgba(255, 255, 255, 0.3)',
+    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+    transform: isHovered ? 'translateY(-12px) scale(1.02)' : 'translateY(0) scale(1)'
   });
 
-  const topBorderStyles = (color, isHovered) => {
+  const cardHeaderStyles = (color) => {
     const colorMap = {
-      blue: '#4f46e5',
-      teal: '#14b8a6',
-      orange: '#f59e0b'
+      blue: 'linear-gradient(135deg, #4f46e5, #6366f1)',
+      teal: 'linear-gradient(135deg, #14b8a6, #0d9488)',
+      orange: 'linear-gradient(135deg, #f59e0b, #d97706)'
     };
     
     return {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      height: isHovered ? '8px' : '4px',
-      background: colorMap[color] || '#4f46e5',
-      transition: 'height 0.2s ease'
+      background: colorMap[color] || colorMap.blue,
+      padding: '32px 32px 24px',
+      position: 'relative',
+      overflow: 'hidden'
     };
   };
 
+  const cardPatternStyles = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots-pattern" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.2)"/><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.2)"/><circle cx="18" cy="18" r="1" fill="rgba(255,255,255,0.2)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots-pattern)"/></svg>')`,
+    opacity: 0.4
+  };
+
   const serviceIconStyles = (isHovered) => ({
-    fontSize: '3rem',
+    fontSize: '3.5rem',
     marginBottom: '16px',
     display: 'block',
-    filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))',
-    transform: isHovered ? 'scale(1.1)' : 'scale(1)',
-    transition: 'transform 0.2s ease'
+    filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2))',
+    transform: isHovered ? 'scale(1.15) rotate(5deg)' : 'scale(1) rotate(0deg)',
+    transition: 'all 0.3s ease'
   });
 
   const serviceTitleStyles = {
     fontSize: '1.5rem',
-    marginBottom: '16px',
-    color: '#1f2937',
+    marginBottom: '8px',
+    color: 'white',
+    fontWeight: '700',
+    textShadow: '0 2px 4px rgba(0, 0, 0, 0.2)'
+  };
+
+  const highlightsContainerStyles = {
+    display: 'flex',
+    gap: '12px',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginTop: '16px'
+  };
+
+  const highlightBadgeStyles = {
+    background: 'rgba(255, 255, 255, 0.2)',
+    backdropFilter: 'blur(10px)',
+    border: '1px solid rgba(255, 255, 255, 0.3)',
+    color: 'white',
+    padding: '4px 12px',
+    borderRadius: '12px',
+    fontSize: '0.75rem',
     fontWeight: '600'
+  };
+
+  const cardBodyStyles = {
+    padding: '24px 32px 32px',
+    background: 'white'
   };
 
   const serviceDescriptionStyles = {
     marginBottom: '24px',
     lineHeight: '1.6',
-    color: '#6b7280'
+    color: '#6b7280',
+    fontSize: '0.95rem'
   };
 
+  const buttonWrapperStyles = {
+    position: 'relative',
+    display: 'inline-block'
+  };
+
+  const pulseRingStyles = (isHovered) => ({
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '100%',
+    height: '100%',
+    borderRadius: '12px',
+    border: '2px solid #4f46e5',
+    opacity: isHovered ? 0.3 : 0,
+    animation: isHovered ? 'pulse 2s infinite' : 'none',
+    pointerEvents: 'none'
+  });
+
+  const pulseKeyframes = `
+    @keyframes pulse {
+      0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.3;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0;
+      }
+    }
+  `;
+
   return (
-    <section style={servicesStyles} id="services">
-      <div style={backgroundOverlayStyles} />
-      
-      <div style={servicesContainerStyles}>
-        <motion.div 
-          ref={ref}
-          style={servicesHeaderStyles}
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        >
-          <h2 style={servicesTitleStyles}>Our Services</h2>
-          <p style={servicesSubtitleStyles}>
-            Comprehensive solutions for your tech career and business needs
-          </p>
-        </motion.div>
-        
-        <motion.div 
-          style={servicesGridStyles}
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-        >
-          {services.map(service => (
-            <motion.div
-              key={service.id}
-              variants={cardVariants}
-              whileHover={{ y: -8, scale: 1.02 }}
-              transition={{ duration: 0.3 }}
-              onMouseEnter={() => setHoveredService(service.id)}
-              onMouseLeave={() => setHoveredService(null)}
-            >
-              <Card 
-                style={serviceCardStyles(service, hoveredService === service.id)}
-                hover={false} // Disable Card's built-in hover since we're handling it manually
+    <>
+      <style>{pulseKeyframes}</style>
+      <section style={servicesStyles} id="services">
+        <div style={servicesContainerStyles}>
+          <motion.div 
+            ref={ref}
+            style={servicesHeaderStyles}
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <h2 style={servicesTitleStyles}>
+              Our Services
+              <span style={titleUnderlineStyles}></span>
+            </h2>
+            <p style={servicesSubtitleStyles}>
+              Comprehensive solutions for your tech career and business needs
+            </p>
+          </motion.div>
+          
+          <motion.div 
+            style={servicesGridStyles}
+            variants={containerVariants}
+            initial="hidden"
+            animate={inView ? "visible" : "hidden"}
+          >
+            {services.map(service => (
+              <motion.div
+                key={service.id}
+                variants={cardVariants}
+                whileHover={{ y: -12, scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+                onMouseEnter={() => setHoveredService(service.id)}
+                onMouseLeave={() => setHoveredService(null)}
               >
-                <div style={topBorderStyles(service.color, hoveredService === service.id)} />
-                
-                <motion.div 
-                  style={serviceIconStyles(hoveredService === service.id)}
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ duration: 0.2 }}
+                <Card 
+                  style={serviceCardStyles(service, hoveredService === service.id)}
+                  hover={false}
                 >
-                  {service.icon}
-                </motion.div>
-                
-                <h3 style={serviceTitleStyles}>{service.title}</h3>
-                <p style={serviceDescriptionStyles}>{service.description}</p>
-                
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Button variant="outline">
-                    {service.buttonText}
-                  </Button>
-                </motion.div>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
+                  <div style={cardHeaderStyles(service.color)}>
+                    <div style={cardPatternStyles} />
+                    <motion.div 
+                      style={serviceIconStyles(hoveredService === service.id)}
+                      whileHover={{ scale: 1.15, rotate: 5 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {service.icon}
+                    </motion.div>
+                    
+                    <h3 style={serviceTitleStyles}>{service.title}</h3>
+                    
+                    <div style={highlightsContainerStyles}>
+                      {service.highlights.map((highlight, index) => (
+                        <span key={index} style={highlightBadgeStyles}>
+                          {highlight}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div style={cardBodyStyles}>
+                    <p style={serviceDescriptionStyles}>{service.description}</p>
+                    
+                    <div style={buttonWrapperStyles}>
+                      <span style={pulseRingStyles(hoveredService === service.id)} />
+                      <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <Button variant="outline">
+                          {service.buttonText}
+                        </Button>
+                      </motion.div>
+                    </div>
+                  </div>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+    </>
   );
 };
 

@@ -17,8 +17,132 @@ const Home = () => {
     flexDirection: 'column',
     width: '100%',
     overflow: 'hidden',
-    position: 'relative'
+    position: 'relative',
+    background: 'linear-gradient(135deg, #ffffff 0%, #f9fafb 100%)'
   };
+
+  // Global background overlay for entire page
+  const globalBackgroundOverlay = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    pointerEvents: 'none',
+    zIndex: 0,
+    background: `
+      radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.06) 0%, transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba(20, 184, 166, 0.06) 0%, transparent 40%),
+      radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.04) 0%, transparent 60%),
+      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="home-pattern" width="30" height="26" patternUnits="userSpaceOnUse"><polygon points="15,2 28,24 2,24" fill="none" stroke="rgba(99,102,241,0.03)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23home-pattern)"/></svg>')
+    `
+  };
+
+  // Floating orbs for visual interest
+  const floatingOrb1Styles = {
+    position: 'fixed',
+    top: '10%',
+    right: '15%',
+    width: '400px',
+    height: '400px',
+    background: 'radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%)',
+    borderRadius: '50%',
+    filter: 'blur(80px)',
+    animation: 'floatOrb1 20s ease-in-out infinite',
+    pointerEvents: 'none',
+    zIndex: 0
+  };
+
+  const floatingOrb2Styles = {
+    position: 'fixed',
+    bottom: '20%',
+    left: '10%',
+    width: '300px',
+    height: '300px',
+    background: 'radial-gradient(circle, rgba(20, 184, 166, 0.08) 0%, transparent 70%)',
+    borderRadius: '50%',
+    filter: 'blur(60px)',
+    animation: 'floatOrb2 25s ease-in-out infinite',
+    pointerEvents: 'none',
+    zIndex: 0
+  };
+
+  const floatingOrb3Styles = {
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    width: '250px',
+    height: '250px',
+    background: 'radial-gradient(circle, rgba(245, 158, 11, 0.06) 0%, transparent 70%)',
+    borderRadius: '50%',
+    filter: 'blur(70px)',
+    animation: 'floatOrb3 30s ease-in-out infinite',
+    pointerEvents: 'none',
+    zIndex: 0
+  };
+
+  // Geometric shapes overlay
+  const geometricOverlayStyles = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    pointerEvents: 'none',
+    zIndex: 0,
+    background: `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:rgba(99,102,241,0.02);stop-opacity:1" /><stop offset="100%" style="stop-color:rgba(20,184,166,0.02);stop-opacity:1" /></linearGradient></defs><rect x="100" y="100" width="200" height="200" fill="none" stroke="url(%23grad1)" stroke-width="1" opacity="0.3" transform="rotate(45 200 200)"/><rect x="800" y="400" width="150" height="150" fill="none" stroke="url(%23grad1)" stroke-width="1" opacity="0.3" transform="rotate(30 875 475)"/><circle cx="500" cy="600" r="100" fill="none" stroke="url(%23grad1)" stroke-width="1" opacity="0.3"/></svg>')`,
+    backgroundSize: '1200px 800px',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'repeat'
+  };
+
+  // Animation keyframes
+  const animationStyles = `
+    @keyframes floatOrb1 {
+      0%, 100% { 
+        transform: translate(0, 0) scale(1);
+        opacity: 0.8;
+      }
+      25% { 
+        transform: translate(-50px, 30px) scale(1.1);
+        opacity: 0.6;
+      }
+      50% { 
+        transform: translate(30px, -20px) scale(0.9);
+        opacity: 0.8;
+      }
+      75% { 
+        transform: translate(-20px, -40px) scale(1.05);
+        opacity: 0.7;
+      }
+    }
+
+    @keyframes floatOrb2 {
+      0%, 100% { 
+        transform: translate(0, 0) scale(1);
+        opacity: 0.7;
+      }
+      33% { 
+        transform: translate(40px, -30px) scale(1.15);
+        opacity: 0.5;
+      }
+      66% { 
+        transform: translate(-30px, 40px) scale(0.95);
+        opacity: 0.7;
+      }
+    }
+
+    @keyframes floatOrb3 {
+      0%, 100% { 
+        transform: translate(0, 0) scale(1);
+        opacity: 0.6;
+      }
+      50% { 
+        transform: translate(-40px, 40px) scale(1.2);
+        opacity: 0.4;
+      }
+    }
+  `;
 
   // Main content wrapper styles
   const mainContentStyles = {
@@ -28,46 +152,27 @@ const Home = () => {
     zIndex: 1
   };
 
-  // Global section styles for consistency
-  const sectionStyles = {
+  // Section wrapper styles - no gaps, seamless flow
+  const sectionWrapperStyles = {
     width: '100%',
     position: 'relative',
     zIndex: 1,
-    opacity: 1,
-    visibility: 'visible',
-    minHeight: 'auto'
+    background: 'transparent'
   };
 
-  // Hero specific styles
-  const heroSectionStyles = {
-    ...sectionStyles,
-    minHeight: '100vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  };
-
-  // Standard section styles
-  const standardSectionStyles = {
-    ...sectionStyles,
-    padding: '80px 0'
-  };
-
-  // Mobile responsive section styles
-  const mobileSectionStyles = window.innerWidth <= 768 ? {
-    ...standardSectionStyles,
-    padding: '64px 0'
-  } : standardSectionStyles;
-
-  // Container styles for sections
-  const containerStyles = {
-    maxWidth: '1200px',
-    margin: '0 auto',
-    padding: window.innerWidth <= 768 ? '0 16px' : '0 24px',
-    width: '100%',
+  // Hero section specific wrapper
+  const heroWrapperStyles = {
+    ...sectionWrapperStyles,
+    background: 'transparent',
     position: 'relative',
-    zIndex: 1,
-    boxSizing: 'border-box'
+    overflow: 'hidden'
+  };
+
+  // Standard section wrapper - no padding between sections
+  const standardSectionWrapper = {
+    ...sectionWrapperStyles,
+    margin: 0,
+    padding: 0
   };
 
   // Header wrapper with proper z-index
@@ -80,142 +185,61 @@ const Home = () => {
   const footerWrapperStyles = {
     position: 'relative',
     zIndex: 1,
-    marginTop: 'auto'
+    marginTop: 0
   };
-
-  // Ensure smooth scrolling and proper layout
-  const globalStyles = `
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    
-    html {
-      scroll-behavior: smooth;
-    }
-    
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-      line-height: 1.6;
-      color: #1f2937;
-      background-color: #ffffff;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-    
-    h1, h2, h3, h4, h5, h6 {
-      font-family: 'Poppins', sans-serif;
-      font-weight: 600;
-      line-height: 1.25;
-      letter-spacing: -0.02em;
-      color: #1f2937;
-      margin: 0;
-    }
-    
-    p {
-      margin-bottom: 16px;
-      color: #6b7280;
-      line-height: 1.6;
-      margin: 0 0 16px 0;
-    }
-    
-    a {
-      text-decoration: none;
-      color: #4f46e5;
-      transition: color 0.15s ease;
-    }
-    
-    a:hover {
-      color: #14b8a6;
-    }
-    
-    button {
-      cursor: pointer;
-      border: none;
-      outline: none;
-      font-family: inherit;
-    }
-    
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-    
-    section {
-      position: relative;
-      overflow: hidden;
-    }
-    
-    /* Responsive typography */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2.5rem;
-      }
-      
-      h2 {
-        font-size: 2rem;
-      }
-      
-      h3 {
-        font-size: 1.5rem;
-      }
-    }
-    
-    /* Smooth transitions */
-    @media (prefers-reduced-motion: no-preference) {
-      * {
-        scroll-behavior: smooth;
-      }
-    }
-  `;
 
   return (
     <>
-      {/* Inject global styles */}
-      <style>{globalStyles}</style>
+      {/* Inject animation keyframes */}
+      <style>{animationStyles}</style>
       
       <div style={homeStyles}>
-        {/* Header with proper z-index */}
+        {/* Global background elements */}
+        <div style={globalBackgroundOverlay} />
+        <div style={floatingOrb1Styles} />
+        <div style={floatingOrb2Styles} />
+        <div style={floatingOrb3Styles} />
+        <div style={geometricOverlayStyles} />
+        
+        {/* Header */}
         <div style={headerWrapperStyles}>
           <Header />
         </div>
         
         {/* Main content wrapper */}
         <main style={mainContentStyles}>
-          {/* Hero Section - Full height */}
-          <div style={heroSectionStyles}>
+          {/* Hero Section */}
+          <div style={heroWrapperStyles}>
             <Hero />
           </div>
           
           {/* Services Section */}
-          <div style={mobileSectionStyles}>
+          <div style={standardSectionWrapper}>
             <Services />
           </div>
           
           {/* Training Courses Section */}
-          <div style={mobileSectionStyles}>
+          <div style={standardSectionWrapper}>
             <TrainingCourses />
           </div>
           
           {/* Placement Services Section */}
-          <div style={mobileSectionStyles}>
+          <div style={standardSectionWrapper}>
             <PlacementServices />
           </div>
           
           {/* Industry Requirements Section */}
-          <div style={mobileSectionStyles}>
+          <div style={standardSectionWrapper}>
             <IndustryRequirements />
           </div>
           
           {/* IT Consultancy Section */}
-          <div style={mobileSectionStyles}>
+          <div style={standardSectionWrapper}>
             <ITConsultancy />
           </div>
           
           {/* Testimonials Section */}
-          <div style={mobileSectionStyles}>
+          <div style={standardSectionWrapper}>
             <Testimonials />
           </div>
         </main>
