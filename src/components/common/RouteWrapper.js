@@ -23,17 +23,21 @@ const RouteWrapper = ({ children }) => {
     setIsLoading(false);
   };
 
+  // Main wrapper styles
+  const wrapperStyles = {
+    opacity: isLoading ? 0.3 : 1,
+    transition: 'opacity 0.3s ease',
+    minHeight: '100vh',
+    width: '100%',
+    position: 'relative'
+  };
+
   return (
     <>
       {isLoading && (
         <LoadingBar isLoading={isLoading} onComplete={handleLoadingComplete} />
       )}
-      <div style={{ 
-        opacity: isLoading ? 0.3 : 1, 
-        transition: 'opacity 0.3s ease',
-        minHeight: '100vh',
-        width: '100%'
-      }}>
+      <div style={wrapperStyles}>
         {children}
       </div>
     </>
