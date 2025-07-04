@@ -3,123 +3,144 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  overflow-x: hidden;
 }
 
-/* Ensure sections flow properly */
+/* Main content wrapper */
+.main-content {
+  flex: 1;
+  width: 100%;
+}
+
+/* Ensure sections are visible and properly spaced */
 .home section {
   width: 100%;
-  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  opacity: 1;
+  visibility: visible;
+  min-height: auto;
 }
 
-/* Hero section full height */
+/* Hero section styling */
 .home .hero {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 1;
 }
 
-/* Other sections proper spacing */
+/* Standard section padding */
 .home section:not(.hero) {
-  padding: var(--space-24) 0;
+  padding: 80px 0;
+  position: relative;
+  z-index: 1;
 }
 
-/* Remove any unwanted margins between sections */
+/* Remove any unwanted margins */
 .home section + section {
   margin-top: 0;
 }
 
-/* Ensure responsive layout */
-@media (max-width: 768px) {
-  .home .hero {
-    min-height: 90vh;
-    padding: var(--space-16) 0;
-  }
-  
-  .home section:not(.hero) {
-    padding: var(--space-16) 0;
-  }
-}
-
-/* Fix any layout issues with containers */
+/* Container styling */
 .home .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 var(--space-6);
+  padding: 0 24px;
   width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
-@media (max-width: 768px) {
-  .home .container {
-    padding: 0 var(--space-4);
-  }
-}
-
-/* Ensure proper section backgrounds */
+/* Section background alternating */
 .home section:nth-child(even) {
-  background: var(--neutral-50);
+  background: #f9fafb;
 }
 
 .home section:nth-child(odd):not(.hero) {
-  background: var(--white);
+  background: #ffffff;
 }
 
-/* Add subtle transitions for better UX */
-.home section {
-  transition: all var(--transition-base);
-}
-
-/* Improve visual hierarchy */
-.home h1 {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  line-height: 1.1;
-  margin-bottom: var(--space-6);
-}
-
-.home h2 {
-  font-size: clamp(2rem, 4vw, 2.5rem);
-  line-height: 1.2;
-  margin-bottom: var(--space-4);
-}
-
+/* Ensure proper text visibility */
+.home h1,
+.home h2,
 .home h3 {
-  font-size: clamp(1.5rem, 3vw, 1.875rem);
-  line-height: 1.3;
-  margin-bottom: var(--space-3);
+  color: #1f2937;
+  margin-bottom: 16px;
 }
 
-/* Ensure proper text contrast */
+.home p {
+  color: #6b7280;
+  margin-bottom: 16px;
+}
+
+/* Hero specific text colors */
 .home .hero h1,
 .home .hero h2,
-.home .hero h3 {
-  color: var(--white);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+.home .hero h3,
+.home .hero p {
+  color: white;
 }
 
-.home section:not(.hero) h1,
-.home section:not(.hero) h2,
-.home section:not(.hero) h3 {
-  color: var(--neutral-900);
-}
-
-/* Improve button spacing in hero */
-.home .hero .hero-cta {
+/* Button containers */
+.home .hero-cta {
   display: flex;
-  gap: var(--space-4);
-  margin-bottom: var(--space-12);
+  gap: 16px;
+  margin-bottom: 48px;
   flex-wrap: wrap;
   justify-content: center;
 }
 
+/* Fix any z-index issues */
+.home .header {
+  position: relative;
+  z-index: 100;
+}
+
+.home .footer {
+  position: relative;
+  z-index: 1;
+  margin-top: auto;
+}
+
+/* Ensure content is not hidden */
+.home * {
+  box-sizing: border-box;
+}
+
+/* Debug visibility - remove after fixing */
+.home section {
+  border: 1px solid transparent;
+}
+
+/* Mobile responsive */
 @media (max-width: 768px) {
-  .home .hero .hero-cta {
+  .home .hero {
+    min-height: 90vh;
+    padding: 64px 0;
+  }
+  
+  .home section:not(.hero) {
+    padding: 64px 0;
+  }
+
+  .home .container {
+    padding: 0 16px;
+  }
+
+  .home .hero-cta {
     flex-direction: column;
     align-items: center;
-    gap: var(--space-3);
+    gap: 12px;
   }
 }
 
-/* Ensure proper footer positioning */
-.home footer {
-  margin-top: auto;
+/* Tablet responsive */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .home .container {
+    padding: 0 20px;
+  }
 }

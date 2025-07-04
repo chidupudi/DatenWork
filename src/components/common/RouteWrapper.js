@@ -11,6 +11,10 @@ const RouteWrapper = ({ children }) => {
     // Check if location actually changed (not just a re-render)
     if (previousLocation && previousLocation.pathname !== location.pathname) {
       setIsLoading(true);
+      // Shorter loading time for better UX
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     }
     setPreviousLocation(location);
   }, [location, previousLocation]);
@@ -21,8 +25,17 @@ const RouteWrapper = ({ children }) => {
 
   return (
     <>
-      <LoadingBar isLoading={isLoading} onComplete={handleLoadingComplete} />
-      {children}
+      {isLoading && (
+        <LoadingBar isLoading={isLoading} onComplete={handleLoadingComplete} />
+      )}
+      <div style={{ 
+        opacity: isLoading ? 0.3 : 1, 
+        transition: 'opacity 0.3s ease',
+        minHeight: '100vh',
+        width: '100%'
+      }}>
+        {children}
+      </div>
     </>
   );
 };

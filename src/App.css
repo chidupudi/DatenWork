@@ -2,13 +2,40 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .App-main {
   flex: 1;
+  width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
-/* Remove any default React styles that might interfere */
+/* Ensure all content is visible */
 .App * {
   box-sizing: border-box;
+}
+
+/* Remove any default styles that might interfere */
+.App section {
+  position: relative;
+  z-index: 1;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Fix any layout issues */
+.App .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .App .container {
+    padding: 0 16px;
+  }
 }
