@@ -14,61 +14,77 @@ const TrainingCourses = () => {
   const navigate = useNavigate();
   const [hoveredCourse, setHoveredCourse] = useState(null);
 
+  // Updated courses to match the courses page exactly
   const courses = [
     {
       id: 1,
-      title: 'Full Stack Development',
-      duration: '6 months',
+      title: 'Full Stack Web Development',
+      duration: '16 weeks',
       level: 'Beginner to Advanced',
       technologies: ['React', 'Node.js', 'MongoDB', 'Express'],
-      price: '₹45,000',
-      discount: '20% OFF',
+      price: '₹2,49,000',
+      originalPrice: '₹4,15,000',
+      discount: '40% OFF',
       icon: '💻',
-      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      rating: 4.9,
+      students: 1250
     },
     {
       id: 2,
-      title: 'Data Science & ML',
-      duration: '8 months',
-      level: 'Intermediate',
-      technologies: ['Python', 'TensorFlow', 'Pandas', 'Scikit-learn'],
-      price: '₹65,000',
-      discount: '15% OFF',
+      title: 'Data Science with Python',
+      duration: '14 weeks',
+      level: 'Beginner to Advanced',
+      technologies: ['Python', 'Pandas', 'TensorFlow', 'Scikit-learn'],
+      price: '₹2,25,000',
+      originalPrice: '₹3,24,000',
+      discount: '31% OFF',
       icon: '🤖',
-      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+      rating: 4.9,
+      students: 543
     },
     {
       id: 3,
-      title: 'Cloud Computing AWS',
-      duration: '4 months',
-      level: 'Professional',
-      technologies: ['AWS', 'Docker', 'Kubernetes', 'Jenkins'],
-      price: '₹40,000',
-      discount: '25% OFF',
-      icon: '☁️',
-      gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
+      title: 'React.js Mastery Course',
+      duration: '10 weeks',
+      level: 'Intermediate',
+      technologies: ['React', 'Redux', 'TypeScript', 'Jest'],
+      price: '₹1,58,000',
+      originalPrice: '₹2,41,000',
+      discount: '34% OFF',
+      icon: '⚛️',
+      gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+      rating: 4.8,
+      students: 890
     },
     {
       id: 4,
-      title: 'Cybersecurity Expert',
-      duration: '6 months',
-      level: 'Advanced',
-      technologies: ['Network Security', 'Ethical Hacking', 'Cryptography'],
-      price: '₹55,000',
-      discount: '10% OFF',
+      title: 'Node.js Backend Development',
+      duration: '12 weeks',
+      level: 'Intermediate',
+      technologies: ['Node.js', 'Express', 'PostgreSQL', 'AWS'],
+      price: '₹1,83,000',
+      originalPrice: '₹2,66,000',
+      discount: '31% OFF',
       icon: '🔐',
-      gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+      gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+      rating: 4.7,
+      students: 654
     },
     {
       id: 5,
-      title: 'Mobile App Development',
-      duration: '5 months',
+      title: 'React Native Mobile Development',
+      duration: '12 weeks',
       level: 'Intermediate',
-      technologies: ['React Native', 'Flutter', 'Firebase', 'APIs'],
-      price: '₹50,000',
-      discount: '30% OFF',
+      technologies: ['React Native', 'Expo', 'Redux', 'Firebase'],
+      price: '₹2,00,000',
+      originalPrice: '₹2,83,000',
+      discount: '29% OFF',
       icon: '📱',
-      gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)'
+      gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+      rating: 4.8,
+      students: 432
     }
   ];
 
@@ -260,11 +276,30 @@ const TrainingCourses = () => {
     border: '1px solid #e5e7eb'
   };
 
+  const priceContainerStyles = {
+    marginBottom: '16px'
+  };
+
   const coursePriceStyles = {
     fontSize: '1.5rem',
     fontWeight: '700',
     color: '#1f2937',
-    marginBottom: '16px'
+    marginBottom: '4px'
+  };
+
+  const originalPriceStyles = {
+    fontSize: '1rem',
+    color: '#9ca3af',
+    textDecoration: 'line-through'
+  };
+
+  const courseStatsStyles = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '16px',
+    fontSize: '0.875rem',
+    color: '#6b7280'
   };
 
   const courseButtonStyles = {
@@ -433,7 +468,15 @@ const TrainingCourses = () => {
                     ))}
                   </div>
                   
-                  <div style={coursePriceStyles}>{course.price}</div>
+                  <div style={priceContainerStyles}>
+                    <div style={coursePriceStyles}>{course.price}</div>
+                    <div style={originalPriceStyles}>{course.originalPrice}</div>
+                  </div>
+
+                  <div style={courseStatsStyles}>
+                    <span>⭐ {course.rating}</span>
+                    <span>👥 {course.students.toLocaleString()} students</span>
+                  </div>
                   
                   <motion.button
                     style={courseButtonStyles}
@@ -464,7 +507,7 @@ const TrainingCourses = () => {
               </div>
               
               <h3 style={viewMoreTextStyles}>Explore More Courses</h3>
-              <p style={viewMoreSubtextStyles}>50+ specialized programs available</p>
+              <p style={viewMoreSubtextStyles}>6+ specialized programs available</p>
               
               <motion.button
                 style={viewMoreButtonStyles(hoveredCourse === 'viewMore')}

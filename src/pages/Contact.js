@@ -39,12 +39,12 @@ const Contact = () => {
     {
       icon: '📍',
       title: 'Our Location',
-      details: ['123 Tech Hub Street', 'Innovation District', 'San Francisco, CA 94105']
+      details: ['Plot No. 47, KPHB Phase 1', 'Kukatpally Housing Board', 'Hyderabad, Telangana 500072']
     },
     {
       icon: '📞',
       title: 'Phone Numbers',
-      details: ['+1 (555) 123-4567', '+1 (555) 765-4321', 'Available 9 AM - 6 PM PST']
+      details: ['+91 9876543210', '+91 8765432109', 'Available 9 AM - 7 PM IST']
     },
     {
       icon: '✉️',
@@ -54,30 +54,34 @@ const Contact = () => {
     {
       icon: '🕒',
       title: 'Business Hours',
-      details: ['Monday - Friday: 9 AM - 6 PM', 'Saturday: 10 AM - 4 PM', 'Sunday: Closed']
+      details: ['Monday - Friday: 9 AM - 7 PM', 'Saturday: 10 AM - 5 PM', 'Sunday: Closed']
     }
   ];
 
   const faqs = [
     {
       question: 'How long are the training programs?',
-      answer: 'Our training programs range from 8 to 16 weeks depending on the course complexity and depth. Full-stack programs are typically 16 weeks, while specialized courses range from 8-12 weeks.'
+      answer: 'Our training programs range from 10 to 16 weeks depending on the course complexity and depth. Full-stack programs are typically 16 weeks, while specialized courses range from 10-14 weeks.'
     },
     {
       question: 'Do you provide job placement assistance?',
-      answer: 'Yes! We offer 100% job placement guarantee. Our dedicated placement team works with you throughout the program and continues support until you land your dream job.'
+      answer: 'Yes! We offer 100% job placement guarantee. Our dedicated placement team works with you throughout the program and continues support until you land your dream job in top companies across India and globally.'
     },
     {
       question: 'What are the payment options available?',
-      answer: 'We offer flexible payment plans including upfront payment discounts, monthly installments, and income share agreements (ISA) where you pay after getting placed.'
+      answer: 'We offer flexible payment plans including upfront payment discounts, monthly installments (EMI), and income share agreements (ISA) where you pay after getting placed. We also accept UPI, card payments, and bank transfers.'
     },
     {
       question: 'Can I attend classes while working full-time?',
-      answer: 'Absolutely! We offer both full-time and part-time schedules. Our evening and weekend batches are designed specifically for working professionals.'
+      answer: 'Absolutely! We offer both full-time and part-time schedules. Our evening (6 PM - 9 PM) and weekend batches are designed specifically for working professionals in Hyderabad and surrounding areas.'
     },
     {
       question: 'What kind of support do you provide during the course?',
-      answer: 'You get dedicated mentorship, 24/7 doubt resolution, peer learning groups, regular assessments, and career counseling throughout your journey with us.'
+      answer: 'You get dedicated mentorship, 24/7 doubt resolution via WhatsApp/Slack, peer learning groups, regular assessments, mock interviews, and career counseling throughout your journey with us.'
+    },
+    {
+      question: 'Do you provide hostel or accommodation facilities?',
+      answer: 'While we don\'t provide direct accommodation, we can help you connect with nearby PG accommodations and shared apartments in KPHB and Kukatpally areas. Our campus is well-connected by metro and bus services.'
     }
   ];
 
@@ -91,7 +95,7 @@ const Contact = () => {
             <h1 style={{ fontSize: '3.5rem', marginBottom: '24px', color: '#1a202c' }}>Get In Touch</h1>
             <p style={{ fontSize: '1.25rem', lineHeight: '1.8', color: '#4a5568' }}>
               Ready to transform your career? We're here to help you every step of the way. 
-              Reach out to us for course information, career guidance, or any questions you might have.
+              Visit our Hyderabad campus or reach out to us for course information, career guidance, or any questions you might have.
             </p>
           </div>
         </div>
@@ -99,11 +103,11 @@ const Contact = () => {
 
       <section style={{ padding: '80px 0' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'flex-start' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: window.innerWidth <= 968 ? '1fr' : '1fr 1fr', gap: '60px', alignItems: 'flex-start' }}>
             <div>
               <h2 style={{ fontSize: '2.5rem', marginBottom: '30px', color: '#1a202c' }}>Send Us a Message</h2>
               <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : '1fr 1fr', gap: '20px' }}>
                   <input
                     type="text"
                     name="name"
@@ -136,11 +140,11 @@ const Contact = () => {
                   />
                 </div>
                 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : '1fr 1fr', gap: '20px' }}>
                   <input
                     type="tel"
                     name="phone"
-                    placeholder="Your Phone"
+                    placeholder="Your Phone (+91)"
                     value={formData.phone}
                     onChange={handleInputChange}
                     style={{
@@ -168,6 +172,7 @@ const Contact = () => {
                     <option value="placement">Job Placement</option>
                     <option value="consultancy">IT Consultancy</option>
                     <option value="partnership">Partnership</option>
+                    <option value="campus-visit">Campus Visit</option>
                     <option value="other">Other</option>
                   </select>
                 </div>
@@ -230,6 +235,20 @@ const Contact = () => {
                 ))}
               </div>
 
+              {/* Campus Location Card */}
+              <Card style={{ padding: '25px', border: '1px solid #e2e8f0', marginTop: '25px', background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '20px' }}>
+                  <div style={{ fontSize: '2rem', minWidth: '50px' }}>🏢</div>
+                  <div>
+                    <h3 style={{ fontSize: '1.3rem', marginBottom: '12px', color: '#1a202c' }}>Campus Details</h3>
+                    <p style={{ margin: '4px 0', color: '#4a5568', fontSize: '1rem' }}>Modern 3-floor facility with AC classrooms</p>
+                    <p style={{ margin: '4px 0', color: '#4a5568', fontSize: '1rem' }}>🚇 5 min walk from KPHB Metro Station</p>
+                    <p style={{ margin: '4px 0', color: '#4a5568', fontSize: '1rem' }}>🅿️ Free parking available</p>
+                    <p style={{ margin: '4px 0', color: '#4a5568', fontSize: '1rem' }}>☕ Cafeteria and break areas</p>
+                  </div>
+                </div>
+              </Card>
+
               <div style={{ marginTop: '40px' }}>
                 <h3 style={{ fontSize: '1.5rem', marginBottom: '20px', color: '#1a202c' }}>Follow Us</h3>
                 <div style={{ display: 'flex', gap: '15px' }}>
@@ -281,6 +300,18 @@ const Contact = () => {
                     fontSize: '1.5rem',
                     textDecoration: 'none'
                   }}>📷</a>
+                  <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center',
+                    width: '50px', 
+                    height: '50px', 
+                    background: '#25D366', 
+                    color: 'white', 
+                    borderRadius: '12px',
+                    fontSize: '1.5rem',
+                    textDecoration: 'none'
+                  }}>💬</a>
                 </div>
               </div>
             </div>
@@ -312,15 +343,52 @@ const Contact = () => {
         </div>
       </section>
 
+      {/* Google Maps Section */}
+      <section style={{ padding: '80px 0', background: '#ffffff' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
+            <h2 style={{ fontSize: '2.5rem', marginBottom: '16px', color: '#1a202c' }}>Find Us on Map</h2>
+            <p style={{ fontSize: '1.1rem', color: '#4a5568' }}>
+              Located in the heart of KPHB, easily accessible by metro and bus
+            </p>
+          </div>
+          
+          <div style={{ borderRadius: '16px', overflow: 'hidden', boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)', height: '400px', background: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ textAlign: 'center', color: '#6b7280' }}>
+              <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🗺️</div>
+              <p style={{ fontSize: '1.1rem', marginBottom: '16px' }}>Google Maps Integration</p>
+              <p style={{ fontSize: '0.9rem' }}>Plot No. 47, KPHB Phase 1, Kukatpally, Hyderabad</p>
+              <a 
+                href="https://maps.google.com/?q=KPHB+Phase+1+Kukatpally+Hyderabad" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ 
+                  display: 'inline-block',
+                  marginTop: '16px',
+                  padding: '12px 24px',
+                  background: '#4f46e5',
+                  color: 'white',
+                  borderRadius: '8px',
+                  textDecoration: 'none',
+                  fontWeight: '500'
+                }}
+              >
+                Open in Google Maps
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section style={{ padding: '80px 0', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white' }}>
         <div className="container">
           <div style={{ textAlign: 'center' }}>
             <h2 style={{ fontSize: '2.5rem', marginBottom: '24px', color: 'white' }}>Ready to Get Started?</h2>
             <p style={{ fontSize: '1.2rem', marginBottom: '40px', color: 'rgba(255,255,255,0.9)', maxWidth: '600px', margin: '0 auto 40px' }}>
-              Don't wait! Your dream career in tech is just one conversation away. Schedule a free consultation call today.
+              Don't wait! Your dream career in tech is just one conversation away. Visit our Hyderabad campus or schedule a free consultation call today.
             </p>
             <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Button variant="secondary" size="large">Schedule Free Call</Button>
+              <Button variant="secondary" size="large">Schedule Campus Visit</Button>
               <Button variant="outline" size="large" style={{ borderColor: 'white', color: 'white' }}>View All Courses</Button>
             </div>
           </div>
