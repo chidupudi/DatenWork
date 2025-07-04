@@ -1,477 +1,484 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { useNavigate } from 'react-router-dom';
+import Card from '../common/Card';
+import Button from '../common/Button';
 
 const TrainingCourses = () => {
+  const [ref, inView] = useInView({
+    threshold: 0.1,
+    triggerOnce: true
+  });
+  
+  const navigate = useNavigate();
   const [hoveredCourse, setHoveredCourse] = useState(null);
-  const [hoveredTech, setHoveredTech] = useState(null);
 
   const courses = [
     {
       id: 1,
       title: 'Full Stack Development',
-      description: 'Master React, Node.js, and modern web technologies with hands-on projects.',
       duration: '6 months',
       level: 'Beginner to Advanced',
       technologies: ['React', 'Node.js', 'MongoDB', 'Express'],
+      price: '₹45,000',
+      discount: '20% OFF',
       icon: '💻',
-      price: '₹49,999',
-      originalPrice: '₹69,999',
-      label: 'Best Seller'
+      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
     },
     {
       id: 2,
-      title: 'Data Science & AI',
-      description: 'Learn Python, machine learning, and AI with real-world applications.',
+      title: 'Data Science & ML',
       duration: '8 months',
       level: 'Intermediate',
       technologies: ['Python', 'TensorFlow', 'Pandas', 'Scikit-learn'],
+      price: '₹65,000',
+      discount: '15% OFF',
       icon: '🤖',
-      price: '₹59,999',
-      originalPrice: '₹79,999',
-      label: 'Hot Pick'
+      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
     },
     {
       id: 3,
-      title: 'DevOps & Cloud',
-      description: 'Master AWS, Docker, Kubernetes, and CI/CD pipelines.',
+      title: 'Cloud Computing AWS',
       duration: '4 months',
-      level: 'Intermediate',
+      level: 'Professional',
       technologies: ['AWS', 'Docker', 'Kubernetes', 'Jenkins'],
+      price: '₹40,000',
+      discount: '25% OFF',
       icon: '☁️',
-      price: '₹39,999',
-      originalPrice: '₹54,999',
-      label: ''
+      gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
     },
     {
       id: 4,
-      title: 'Cybersecurity',
-      description: 'Comprehensive security training covering ethical hacking and defense.',
-      duration: '5 months',
-      level: 'Beginner to Advanced',
-      technologies: ['Penetration Testing', 'Network Security', 'CISSP', 'CEH'],
-      icon: '🔒',
-      price: '₹44,999',
-      originalPrice: '₹64,999',
-      label: ''
+      title: 'Cybersecurity Expert',
+      duration: '6 months',
+      level: 'Advanced',
+      technologies: ['Network Security', 'Ethical Hacking', 'Cryptography'],
+      price: '₹55,000',
+      discount: '10% OFF',
+      icon: '🔐',
+      gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
     },
     {
       id: 5,
-      title: 'Mainframe Technologies',
-      description: 'Learn COBOL, JCL, DB2, and mainframe operations for enterprise systems.',
-      duration: '5 months',
-      level: 'Beginner to Advanced',
-      technologies: ['COBOL', 'JCL', 'DB2', 'CICS'],
-      icon: '🖥️',
-      price: '₹54,999',
-      originalPrice: '₹74,999',
-      label: 'Enterprise'
-    },
-    {
-      id: 6,
-      title: 'UI/UX Design',
-      description: 'Master user interface and experience design with Figma and Adobe XD.',
-      duration: '3 months',
-      level: 'Beginner',
-      technologies: ['Figma', 'Adobe XD', 'Sketch', 'InVision'],
-      icon: '🎨',
-      price: '₹29,999',
-      originalPrice: '₹39,999',
-      label: ''
-    },
-    {
-      id: 7,
       title: 'Mobile App Development',
-      description: 'Build cross-platform mobile apps using Flutter and React Native.',
-      duration: '4 months',
+      duration: '5 months',
       level: 'Intermediate',
-      technologies: ['Flutter', 'React Native', 'Dart', 'JavaScript'],
+      technologies: ['React Native', 'Flutter', 'Firebase', 'APIs'],
+      price: '₹50,000',
+      discount: '30% OFF',
       icon: '📱',
-      price: '₹42,999',
-      originalPrice: '₹59,999',
-      label: 'Popular'
-    },
-    {
-      id: 8,
-      title: 'Digital Marketing',
-      description: 'Complete digital marketing course covering SEO, SEM, and social media.',
-      duration: '3 months',
-      level: 'Beginner',
-      technologies: ['Google Ads', 'Facebook Ads', 'SEO', 'Analytics'],
-      icon: '📈',
-      price: '₹24,999',
-      originalPrice: '₹34,999',
-      label: ''
-    },
-    {
-      id: 9,
-      title: 'Blockchain Development',
-      description: 'Learn blockchain technology, smart contracts, and DeFi applications.',
-      duration: '6 months',
-      level: 'Advanced',
-      technologies: ['Solidity', 'Ethereum', 'Web3.js', 'Truffle'],
-      icon: '⛓️',
-      price: '₹69,999',
-      originalPrice: '₹89,999',
-      label: 'New'
+      gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)'
     }
   ];
 
-  const trainingSectionStyles = {
-    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    padding: '100px 0',
-    position: 'relative',
-    overflow: 'hidden',
-    minHeight: '100vh'
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        duration: 0.6
+      }
+    }
   };
 
-  const backgroundPatternStyles = {
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  // Styles
+  const sectionStyles = {
+    background: 'transparent',
+    padding: '80px 0',
+    position: 'relative'
+  };
+
+  const containerStyles = {
+    maxWidth: '1200px',
+    margin: '0 auto',
+    padding: '0 24px'
+  };
+
+  const headerStyles = {
+    textAlign: 'center',
+    marginBottom: '64px'
+  };
+
+  const titleStyles = {
+    fontSize: window.innerWidth <= 768 ? '2rem' : '2.5rem',
+    marginBottom: '16px',
+    color: '#1f2937',
+    fontWeight: '600',
+    fontFamily: "'Poppins', sans-serif",
+    position: 'relative',
+    display: 'inline-block'
+  };
+
+  const titleUnderlineStyles = {
+    position: 'absolute',
+    bottom: '-8px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    width: '80px',
+    height: '4px',
+    background: 'linear-gradient(90deg, #4f46e5, #14b8a6)',
+    borderRadius: '2px'
+  };
+
+  const subtitleStyles = {
+    fontSize: '1.25rem',
+    color: '#6b7280',
+    maxWidth: '600px',
+    margin: '0 auto',
+    lineHeight: '1.6'
+  };
+
+  const coursesGridStyles = {
+    display: 'grid',
+    gridTemplateColumns: window.innerWidth <= 768 
+      ? '1fr' 
+      : window.innerWidth <= 1024 
+      ? 'repeat(2, 1fr)' 
+      : 'repeat(3, 1fr)',
+    gap: '32px'
+  };
+
+  const courseCardStyles = (isHovered) => ({
+    background: 'white',
+    borderRadius: '20px',
+    overflow: 'hidden',
+    boxShadow: isHovered 
+      ? '0 20px 40px rgba(0, 0, 0, 0.15)' 
+      : '0 10px 25px rgba(0, 0, 0, 0.08)',
+    border: '1px solid rgba(0, 0, 0, 0.05)',
+    transition: 'all 0.3s ease',
+    transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column'
+  });
+
+  const courseHeaderStyles = (gradient) => ({
+    background: gradient,
+    padding: '24px',
+    position: 'relative',
+    overflow: 'hidden'
+  });
+
+  const courseIconStyles = {
+    fontSize: '2.5rem',
+    marginBottom: '12px',
+    filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))'
+  };
+
+  const courseTitleStyles = {
+    fontSize: '1.5rem',
+    fontWeight: '700',
+    color: 'white',
+    marginBottom: '8px',
+    textShadow: '0 2px 4px rgba(0, 0, 0, 0.2)'
+  };
+
+  const courseDurationStyles = {
+    fontSize: '0.875rem',
+    color: 'rgba(255, 255, 255, 0.9)',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px'
+  };
+
+  const discountBadgeStyles = {
+    position: 'absolute',
+    top: '16px',
+    right: '16px',
+    background: 'rgba(255, 255, 255, 0.2)',
+    backdropFilter: 'blur(10px)',
+    border: '1px solid rgba(255, 255, 255, 0.3)',
+    color: 'white',
+    padding: '4px 12px',
+    borderRadius: '20px',
+    fontSize: '0.75rem',
+    fontWeight: '700'
+  };
+
+  const courseBodyStyles = {
+    padding: '24px',
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column'
+  };
+
+  const courseLevelStyles = {
+    fontSize: '0.875rem',
+    color: '#6b7280',
+    marginBottom: '16px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px'
+  };
+
+  const levelDotStyles = (level) => {
+    const colors = {
+      'Beginner to Advanced': '#10b981',
+      'Intermediate': '#f59e0b',
+      'Professional': '#3b82f6',
+      'Advanced': '#ef4444'
+    };
+    
+    return {
+      width: '8px',
+      height: '8px',
+      borderRadius: '50%',
+      background: colors[level] || '#6b7280'
+    };
+  };
+
+  const technologiesStyles = {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '8px',
+    marginBottom: '20px',
+    flex: 1
+  };
+
+  const techBadgeStyles = {
+    background: '#f3f4f6',
+    color: '#4b5563',
+    padding: '4px 12px',
+    borderRadius: '12px',
+    fontSize: '0.75rem',
+    fontWeight: '500',
+    border: '1px solid #e5e7eb'
+  };
+
+  const coursePriceStyles = {
+    fontSize: '1.5rem',
+    fontWeight: '700',
+    color: '#1f2937',
+    marginBottom: '16px'
+  };
+
+  const courseButtonStyles = {
+    width: '100%',
+    padding: '12px 24px',
+    background: 'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)',
+    color: 'white',
+    border: 'none',
+    borderRadius: '12px',
+    fontSize: '0.95rem',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 4px 12px rgba(79, 70, 229, 0.3)'
+  };
+
+  const courseButtonHoverStyles = {
+    transform: 'translateY(-2px)',
+    boxShadow: '0 6px 20px rgba(79, 70, 229, 0.4)'
+  };
+
+  // View More Card Styles
+  const viewMoreCardStyles = (isHovered) => ({
+    background: 'linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%)',
+    borderRadius: '20px',
+    overflow: 'hidden',
+    boxShadow: isHovered 
+      ? '0 20px 40px rgba(0, 0, 0, 0.15)' 
+      : '0 10px 25px rgba(0, 0, 0, 0.08)',
+    border: '2px dashed #6b7280',
+    transition: 'all 0.3s ease',
+    transform: isHovered ? 'translateY(-8px) scale(1.02)' : 'translateY(0) scale(1)',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '48px',
+    cursor: 'pointer',
+    position: 'relative',
+    overflow: 'hidden'
+  });
+
+  const viewMoreBackgroundPattern = {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    background: `
-      radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 0%, transparent 50%),
-      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="hexagon" width="25" height="22" patternUnits="userSpaceOnUse"><polygon points="12.5,2 22,8 22,16 12.5,22 3,16 3,8" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23hexagon)"/></svg>')
-    `,
-    zIndex: 0
+    opacity: 0.1,
+    background: `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="2" fill="%234b5563"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>')`
   };
 
-  const floatingElementStyles = {
-    position: 'absolute',
-    top: '15%',
-    right: '10%',
-    width: '150px',
-    height: '150px',
-    background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
+  const viewMoreIconContainerStyles = (isHovered) => ({
+    width: '80px',
+    height: '80px',
+    background: isHovered 
+      ? 'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)'
+      : 'white',
     borderRadius: '50%',
-    filter: 'blur(30px)',
-    animation: 'float 6s ease-in-out infinite',
-    zIndex: 0
-  };
-
-  const floatingElement2Styles = {
-    position: 'absolute',
-    bottom: '20%',
-    left: '5%',
-    width: '100px',
-    height: '100px',
-    background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%)',
-    borderRadius: '50%',
-    filter: 'blur(25px)',
-    animation: 'float 8s ease-in-out infinite reverse',
-    zIndex: 0
-  };
-
-  const containerStyles = {
-    maxWidth: '1400px',
-    margin: '0 auto',
-    padding: '0 20px',
-    position: 'relative',
-    zIndex: 1
-  };
-
-  const headerStyles = {
-    textAlign: 'center',
-    marginBottom: '80px',
-    color: 'white'
-  };
-
-  const titleStyles = {
-    fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
-    fontWeight: '700',
-    marginBottom: '20px',
-    background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    backgroundClip: 'text',
-    textShadow: '0 2px 4px rgba(0,0,0,0.1)',
-    letterSpacing: '-0.02em'
-  };
-
-  const subtitleStyles = {
-    fontSize: '1.3rem',
-    color: 'rgba(255,255,255,0.9)',
-    maxWidth: '600px',
-    margin: '0 auto',
-    lineHeight: '1.7',
-    fontWeight: '400'
-  };
-
-  const gridStyles = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
-    gap: '30px',
-    '@media (max-width: 1200px)': {
-      gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))'
-    },
-    '@media (max-width: 768px)': {
-      gridTemplateColumns: '1fr',
-      gap: '20px'
-    }
-  };
-
-  const cardStyles = (isHovered) => ({
-    background: 'rgba(255,255,255,0.95)',
-    borderRadius: '24px',
-    boxShadow: isHovered
-      ? '0 25px 50px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.1)'
-      : '0 15px 35px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.05)',
-    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-    transform: isHovered ? 'translateY(-12px) scale(1.02)' : 'translateY(0) scale(1)',
-    position: 'relative',
-    overflow: 'hidden',
-    cursor: 'pointer',
-    border: '1px solid rgba(255,255,255,0.2)',
-    backdropFilter: 'blur(10px)'
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: '24px',
+    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.1)',
+    transition: 'all 0.3s ease',
+    transform: isHovered ? 'rotate(180deg)' : 'rotate(0deg)'
   });
 
-  const labelStyles = (label) => ({
-    display: label ? 'inline-block' : 'none',
-    position: 'absolute',
-    top: '20px',
-    right: '20px',
-    background: 
-      label === 'Best Seller' ? 'linear-gradient(135deg, #ff6b6b, #ee5a24)' :
-      label === 'Hot Pick' ? 'linear-gradient(135deg, #667eea, #764ba2)' :
-      label === 'Enterprise' ? 'linear-gradient(135deg, #0984e3, #6c5ce7)' :
-      label === 'Popular' ? 'linear-gradient(135deg, #fd79a8, #e84393)' :
-      label === 'New' ? 'linear-gradient(135deg, #00b894, #00a085)' :
-      'linear-gradient(135deg, #636e72, #2d3436)',
-    color: 'white',
-    fontSize: '0.75rem',
-    fontWeight: '600',
-    padding: '6px 12px',
-    borderRadius: '12px',
-    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-    zIndex: 2,
-    letterSpacing: '0.5px',
-    textTransform: 'uppercase'
-  });
-
-  const gradientBarStyles = {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: '4px',
-    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    borderRadius: '24px 24px 0 0'
-  };
-
-  const cardContentStyles = {
-    padding: '30px',
-    textAlign: 'center'
-  };
-
-  const iconStyles = (isHovered) => ({
-    fontSize: '3.5rem',
-    marginBottom: '20px',
-    display: 'block',
-    filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))',
-    transform: isHovered ? 'scale(1.15) rotate(8deg)' : 'scale(1) rotate(0deg)',
+  const viewMoreIconStyles = (isHovered) => ({
+    fontSize: '2rem',
+    color: isHovered ? 'white' : '#4f46e5',
     transition: 'all 0.3s ease'
   });
 
-  const courseTitleStyles = {
-    fontSize: '1.4rem',
+  const viewMoreTextStyles = {
+    fontSize: '1.5rem',
     fontWeight: '700',
-    color: '#2d3436',
-    marginBottom: '12px',
-    lineHeight: '1.3'
+    color: '#1f2937',
+    marginBottom: '8px'
   };
 
-  const descriptionStyles = {
-    fontSize: '0.95rem',
-    color: '#636e72',
-    lineHeight: '1.6',
-    marginBottom: '20px'
-  };
-
-  const priceContainerStyles = {
-    marginBottom: '25px'
-  };
-
-  const priceStyles = {
-    fontSize: '1.8rem',
-    fontWeight: '800',
-    color: '#667eea',
-    marginBottom: '5px'
-  };
-
-  const originalPriceStyles = {
+  const viewMoreSubtextStyles = {
     fontSize: '1rem',
-    color: '#b2bec3',
-    textDecoration: 'line-through',
-    fontWeight: '500'
+    color: '#6b7280',
+    marginBottom: '24px'
   };
 
-  const detailsContainerStyles = {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '15px',
-    marginBottom: '25px',
-    textAlign: 'left'
-  };
-
-  const detailItemStyles = {
-    fontSize: '0.85rem',
-    color: '#636e72'
-  };
-
-  const detailLabelStyles = {
-    color: '#2d3436',
-    fontWeight: '600',
-    display: 'block',
-    marginBottom: '4px'
-  };
-
-  const techSectionStyles = {
-    marginBottom: '30px',
-    textAlign: 'left'
-  };
-
-  const techLabelStyles = {
-    fontSize: '0.9rem',
-    color: '#2d3436',
-    fontWeight: '600',
-    marginBottom: '12px',
-    display: 'block'
-  };
-
-  const techTagsStyles = {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '8px',
-    justifyContent: 'center'
-  };
-
-  const techTagStyles = (isHovered) => ({
-    background: isHovered ? 'linear-gradient(135deg, #667eea, #764ba2)' : '#f8f9fa',
-    color: isHovered ? 'white' : '#667eea',
-    padding: '6px 12px',
-    borderRadius: '20px',
-    fontSize: '0.75rem',
-    fontWeight: '600',
-    border: isHovered ? 'none' : '1px solid #e9ecef',
-    transition: 'all 0.2s ease',
-    cursor: 'pointer',
-    transform: isHovered ? 'scale(1.05)' : 'scale(1)'
-  });
-
-  const buttonContainerStyles = {
-    display: 'flex',
-    gap: '12px',
-    justifyContent: 'center'
-  };
-
-  const buttonStyles = (variant) => ({
-    padding: '12px 24px',
+  const viewMoreButtonStyles = (isHovered) => ({
+    padding: '12px 32px',
+    background: isHovered 
+      ? 'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)'
+      : 'white',
+    color: isHovered ? 'white' : '#4f46e5',
+    border: `2px solid ${isHovered ? 'transparent' : '#4f46e5'}`,
     borderRadius: '12px',
-    fontSize: '0.9rem',
+    fontSize: '1rem',
     fontWeight: '600',
-    border: 'none',
     cursor: 'pointer',
-    transition: 'all 0.2s ease',
-    background: variant === 'primary' 
-      ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-      : 'transparent',
-    color: variant === 'primary' ? 'white' : '#667eea',
-    border: variant === 'primary' ? 'none' : '2px solid #667eea',
-    boxShadow: variant === 'primary' ? '0 4px 12px rgba(102,126,234,0.4)' : 'none'
+    transition: 'all 0.3s ease',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    boxShadow: isHovered ? '0 6px 20px rgba(79, 70, 229, 0.4)' : 'none'
   });
 
-  const keyframes = `
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
-    }
-  `;
+  const arrowStyles = (isHovered) => ({
+    transition: 'all 0.3s ease',
+    transform: isHovered ? 'translateX(4px)' : 'translateX(0)'
+  });
 
   return (
-    <>
-      <style>{keyframes}</style>
-      <section style={trainingSectionStyles}>
-        <div style={backgroundPatternStyles} />
-        <div style={floatingElementStyles} />
-        <div style={floatingElement2Styles} />
-        
-        <div style={containerStyles}>
-          <div style={headerStyles}>
-            <h2 style={titleStyles}>
-              Premium Training Programs
-            </h2>
-            <p style={subtitleStyles}>
-              Transform your career with industry-leading courses designed for Indian professionals
-            </p>
-          </div>
+    <section style={sectionStyles} id="courses">
+      <div style={containerStyles}>
+        <motion.div 
+          ref={ref}
+          style={headerStyles}
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          <h2 style={titleStyles}>
+            Popular Training Courses
+            <span style={titleUnderlineStyles}></span>
+          </h2>
+          <p style={subtitleStyles}>
+            Industry-relevant courses designed to make you job-ready
+          </p>
+        </motion.div>
 
-          <div style={gridStyles}>
-            {courses.map((course) => (
-              <div
-                key={course.id}
-                style={cardStyles(hoveredCourse === course.id)}
-                onMouseEnter={() => setHoveredCourse(course.id)}
-                onMouseLeave={() => setHoveredCourse(null)}
-              >
-                <div style={gradientBarStyles} />
-                <span style={labelStyles(course.label)}>{course.label}</span>
-                
-                <div style={cardContentStyles}>
-                  <span style={iconStyles(hoveredCourse === course.id)}>
-                    {course.icon}
-                  </span>
-                  
+        <motion.div 
+          style={coursesGridStyles}
+          variants={containerVariants}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+        >
+          {courses.map((course) => (
+            <motion.div
+              key={course.id}
+              variants={cardVariants}
+              onMouseEnter={() => setHoveredCourse(course.id)}
+              onMouseLeave={() => setHoveredCourse(null)}
+            >
+              <Card style={courseCardStyles(hoveredCourse === course.id)} hover={false}>
+                <div style={courseHeaderStyles(course.gradient)}>
+                  <div style={discountBadgeStyles}>{course.discount}</div>
+                  <div style={courseIconStyles}>{course.icon}</div>
                   <h3 style={courseTitleStyles}>{course.title}</h3>
-                  <p style={descriptionStyles}>{course.description}</p>
-                  
-                  <div style={priceContainerStyles}>
-                    <div style={priceStyles}>{course.price}</div>
-                    <div style={originalPriceStyles}>{course.originalPrice}</div>
-                  </div>
-                  
-                  <div style={detailsContainerStyles}>
-                    <div style={detailItemStyles}>
-                      <span style={detailLabelStyles}>Duration</span>
-                      {course.duration}
-                    </div>
-                    <div style={detailItemStyles}>
-                      <span style={detailLabelStyles}>Level</span>
-                      {course.level}
-                    </div>
-                  </div>
-                  
-                  <div style={techSectionStyles}>
-                    <span style={techLabelStyles}>Key Technologies</span>
-                    <div style={techTagsStyles}>
-                      {course.technologies.map((tech, index) => (
-                        <span
-                          key={index}
-                          style={techTagStyles(hoveredTech === `${course.id}-${index}`)}
-                          onMouseEnter={() => setHoveredTech(`${course.id}-${index}`)}
-                          onMouseLeave={() => setHoveredTech(null)}
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div style={buttonContainerStyles}>
-                    <button style={buttonStyles('primary')}>
-                      Enroll Now
-                    </button>
-                    <button style={buttonStyles('outline')}>
-                      View Details
-                    </button>
+                  <div style={courseDurationStyles}>
+                    <span>⏱️</span>
+                    <span>{course.duration}</span>
                   </div>
                 </div>
+                
+                <div style={courseBodyStyles}>
+                  <div style={courseLevelStyles}>
+                    <span style={levelDotStyles(course.level)} />
+                    <span>{course.level}</span>
+                  </div>
+                  
+                  <div style={technologiesStyles}>
+                    {course.technologies.map((tech, index) => (
+                      <span key={index} style={techBadgeStyles}>
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  <div style={coursePriceStyles}>{course.price}</div>
+                  
+                  <motion.button
+                    style={courseButtonStyles}
+                    whileHover={courseButtonHoverStyles}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Enroll Now
+                  </motion.button>
+                </div>
+              </Card>
+            </motion.div>
+          ))}
+          
+          {/* View More Courses Card */}
+          <motion.div
+            variants={cardVariants}
+            onMouseEnter={() => setHoveredCourse('viewMore')}
+            onMouseLeave={() => setHoveredCourse(null)}
+            onClick={() => navigate('/courses')}
+          >
+            <div style={viewMoreCardStyles(hoveredCourse === 'viewMore')}>
+              <div style={viewMoreBackgroundPattern} />
+              
+              <div style={viewMoreIconContainerStyles(hoveredCourse === 'viewMore')}>
+                <span style={viewMoreIconStyles(hoveredCourse === 'viewMore')}>
+                  {hoveredCourse === 'viewMore' ? '🚀' : '➕'}
+                </span>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    </>
+              
+              <h3 style={viewMoreTextStyles}>Explore More Courses</h3>
+              <p style={viewMoreSubtextStyles}>50+ specialized programs available</p>
+              
+              <motion.button
+                style={viewMoreButtonStyles(hoveredCourse === 'viewMore')}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                View All Courses
+                <span style={arrowStyles(hoveredCourse === 'viewMore')}>→</span>
+              </motion.button>
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
   );
 };
 
