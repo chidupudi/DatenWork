@@ -214,9 +214,9 @@ const Home = () => {
           </div>
           
           {/* Services Section */}
-          <div style={standardSectionWrapper}>
+          {/* <div style={standardSectionWrapper}>
             <Services />
-          </div>
+          </div> */}
           
           {/* Training Courses Section */}
           <div style={standardSectionWrapper}>

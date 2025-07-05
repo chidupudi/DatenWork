@@ -235,20 +235,7 @@ const Contact = () => {
                 ))}
               </div>
 
-              {/* Campus Location Card */}
-              <Card style={{ padding: '25px', border: '1px solid #e2e8f0', marginTop: '25px', background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)' }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '20px' }}>
-                  <div style={{ fontSize: '2rem', minWidth: '50px' }}>🏢</div>
-                  <div>
-                    <h3 style={{ fontSize: '1.3rem', marginBottom: '12px', color: '#1a202c' }}>Campus Details</h3>
-                    <p style={{ margin: '4px 0', color: '#4a5568', fontSize: '1rem' }}>Modern 3-floor facility with AC classrooms</p>
-                    <p style={{ margin: '4px 0', color: '#4a5568', fontSize: '1rem' }}>🚇 5 min walk from KPHB Metro Station</p>
-                    <p style={{ margin: '4px 0', color: '#4a5568', fontSize: '1rem' }}>🅿️ Free parking available</p>
-                    <p style={{ margin: '4px 0', color: '#4a5568', fontSize: '1rem' }}>☕ Cafeteria and break areas</p>
-                  </div>
-                </div>
-              </Card>
-
+             
               <div style={{ marginTop: '40px' }}>
                 <h3 style={{ fontSize: '1.5rem', marginBottom: '20px', color: '#1a202c' }}>Follow Us</h3>
                 <div style={{ display: 'flex', gap: '15px' }}>
@@ -343,43 +330,7 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Google Maps Section */}
-      <section style={{ padding: '80px 0', background: '#ffffff' }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '16px', color: '#1a202c' }}>Find Us on Map</h2>
-            <p style={{ fontSize: '1.1rem', color: '#4a5568' }}>
-              Located in the heart of KPHB, easily accessible by metro and bus
-            </p>
-          </div>
-          
-          <div style={{ borderRadius: '16px', overflow: 'hidden', boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)', height: '400px', background: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <div style={{ textAlign: 'center', color: '#6b7280' }}>
-              <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🗺️</div>
-              <p style={{ fontSize: '1.1rem', marginBottom: '16px' }}>Google Maps Integration</p>
-              <p style={{ fontSize: '0.9rem' }}>Plot No. 47, KPHB Phase 1, Kukatpally, Hyderabad</p>
-              <a 
-                href="https://maps.google.com/?q=KPHB+Phase+1+Kukatpally+Hyderabad" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{ 
-                  display: 'inline-block',
-                  marginTop: '16px',
-                  padding: '12px 24px',
-                  background: '#4f46e5',
-                  color: 'white',
-                  borderRadius: '8px',
-                  textDecoration: 'none',
-                  fontWeight: '500'
-                }}
-              >
-                Open in Google Maps
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      
       <section style={{ padding: '80px 0', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white' }}>
         <div className="container">
           <div style={{ textAlign: 'center' }}>

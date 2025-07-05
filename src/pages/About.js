@@ -442,40 +442,7 @@ const About = () => {
       </section>
 
       {/* Team Section */}
-      <section style={teamSectionStyles}>
-        <div style={containerStyles}>
-          <div style={teamHeaderStyles}>
-            <h2 style={teamTitleStyles}>Meet Our Team</h2>
-            <p style={teamSubtitleStyles}>
-              Our experienced team of industry experts is dedicated to your success
-            </p>
-          </div>
-          <div style={teamGridStyles}>
-            {team.map((member, index) => (
-              <Card 
-                key={member.id} 
-                style={teamCardStyles(hoveredTeamMember === member.id)}
-                hover={false}
-                onMouseEnter={() => setHoveredTeamMember(member.id)}
-                onMouseLeave={() => setHoveredTeamMember(null)}
-              >
-                <div style={teamImageStyles}>{member.image}</div>
-                <h3 style={teamNameStyles}>{member.name}</h3>
-                <p style={teamRoleStyles}>{member.role}</p>
-                <p style={teamExperienceStyles}>{member.experience}</p>
-                <div style={specialtiesStyles}>
-                  {member.specialties.map(specialty => (
-                    <span key={specialty} style={specialtyTagStyles}>
-                      {specialty}
-                    </span>
-                  ))}
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
+      
       {/* CTA Section */}
       <section style={ctaSectionStyles}>
         <div style={ctaOverlayStyles} />
