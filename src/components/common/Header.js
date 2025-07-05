@@ -48,6 +48,7 @@ const Header = () => {
     width: 'auto',   // Width will scale automatically
   };
 
+  
   const navStyles = {
     display: 'flex',
     // The conditional logic for mobile menu needs to be inside the render return
