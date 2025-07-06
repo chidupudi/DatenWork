@@ -39,17 +39,17 @@ const Contact = () => {
     {
       icon: '📍',
       title: 'Our Location',
-      details: ['Plot No. 47, KPHB Phase 1', 'Kukatpally Housing Board', 'Hyderabad, Telangana 500072']
+      details: ['Manjeera Trinity Corporate', 'Kukatpally Housing Board, Phase 3', 'Hyderabad, Telangana 500072']
     },
     {
       icon: '📞',
       title: 'Phone Numbers',
-      details: ['+91 9876543210', '+91 8765432109', 'Available 9 AM - 7 PM IST']
+      details: ['+91 9652247047', '+91 8008085560', 'Available 9 AM - 7 PM IST']
     },
     {
       icon: '✉️',
       title: 'Email Addresses',
-      details: ['info@datenwork.com', 'careers@datenwork.com', 'support@datenwork.com']
+      details: ['hr@datenwork.in']
     },
     {
       icon: '🕒',
@@ -59,10 +59,7 @@ const Contact = () => {
   ];
 
   const faqs = [
-    {
-      question: 'How long are the training programs?',
-      answer: 'Our training programs range from 10 to 16 weeks depending on the course complexity and depth. Full-stack programs are typically 16 weeks, while specialized courses range from 10-14 weeks.'
-    },
+   
     {
       question: 'Do you provide job placement assistance?',
       answer: 'Yes! We offer 100% job placement guarantee. Our dedicated placement team works with you throughout the program and continues support until you land your dream job in top companies across India and globally.'
@@ -172,7 +169,7 @@ const Contact = () => {
                     <option value="placement">Job Placement</option>
                     <option value="consultancy">IT Consultancy</option>
                     <option value="partnership">Partnership</option>
-                    <option value="campus-visit">Campus Visit</option>
+                   
                     <option value="other">Other</option>
                   </select>
                 </div>
@@ -235,7 +232,7 @@ const Contact = () => {
                 ))}
               </div>
 
-             
+{/*              
               <div style={{ marginTop: '40px' }}>
                 <h3 style={{ fontSize: '1.5rem', marginBottom: '20px', color: '#1a202c' }}>Follow Us</h3>
                 <div style={{ display: 'flex', gap: '15px' }}>
@@ -300,51 +297,13 @@ const Contact = () => {
                     textDecoration: 'none'
                   }}>💬</a>
                 </div>
-              </div>
+              </div> */}
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section style={{ padding: '80px 0', background: '#f7fafc' }}>
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '50px' }}>
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '16px', color: '#1a202c' }}>Frequently Asked Questions</h2>
-            <p style={{ fontSize: '1.1rem', color: '#4a5568', maxWidth: '600px', margin: '0 auto' }}>
-              Find answers to common questions about our programs and services
-            </p>
-          </div>
-
-          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-            {faqs.map((faq, index) => (
-              <Card key={index} style={{ marginBottom: '20px', padding: '30px' }}>
-                <h3 style={{ fontSize: '1.3rem', marginBottom: '15px', color: '#1a202c', fontWeight: '600' }}>
-                  {faq.question}
-                </h3>
-                <p style={{ color: '#4a5568', lineHeight: '1.7', fontSize: '1rem' }}>
-                  {faq.answer}
-                </p>
-              </Card>
-            ))}
           </div>
         </div>
       </section>
 
       
-      <section style={{ padding: '80px 0', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white' }}>
-        <div className="container">
-          <div style={{ textAlign: 'center' }}>
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '24px', color: 'white' }}>Ready to Get Started?</h2>
-            <p style={{ fontSize: '1.2rem', marginBottom: '40px', color: 'rgba(255,255,255,0.9)', maxWidth: '600px', margin: '0 auto 40px' }}>
-              Don't wait! Your dream career in tech is just one conversation away. Visit our Hyderabad campus or schedule a free consultation call today.
-            </p>
-            <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Button variant="secondary" size="large">Schedule Campus Visit</Button>
-              <Button variant="outline" size="large" style={{ borderColor: 'white', color: 'white' }}>View All Courses</Button>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <Footer />
     </div>

@@ -1,8 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import Button from '../common/Button';
 
 const Hero = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    course: ''
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+    // Handle form submission here
+  };
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -59,30 +80,12 @@ const Hero = () => {
       }
     }
 
-    @keyframes floatShape1 {
+    @keyframes glow {
       0%, 100% {
-        transform: translateY(0px) rotate(0deg);
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
       }
       50% {
-        transform: translateY(-20px) rotate(5deg);
-      }
-    }
-
-    @keyframes floatShape2 {
-      0%, 100% {
-        transform: translateY(0px) rotate(0deg);
-      }
-      50% {
-        transform: translateY(-15px) rotate(-3deg);
-      }
-    }
-
-    @keyframes floatShape3 {
-      0%, 100% {
-        transform: translateY(0px) rotate(0deg);
-      }
-      50% {
-        transform: translateY(-25px) rotate(8deg);
+        box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
       }
     }
   `;
@@ -139,9 +142,10 @@ const Hero = () => {
     textAlign: window.innerWidth <= 768 ? 'center' : 'left'
   };
 
-  // Content styles
+  // Content styles (BRIGHTENED)
   const heroContentStyles = {
-    animation: 'fadeInUp 0.8s ease-out'
+    animation: 'fadeInUp 0.8s ease-out',
+    order: window.innerWidth <= 768 ? 0 : 0  // Content comes first on mobile
   };
 
   const heroTitleStyles = {
@@ -151,20 +155,21 @@ const Hero = () => {
     marginBottom: '24px',
     color: '#ffffff',
     textShadow: '0 4px 8px rgba(0, 0, 0, 0.5)',
-    background: 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%)',
+    background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)', // Brighter gradient
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
     backgroundClip: 'text',
-    filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))'
+    filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3)) brightness(1.2)' // Added brightness
   };
 
   const heroSubtitleStyles = {
     fontSize: window.innerWidth <= 768 ? '1.125rem' : '1.25rem',
     marginBottom: '32px',
-    color: '#e2e8f0',
+    color: '#f1f5f9', // Brighter than #e2e8f0
     lineHeight: '1.6',
     textShadow: '0 2px 4px rgba(0, 0, 0, 0.4)',
-    fontWeight: '400'
+    fontWeight: '400',
+    filter: 'brightness(1.1)' // Added brightness
   };
 
   const heroCtaStyles = {
@@ -191,76 +196,91 @@ const Hero = () => {
     display: 'block',
     fontSize: window.innerWidth <= 768 ? '2rem' : '3rem',
     fontWeight: '800',
-    color: '#fbbf24',
+    color: '#fde047', // Brighter yellow
     marginBottom: '4px',
-    textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)'
+    textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+    filter: 'brightness(1.2)' // Added brightness
   };
 
   const statLabelStyles = {
     fontSize: '0.875rem',
-    opacity: '0.9',
-    color: '#ffffff',
+    opacity: '1', // Increased from 0.9
+    color: '#f8fafc', // Brighter white
     textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)'
   };
 
-  // Visual section styles
-  const heroVisualStyles = {
+  // JOIN FORM STYLES
+  const joinFormContainerStyles = {
     position: 'relative',
-    height: window.innerWidth <= 768 ? '300px' : '500px',
+    height: window.innerWidth <= 768 ? 'auto' : '500px',
     animation: 'fadeInRight 0.8s ease-out 0.2s both',
-    order: window.innerWidth <= 768 ? -1 : 0
-  };
-
-  const heroImagePlaceholderStyles = {
-    width: '100%',
-    height: '100%',
-    position: 'relative',
+    order: window.innerWidth <= 768 ? 1 : 0,  // Form comes second on mobile
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
   };
 
-  const geometricShapeBaseStyles = {
-    position: 'absolute',
-    borderRadius: '16px',
-    backdropFilter: 'blur(10px)',
-    border: '1px solid rgba(255, 255, 255, 0.1)'
+  const joinFormStyles = {
+    background: 'rgba(255, 255, 255, 0.1)',
+    backdropFilter: 'blur(20px)',
+    border: '1px solid rgba(255, 255, 255, 0.2)',
+    borderRadius: '20px',
+    padding: '32px',
+    width: '100%',
+    maxWidth: '400px',
+    boxShadow: '0 25px 50px rgba(0, 0, 0, 0.2)',
+    animation: 'glow 3s ease-in-out infinite'
   };
 
-  const shape1Styles = {
-    ...geometricShapeBaseStyles,
-    width: '200px',
-    height: '200px',
-    background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(245, 158, 11, 0.2) 100%)',
-    top: '20%',
-    left: '10%',
-    clipPath: 'polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)',
-    boxShadow: '0 8px 32px rgba(99, 102, 241, 0.1)',
-    animation: 'floatShape1 4s ease-in-out infinite'
+  const formTitleStyles = {
+    fontSize: '1.5rem',
+    fontWeight: '700',
+    marginBottom: '8px',
+    color: '#ffffff',
+    textAlign: 'center',
+    textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)'
   };
 
-  const shape2Styles = {
-    ...geometricShapeBaseStyles,
-    width: '150px',
-    height: '150px',
-    background: 'linear-gradient(135deg, rgba(20, 184, 166, 0.25) 0%, rgba(99, 102, 241, 0.25) 100%)',
-    top: '60%',
-    right: '20%',
-    borderRadius: '50%',
-    boxShadow: '0 8px 32px rgba(20, 184, 166, 0.15)',
-    animation: 'floatShape2 3s ease-in-out infinite 1s'
+  const formSubtitleStyles = {
+    fontSize: '0.875rem',
+    color: '#e2e8f0',
+    textAlign: 'center',
+    marginBottom: '24px',
+    opacity: '0.9'
   };
 
-  const shape3Styles = {
-    ...geometricShapeBaseStyles,
-    width: '120px',
-    height: '120px',
-    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(245, 158, 11, 0.15) 100%)',
-    top: '40%',
-    right: '40%',
-    clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-    boxShadow: '0 8px 32px rgba(255, 255, 255, 0.1)',
-    animation: 'floatShape3 5s ease-in-out infinite 2s'
+  const inputStyles = {
+    width: '100%',
+    padding: '12px 16px',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    border: '1px solid rgba(255, 255, 255, 0.2)',
+    borderRadius: '12px',
+    color: '#ffffff',
+    fontSize: '14px',
+    marginBottom: '16px',
+    outline: 'none',
+    transition: 'all 0.3s ease',
+    backdropFilter: 'blur(10px)'
+  };
+
+  const selectStyles = {
+    ...inputStyles,
+    cursor: 'pointer'
+  };
+
+  const submitButtonStyles = {
+    width: '100%',
+    padding: '14px',
+    background: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
+    border: 'none',
+    borderRadius: '12px',
+    color: '#ffffff',
+    fontSize: '16px',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 4px 15px rgba(99, 102, 241, 0.3)',
+    marginTop: '8px'
   };
 
   return (
@@ -324,7 +344,7 @@ const Hero = () => {
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2 }}
               >
-                <span style={statNumberStyles}>500+</span>
+                <span style={statNumberStyles}>600+</span>
                 <span style={statLabelStyles}>Successful Placements</span>
               </motion.div>
               
@@ -333,7 +353,7 @@ const Hero = () => {
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2 }}
               >
-                <span style={statNumberStyles}>5+</span>
+                <span style={statNumberStyles}>6+</span>
                 <span style={statLabelStyles}>Years Experience</span>
               </motion.div>
               
@@ -343,20 +363,87 @@ const Hero = () => {
                 transition={{ duration: 0.2 }}
               >
                 <span style={statNumberStyles}>50+</span>
-                <span style={statLabelStyles}>Partner Companies</span>
+                <span style={statLabelStyles}>Placement Companies</span>
               </motion.div>
             </motion.div>
           </motion.div>
           
+          {/* JOIN FORM SECTION */}
           <motion.div 
-            style={heroVisualStyles}
+            style={joinFormContainerStyles}
             variants={itemVariants}
           >
-            <div style={heroImagePlaceholderStyles}>
-              <div style={shape1Styles} />
-              <div style={shape2Styles} />
-              <div style={shape3Styles} />
-            </div>
+            <motion.div 
+              style={joinFormStyles}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+            >
+              <h3 style={formTitleStyles}>Join Now</h3>
+              <p style={formSubtitleStyles}>Start your tech career journey today</p>
+              
+              <form onSubmit={handleSubmit}>
+                <motion.input
+                  type="text"
+                  name="name"
+                  placeholder="Full Name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  style={inputStyles}
+                  whileFocus={{ scale: 1.02, borderColor: 'rgba(99, 102, 241, 0.5)' }}
+                  required
+                />
+                
+                <motion.input
+                  type="email"
+                  name="email"
+                  placeholder="Email Address"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  style={inputStyles}
+                  whileFocus={{ scale: 1.02, borderColor: 'rgba(99, 102, 241, 0.5)' }}
+                  required
+                />
+                
+                <motion.input
+                  type="tel"
+                  name="phone"
+                  placeholder="Phone Number"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  style={inputStyles}
+                  whileFocus={{ scale: 1.02, borderColor: 'rgba(99, 102, 241, 0.5)' }}
+                  required
+                />
+                
+                <motion.select
+                  name="course"
+                  value={formData.course}
+                  onChange={handleInputChange}
+                  style={selectStyles}
+                  whileFocus={{ scale: 1.02, borderColor: 'rgba(99, 102, 241, 0.5)' }}
+                  required
+                >
+                  <option value="" style={{color: '#000'}}>Select Course</option>
+                  <option value="react" style={{color: '#000'}}>React Development</option>
+                  <option value="node" style={{color: '#000'}}>Node.js Backend</option>
+                  <option value="fullstack" style={{color: '#000'}}>Full Stack Development</option>
+                  <option value="python" style={{color: '#000'}}>Python Programming</option>
+                  <option value="data-science" style={{color: '#000'}}>Data Science</option>
+                </motion.select>
+                
+                <motion.button
+                  type="submit"
+                  style={submitButtonStyles}
+                  whileHover={{ 
+                    scale: 1.05, 
+                    boxShadow: '0 6px 20px rgba(99, 102, 241, 0.4)' 
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Get Started Free
+                </motion.button>
+              </form>
+            </motion.div>
           </motion.div>
         </motion.div>
       </section>

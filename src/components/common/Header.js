@@ -2,7 +2,17 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 // Import your logo file from its location
-import logoSrc from '../../assets/logo.png'; // <-- 1. IMPORT YOUR LOGO
+import logoSrc from '../../assets/logo.png';
+
+// Logo colors for the dark professional theme
+const logoColors = {
+  teal: '#2d7a7a',
+  tealLight: '#368686', 
+  tealDark: '#1f5555',
+  orange: '#d4935c',
+  orangeLight: '#e6a972',
+  orangeDark: '#b8804a'
+};
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,16 +24,15 @@ const Header = () => {
 
   const isActive = (path) => location.pathname === path;
 
-  // --- STYLES (No changes here except for the logo style) ---
-
+  // DARK PROFESSIONAL THEME STYLES
   const headerStyles = {
     position: 'sticky',
     top: 0,
-    background: 'rgba(255, 255, 255, 0.95)',
-    backdropFilter: 'blur(10px)',
-    borderBottom: '1px solid rgba(243, 244, 246, 0.8)',
+    background: `linear-gradient(135deg, ${logoColors.tealDark} 0%, #1a1a1a 100%)`,
+    borderBottom: `2px solid ${logoColors.orange}`,
     zIndex: 100,
-    transition: 'all 0.2s ease'
+    transition: 'all 0.3s ease',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.4)'
   };
 
   const headerContainerStyles = {
@@ -36,28 +45,19 @@ const Header = () => {
     height: '80px'
   };
 
-  // 2. UPDATED LOGO STYLES
   const logoLinkStyles = {
     textDecoration: 'none',
     display: 'flex',
     alignItems: 'center',
+    transition: 'transform 0.2s ease'
   };
 
   const logoImageStyles = {
-    height: '60px', // Adjust the height of your logo as needed
-    width: 'auto',   // Width will scale automatically
+    height: '70px',
+    width: 'auto',
+    filter: 'brightness(1.1)', // Slightly brighten logo for dark background
+    transition: 'transform 0.2s ease'
   };
-
-  
-  const navStyles = {
-    display: 'flex',
-    // The conditional logic for mobile menu needs to be inside the render return
-    // or use a more advanced CSS-in-JS solution. For this example, we'll adjust in the return.
-  };
-  
-  // This is a simplified version for clarity. The complex logic from your original code
-  // is better handled with useEffect and window event listeners for resize.
-  // We will apply styles directly in the JSX for responsiveness based on `isMenuOpen`.
 
   const navListStyles = {
     display: 'flex',
@@ -68,24 +68,28 @@ const Header = () => {
     alignItems: 'center',
   };
 
+  // Updated for dark theme with orange active states
   const navLinkStyles = (path) => ({
-    fontWeight: '500',
-    color: isActive(path) ? '#4f46e5' : '#4b5563',
-    transition: 'color 0.15s ease',
+    fontWeight: '600',
+    color: isActive(path) ? logoColors.orange : '#ffffff',
+    transition: 'all 0.15s ease',
     position: 'relative',
     textDecoration: 'none',
-    padding: '4px 0',
-    borderBottom: isActive(path) ? '2px solid #4f46e5' : '2px solid transparent'
+    padding: '8px 16px',
+    borderRadius: '8px',
+    background: isActive(path) ? `${logoColors.orange}20` : 'transparent',
+    border: isActive(path) ? `2px solid ${logoColors.orange}` : '2px solid transparent'
   });
 
+  // Dark professional CTA button
   const ctaButtonStyles = {
-    background: 'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)',
+    background: `linear-gradient(135deg, ${logoColors.orange} 0%, ${logoColors.orangeLight} 100%)`,
     color: 'white',
     padding: '12px 24px',
     borderRadius: '12px',
     fontWeight: '600',
-    transition: 'all 0.2s ease',
-    boxShadow: '0 4px 6px rgba(79, 70, 229, 0.25)',
+    transition: 'all 0.3s ease',
+    boxShadow: `0 4px 15px ${logoColors.orange}40`,
     textDecoration: 'none',
     display: 'inline-flex',
     alignItems: 'center',
@@ -94,7 +98,7 @@ const Header = () => {
   };
 
   const hamburgerStyles = {
-    display: 'none', // Will be overridden by media query style block
+    display: 'none',
     flexDirection: 'column',
     gap: '4px',
     background: 'none',
@@ -103,19 +107,15 @@ const Header = () => {
     cursor: 'pointer'
   };
 
+  // White hamburger lines for dark background
   const hamburgerSpanStyles = {
     width: '24px',
     height: '2px',
-    background: '#4b5563',
+    background: '#ffffff',
     transition: 'all 0.2s ease',
     borderRadius: '1px'
   };
-  
-  // Handling responsive styles inline can be tricky.
-  // The logic `window.innerWidth <= 768` only runs once on component render.
-  // A proper solution uses event listeners, but to keep it simple and fix your code:
-  // We'll use a more direct approach for the mobile menu.
-  
+
   const getNavStyles = () => {
     const baseStyles = {
         transition: 'all 0.3s ease-in-out',
@@ -130,17 +130,17 @@ const Header = () => {
         };
     }
     
-    // Mobile styles
+    // Mobile styles with dark theme
     return {
         ...baseStyles,
         position: 'absolute',
-        top: '80px', // Position below the header
+        top: '80px',
         left: 0,
         right: 0,
-        background: 'white',
+        background: `linear-gradient(135deg, ${logoColors.tealDark} 0%, #2a2a2a 100%)`,
         flexDirection: 'column',
-        borderTop: '1px solid #f3f4f6',
-        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.05)',
+        borderTop: `2px solid ${logoColors.orange}`,
+        boxShadow: '0 4px 20px rgba(0,0,0,0.6)',
         transform: isMenuOpen ? 'translateY(0)' : 'translateY(-120%)',
         opacity: isMenuOpen ? 1 : 0,
         visibility: isMenuOpen ? 'visible' : 'hidden',
@@ -151,8 +151,13 @@ const Header = () => {
   return (
     <header style={headerStyles}>
       <div style={headerContainerStyles}>
-        {/* 3. REPLACE TEXT WITH IMAGE TAG */}
-        <Link to="/" style={logoLinkStyles}>
+        {/* Logo with hover effect */}
+        <Link 
+          to="/" 
+          style={logoLinkStyles}
+          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+        >
           <img 
             src={logoSrc} 
             alt="Datenwork Logo" 
@@ -165,16 +170,38 @@ const Header = () => {
               ...navListStyles, 
               flexDirection: window.innerWidth <= 768 ? 'column' : 'row'
             }}>
-            {/* ... your nav links ... */}
              <li>
                <Link 
                  to="/" 
                  style={navLinkStyles('/')}
                  onClick={() => setIsMenuOpen(false)}
-                 onMouseEnter={(e) => e.target.style.color = '#4f46e5'}
-                 onMouseLeave={(e) => e.target.style.color = isActive('/') ? '#4f46e5' : '#4b5563'}
+                 onMouseEnter={(e) => {
+                   e.target.style.color = logoColors.orangeLight;
+                   e.target.style.background = `${logoColors.orangeLight}15`;
+                 }}
+                 onMouseLeave={(e) => {
+                   e.target.style.color = isActive('/') ? logoColors.orange : '#ffffff';
+                   e.target.style.background = isActive('/') ? `${logoColors.orange}20` : 'transparent';
+                 }}
                >
                  Home
+               </Link>
+             </li>
+             <li>
+               <Link 
+                 to="/courses" 
+                 style={navLinkStyles('/courses')}
+                 onClick={() => setIsMenuOpen(false)}
+                 onMouseEnter={(e) => {
+                   e.target.style.color = logoColors.orangeLight;
+                   e.target.style.background = `${logoColors.orangeLight}15`;
+                 }}
+                 onMouseLeave={(e) => {
+                   e.target.style.color = isActive('/courses') ? logoColors.orange : '#ffffff';
+                   e.target.style.background = isActive('/courses') ? `${logoColors.orange}20` : 'transparent';
+                 }}
+               >
+                 Courses
                </Link>
              </li>
              <li>
@@ -182,8 +209,14 @@ const Header = () => {
                  to="/services" 
                  style={navLinkStyles('/services')}
                  onClick={() => setIsMenuOpen(false)}
-                 onMouseEnter={(e) => e.target.style.color = '#4f46e5'}
-                 onMouseLeave={(e) => e.target.style.color = isActive('/services') ? '#4f46e5' : '#4b5563'}
+                 onMouseEnter={(e) => {
+                   e.target.style.color = logoColors.orangeLight;
+                   e.target.style.background = `${logoColors.orangeLight}15`;
+                 }}
+                 onMouseLeave={(e) => {
+                   e.target.style.color = isActive('/services') ? logoColors.orange : '#ffffff';
+                   e.target.style.background = isActive('/services') ? `${logoColors.orange}20` : 'transparent';
+                 }}
                >
                  Services
                </Link>
@@ -193,21 +226,16 @@ const Header = () => {
                  to="/about" 
                  style={navLinkStyles('/about')}
                  onClick={() => setIsMenuOpen(false)}
-                 onMouseEnter={(e) => e.target.style.color = '#4f46e5'}
-                 onMouseLeave={(e) => e.target.style.color = isActive('/about') ? '#4f46e5' : '#4b5563'}
+                 onMouseEnter={(e) => {
+                   e.target.style.color = logoColors.orangeLight;
+                   e.target.style.background = `${logoColors.orangeLight}15`;
+                 }}
+                 onMouseLeave={(e) => {
+                   e.target.style.color = isActive('/about') ? logoColors.orange : '#ffffff';
+                   e.target.style.background = isActive('/about') ? `${logoColors.orange}20` : 'transparent';
+                 }}
                >
-                 About
-               </Link>
-             </li>
-             <li>
-               <Link 
-                 to="/courses" 
-                 style={navLinkStyles('/courses')}
-                 onClick={() => setIsMenuOpen(false)}
-                 onMouseEnter={(e) => e.target.style.color = '#4f46e5'}
-                 onMouseLeave={(e) => e.target.style.color = isActive('/courses') ? '#4f46e5' : '#4b5563'}
-               >
-                 Courses
+                 About Us
                </Link>
              </li>
              <li>
@@ -215,27 +243,35 @@ const Header = () => {
                  to="/contact" 
                  style={navLinkStyles('/contact')}
                  onClick={() => setIsMenuOpen(false)}
-                 onMouseEnter={(e) => e.target.style.color = '#4f46e5'}
-                 onMouseLeave={(e) => e.target.style.color = isActive('/contact') ? '#4f46e5' : '#4b5563'}
+                 onMouseEnter={(e) => {
+                   e.target.style.color = logoColors.orangeLight;
+                   e.target.style.background = `${logoColors.orangeLight}15`;
+                 }}
+                 onMouseLeave={(e) => {
+                   e.target.style.color = isActive('/contact') ? logoColors.orange : '#ffffff';
+                   e.target.style.background = isActive('/contact') ? `${logoColors.orange}20` : 'transparent';
+                 }}
                >
-                 Contact
+                Contact
                </Link>
              </li>
           </ul>
         </nav>
 
-        {/* This logic also needs to be responsive */}
+        {/* CTA Button with enhanced hover effects */}
         <div style={{ display: window.innerWidth <= 768 ? 'none' : 'block' }}>
           <Link 
-            to="/courses" 
+            to="/about" 
             style={ctaButtonStyles}
             onMouseEnter={(e) => {
-              e.target.style.transform = 'translateY(-2px)';
-              e.target.style.boxShadow = '0 6px 20px rgba(79, 70, 229, 0.4)';
+              e.target.style.transform = 'translateY(-2px) scale(1.05)';
+              e.target.style.boxShadow = `0 8px 25px ${logoColors.orange}60`;
+              e.target.style.background = `linear-gradient(135deg, ${logoColors.orangeLight} 0%, ${logoColors.orange} 100%)`;
             }}
             onMouseLeave={(e) => {
-              e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = '0 4px 6px rgba(79, 70, 229, 0.25)';
+              e.target.style.transform = 'translateY(0) scale(1)';
+              e.target.style.boxShadow = `0 4px 15px ${logoColors.orange}40`;
+              e.target.style.background = `linear-gradient(135deg, ${logoColors.orange} 0%, ${logoColors.orangeLight} 100%)`;
             }}
           >
             Get Started

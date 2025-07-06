@@ -24,8 +24,8 @@ const PlacementServices = () => {
 
   // Target values
   const targets = {
-    students: 5000,
-    companies: 250,
+    students: 600,
+    companies: 50,
     successRate: 95,
     avgPackage: 8.5
   };
@@ -346,7 +346,7 @@ const PlacementServices = () => {
             <span style={titleUnderlineStyles}></span>
           </h2>
           <p style={subtitleStyles}>
-            Your success is our commitment. Join thousands of placed students.
+            Your success is our commitment. Join hundreds of placed students.
           </p>
         </motion.div>
 
@@ -384,26 +384,7 @@ const PlacementServices = () => {
           ))}
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          <div style={ctaSectionStyles}>
-            <h3 style={ctaTitleStyles}>Ready to Start Your Journey?</h3>
-            <p style={ctaDescriptionStyles}>
-              Join our placement program and secure your dream job in tech
-            </p>
-            <motion.button
-              style={ctaButtonStyles}
-              whileHover={ctaButtonHoverStyles}
-              whileTap={{ scale: 0.98 }}
-            >
-              Get Placed Now
-              <span>→</span>
-            </motion.button>
-          </div>
-        </motion.div>
+        
       </div>
     </section>
   );

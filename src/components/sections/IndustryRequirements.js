@@ -525,16 +525,17 @@ const skillTagStyles = (isHovered) => ({
                       
                       <div style={jobDetailsStyles}>
                         <div style={detailItemStyles}>
-                          <span style={detailLabelStyles}>📍 Location:</span>
-                          <span style={detailValueStyles}>{req.location}</span>
+                          <span style={detailLabelStyles}>💰 Package:</span>
+                          <span style={detailValueStyles}>{req.package}</span>
                         </div>
                         <div style={detailItemStyles}>
                           <span style={detailLabelStyles}>💼 Experience:</span>
                           <span style={detailValueStyles}>{req.experience}</span>
                         </div>
                         <div style={{...detailItemStyles, borderBottom: 'none'}}>
-                          <span style={detailLabelStyles}>💰 Package:</span>
-                          <span style={detailValueStyles}>{req.package}</span>
+                           <span style={detailLabelStyles}>📍 Location:</span>
+                          <span style={detailValueStyles}>{req.location}</span>
+
                         </div>
                       </div>
 
@@ -586,29 +587,7 @@ const skillTagStyles = (isHovered) => ({
             ))}
           </motion.div>
 
-          <motion.div 
-            style={ctaSectionStyles}
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-          >
-            <div>
-              <h3 style={ctaTitleStyles}>Ready to Apply?</h3>
-              <p style={ctaTextStyles}>
-                Join our training program and get direct access to these opportunities
-              </p>
-              <motion.button 
-                style={ctaButtonStyles}
-                whileHover={{ 
-                  scale: 1.05,
-                  boxShadow: '0 12px 24px rgba(0, 0, 0, 0.15)'
-                }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Start Your Journey
-              </motion.button>
-            </div>
-          </motion.div>
+       
         </div>
       </section>
     </>

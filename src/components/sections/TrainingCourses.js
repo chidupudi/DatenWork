@@ -16,20 +16,35 @@ const TrainingCourses = () => {
 
   // Updated courses to match the courses page exactly
   const courses = [
+    // {
+    //   id: 1,
+    //   title: 'Full Stack Web Development',
+    //   duration: '16 weeks',
+    //   level: 'Beginner to Advanced',
+    //   technologies: ['React', 'Node.js', 'MongoDB', 'Express'],
+    //   price: '₹2,49,000',
+    //   originalPrice: '₹4,15,000',
+    //   discount: '40% OFF',
+    //   icon: '💻',
+    //   gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    //   rating: 4.9,
+    //   students: 1250
+    // },
     {
-      id: 1,
-      title: 'Full Stack Web Development',
-      duration: '16 weeks',
-      level: 'Beginner to Advanced',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Express'],
-      price: '₹2,49,000',
-      originalPrice: '₹4,15,000',
-      discount: '40% OFF',
-      icon: '💻',
-      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      rating: 4.9,
-      students: 1250
-    },
+  id: 1,
+  title: 'Mainframe Training & Placement Program',
+  duration: '30 hours',
+  level: 'Beginner to Job-Ready',
+  technologies: ['COBOL', 'JCL', 'DB2', 'CICS', 'IBM z/OS'],
+  price: '₹1,79,000',
+  originalPrice: '₹2,99,000',
+  discount: '40% OFF',
+  icon: '🖥️',
+  gradient: 'linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)',
+  rating: 4.8,
+  students: 850
+},
+
     {
       id: 2,
       title: 'Data Science with Python',

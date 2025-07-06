@@ -633,38 +633,7 @@ const vendorSubtitleStyles = {
           </div>
         </motion.div>
 
-        <motion.div 
-          style={consultancyCtaStyles}
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
-        >
-          <div style={ctaPatternStyles} />
-          <div style={ctaContentStyles}>
-            <h3 style={ctaTitleStyles}>Ready to Transform Your Business?</h3>
-            <p style={ctaTextStyles}>
-              Let's discuss how our IT consultancy services can help accelerate your digital transformation
-            </p>
-            <div style={ctaActionsStyles}>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button variant="primary" size="large">
-                  Schedule Consultation
-                </Button>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button variant="secondary" size="large">
-                  View Case Studies
-                </Button>
-              </motion.div>
-            </div>
-          </div>
-        </motion.div>
+       
       </div>
     </section>
   );
