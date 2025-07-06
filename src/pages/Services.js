@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Header from '../components/common/Header'; // Assuming these components exist
-import Footer from '../components/sections/Footer'; // Assuming these components exist
+import Header from '../components/common/Header';
+import Footer from '../components/sections/Footer';
 
-// --- SVG ASSETS & COMPONENTS (from Version 1) ---
+// --- SVG ASSETS & COMPONENTS ---
 
 const illustrations = {
     training: (
@@ -89,7 +89,6 @@ const ShapeDivider = ({ position, color }) => {
     );
 };
 
-
 const Services = () => {
     const [activeService, setActiveService] = useState('training');
     const [hoveredFeature, setHoveredFeature] = useState(null);
@@ -102,7 +101,7 @@ const Services = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    // --- COMBINED & EXPANDED DATA ---
+    // --- UPDATED SERVICES ARRAY WITH CERTIFICATION ASSISTANCE ---
     const services = [
         {
             id: 'training',
@@ -115,15 +114,18 @@ const Services = () => {
                 { title: 'Live Interactive Sessions', description: 'Real-time learning with industry experts', icon: '📡' },
                 { title: 'Hands-on Projects', description: 'Build portfolio-worthy applications', icon: '💡' },
                 { title: 'Lifetime Access', description: 'Never stop learning with unlimited access', icon: '♾️' },
-                { title: 'Industry Certification', description: 'Get certified by leading tech companies', icon: '🏆' }
+                { title: 'Industry Certification', description: 'Get certified by leading tech companies', icon: '🏆' },
+                { title: 'Certification Assistance', description: 'Comprehensive support for industry certifications', icon: '📜' },
+                { title: 'Exam Preparation', description: 'Structured prep for certification exams', icon: '📚' }
             ],
             process: [
                 { title: 'Enrollment', description: 'Choose your course and enroll online.' },
                 { title: 'Live Classes', description: 'Attend interactive sessions and workshops.' },
                 { title: 'Project Work', description: 'Apply skills to real-world projects.' },
+                { title: 'Certification Prep', description: 'Structured preparation for industry certifications.' },
                 { title: 'Certification', description: 'Receive your industry-recognized certificate.' }
             ],
-            stats: [{ label: 'Students', value: '12,500+' }, { label: 'Completion', value: '95%' }, { label: 'Satisfaction', value: '98%' }]
+            stats: [{ label: 'Students', value: '12,500+' }, { label: 'Completion', value: '95%' }, { label: 'Certifications', value: '8,200+' }]
         },
         {
             id: 'placement',
@@ -136,15 +138,18 @@ const Services = () => {
                 { title: 'Resume Building', description: 'ATS-optimized professional resumes', icon: '📄' },
                 { title: 'Mock Interviews', description: 'Practice with industry professionals', icon: '🎤' },
                 { title: 'Direct Referrals', description: 'Skip the queue with partner companies', icon: '🔗' },
-                { title: 'Salary Negotiation', description: 'Maximize your compensation package', icon: '💰' }
+                { title: 'Salary Negotiation', description: 'Maximize your compensation package', icon: '💰' },
+                { title: 'Certification Showcase', description: 'Highlight your certifications to employers', icon: '🏅' },
+                { title: 'Skills Validation', description: 'Verify your expertise through certified assessments', icon: '✅' }
             ],
             process: [
                 { title: 'Profile Review', description: 'We analyze your strengths and career goals.' },
                 { title: 'Skill Enhancement', description: 'Targeted training to fill any skill gaps.' },
+                { title: 'Certification Verification', description: 'Validate and showcase your certifications.' },
                 { title: 'Interview Prep', description: 'Intensive preparation for technical and HR rounds.' },
                 { title: 'Job Offer', description: 'Land your dream job with our support.' }
             ],
-            stats: [{ label: 'Avg. Package', value: '15 LPA' }, { label: 'Placement Rate', value: '97%' }, { label: 'Partners', value: '600+' }]
+            stats: [{ label: 'Avg. Package', value: '15 LPA' }, { label: 'Placement Rate', value: '97%' }, { label: 'Certified Placements', value: '85%' }]
         },
         {
             id: 'engineering',
@@ -157,15 +162,18 @@ const Services = () => {
                 { title: 'UI/UX Design', description: 'Intuitive and beautiful user interfaces', icon: '🎨' },
                 { title: 'Full-Stack Development', description: 'Web & mobile app development', icon: '💻' },
                 { title: 'QA & Testing', description: 'Ensuring bug-free, high-quality products', icon: '🧪' },
-                { title: 'DevOps & CI/CD', description: 'Automated pipelines for rapid deployment', icon: '🔄' }
+                { title: 'DevOps & CI/CD', description: 'Automated pipelines for rapid deployment', icon: '🔄' },
+                { title: 'Security Certifications', description: 'ISO 27001 and SOC 2 compliant development', icon: '🔐' },
+                { title: 'Quality Assurance', description: 'Industry-standard testing and certification', icon: '🎯' }
             ],
             process: [
                 { title: 'Discovery', description: 'Understanding your vision and requirements.' },
                 { title: 'Design & Prototype', description: 'Creating wireframes and mockups.' },
                 { title: 'Development', description: 'Agile sprints to build the product.' },
+                { title: 'Quality Certification', description: 'Industry-standard testing and validation.' },
                 { title: 'Launch & Support', description: 'Go-to-market strategy and ongoing maintenance.' }
             ],
-            stats: [{ label: 'Products Launched', value: '50+' }, { label: 'Client Retention', value: '99%' }, { label: 'Satisfaction', value: '100%' }]
+            stats: [{ label: 'Products Launched', value: '50+' }, { label: 'Client Retention', value: '99%' }, { label: 'Certified Products', value: '100%' }]
         },
         {
             id: 'consulting',
@@ -178,15 +186,18 @@ const Services = () => {
                 { title: 'Digital Transformation', description: 'Modernize your tech infrastructure', icon: '🌐' },
                 { title: 'Cloud Migration', description: 'Seamless transition to cloud platforms', icon: '☁️' },
                 { title: 'AI Integration', description: 'Leverage AI for business intelligence', icon: '🤖' },
-                { title: 'Security Audit', description: 'Comprehensive cybersecurity assessment', icon: '🔒' }
+                { title: 'Security Audit', description: 'Comprehensive cybersecurity assessment', icon: '🔒' },
+                { title: 'Compliance Certification', description: 'Achieve industry-standard certifications', icon: '📋' },
+                { title: 'Technology Validation', description: 'Certified technology assessments and audits', icon: '🔍' }
             ],
             process: [
                 { title: 'Assessment', description: 'Analyzing your current technology landscape.' },
                 { title: 'Strategy', description: 'Developing a roadmap for digital transformation.' },
                 { title: 'Implementation', description: 'Executing the plan with expert precision.' },
+                { title: 'Certification Support', description: 'Guidance for industry certifications and compliance.' },
                 { title: 'Optimization', description: 'Continuous improvement and support.' }
             ],
-            stats: [{ label: 'Projects', value: '250+' }, { label: 'Avg. ROI', value: '4x' }, { label: 'Client Success', value: '96%' }]
+            stats: [{ label: 'Projects', value: '250+' }, { label: 'Avg. ROI', value: '4x' }, { label: 'Compliance Rate', value: '100%' }]
         }
     ];
 
@@ -198,7 +209,85 @@ const Services = () => {
 
     const selectedService = services.find(s => s.id === activeService);
 
-    // --- INLINE STYLES (Unified & Refined) ---
+    // --- CERTIFICATION SECTION DATA ---
+    const certificationPrograms = [
+        {
+            icon: '☁️',
+            title: 'Cloud Certifications',
+            certifications: ['AWS Solutions Architect', 'Microsoft Azure Fundamentals', 'Google Cloud Professional', 'AWS DevOps Engineer'],
+            successRate: '92%'
+        },
+        {
+            icon: '💻',
+            title: 'Development Certifications',
+            certifications: ['Oracle Java Certification', 'Microsoft .NET Developer', 'React Developer Certification', 'Full Stack Web Developer'],
+            successRate: '89%'
+        },
+        {
+            icon: '🛡️',
+            title: 'Security Certifications',
+            certifications: ['CISSP', 'CEH (Ethical Hacker)', 'CompTIA Security+', 'CISM'],
+            successRate: '85%'
+        },
+        {
+            icon: '📊',
+            title: 'Data & Analytics',
+            certifications: ['Google Analytics', 'Tableau Desktop Specialist', 'Microsoft Power BI', 'AWS Data Analytics'],
+            successRate: '91%'
+        }
+    ];
+
+    const certificationSteps = [
+        {
+            title: 'Assessment & Planning',
+            description: 'We evaluate your current skills and create a personalized certification roadmap aligned with your career goals.'
+        },
+        {
+            title: 'Study Materials & Resources',
+            description: 'Access to premium study guides, practice exams, video tutorials, and hands-on lab environments.'
+        },
+        {
+            title: 'Structured Learning Path',
+            description: 'Follow our proven curriculum with scheduled milestones and regular progress assessments.'
+        },
+        {
+            title: 'Practice & Mock Exams',
+            description: 'Extensive practice with real exam scenarios and detailed feedback on your performance.'
+        },
+        {
+            title: 'Exam Support & Guidance',
+            description: 'Complete support for exam registration, scheduling, and last-minute preparation strategies.'
+        },
+        {
+            title: 'Post-Certification Career Support',
+            description: 'Leverage your new certification for better job opportunities and salary negotiations.'
+        }
+    ];
+
+    const certificationBenefits = [
+        {
+            icon: '💰',
+            title: 'Higher Salary',
+            description: 'Certified professionals earn 20-30% more than their non-certified counterparts.'
+        },
+        {
+            icon: '🚀',
+            title: 'Career Advancement',
+            description: 'Fast-track your career with industry-recognized credentials that employers value.'
+        },
+        {
+            icon: '🎯',
+            title: 'Skill Validation',
+            description: 'Prove your expertise with objective, third-party validation of your technical skills.'
+        },
+        {
+            icon: '🌟',
+            title: 'Market Credibility',
+            description: 'Build trust with clients and employers through recognized professional certifications.'
+        }
+    ];
+
+    // --- STYLES ---
     const pageStyles = {
         background: '#FFFFFF', position: 'relative', overflowX: 'hidden'
     };
@@ -365,6 +454,230 @@ const Services = () => {
     };
     const statLabelStyles = { fontSize: '1.125rem', color: '#718096', fontWeight: '500' };
 
+    // --- CERTIFICATION SECTION STYLES ---
+    const certificationSectionStyles = {
+        padding: '100px 0',
+        background: 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)',
+        position: 'relative'
+    };
+
+    const certificationHeaderStyles = {
+        textAlign: 'center',
+        marginBottom: '80px'
+    };
+
+    const certificationTitleStyles = {
+        fontSize: '3rem',
+        fontWeight: '800',
+        marginBottom: '20px',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent'
+    };
+
+    const certificationSubtitleStyles = {
+        fontSize: '1.25rem',
+        color: '#64748b',
+        maxWidth: '800px',
+        margin: '0 auto',
+        lineHeight: '1.6'
+    };
+
+    const certificationFeaturesStyles = {
+        marginBottom: '80px'
+    };
+
+    const certificationMainCardStyles = {
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        color: 'white',
+        padding: '60px',
+        borderRadius: '20px',
+        textAlign: 'center',
+        marginBottom: '60px',
+        boxShadow: '0 20px 40px -10px rgba(102, 126, 234, 0.3)'
+    };
+
+    const certificationIconContainerStyles = {
+        marginBottom: '30px'
+    };
+
+    const certificationMainIconStyles = {
+        fontSize: '4rem',
+        display: 'inline-block'
+    };
+
+    const certificationMainTitleStyles = {
+        fontSize: '2.5rem',
+        fontWeight: '700',
+        marginBottom: '20px'
+    };
+
+    const certificationMainDescStyles = {
+        fontSize: '1.2rem',
+        lineHeight: '1.7',
+        maxWidth: '800px',
+        margin: '0 auto',
+        opacity: 0.95
+    };
+
+    const certificationGridStyles = {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+        gap: '30px'
+    };
+
+    const certificationCardStyles = {
+        background: 'white',
+        padding: '40px',
+        borderRadius: '16px',
+        boxShadow: '0 8px 20px -5px rgba(0, 0, 0, 0.1)',
+        border: '1px solid #e2e8f0',
+        textAlign: 'center',
+        transition: 'all 0.3s ease'
+    };
+
+    const certificationCardIconStyles = {
+        fontSize: '3rem',
+        marginBottom: '20px',
+        display: 'block'
+    };
+
+    const certificationCardTitleStyles = {
+        fontSize: '1.5rem',
+        fontWeight: '600',
+        color: '#1e293b',
+        marginBottom: '20px'
+    };
+
+    const certificationListStyles = {
+        listStyle: 'none',
+        padding: 0,
+        margin: '0 0 20px 0'
+    };
+
+    const certificationListItemStyles = {
+        padding: '8px 0',
+        color: '#64748b',
+        borderBottom: '1px solid #f1f5f9',
+        fontSize: '0.95rem'
+    };
+
+    const certificationSuccessRateStyles = {
+        background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+        color: 'white',
+        padding: '8px 16px',
+        borderRadius: '20px',
+        fontWeight: '600',
+        fontSize: '0.9rem',
+        display: 'inline-block'
+    };
+
+    const certificationProcessStyles = {
+        marginBottom: '80px'
+    };
+
+    const certificationProcessTitleStyles = {
+        fontSize: '2.5rem',
+        fontWeight: '700',
+        textAlign: 'center',
+        marginBottom: '50px',
+        color: '#1e293b'
+    };
+
+    const certificationStepsStyles = {
+        maxWidth: '900px',
+        margin: '0 auto'
+    };
+
+    const certificationStepStyles = {
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: '30px',
+        marginBottom: '40px',
+        padding: '30px',
+        background: 'white',
+        borderRadius: '16px',
+        boxShadow: '0 4px 15px -5px rgba(0, 0, 0, 0.08)',
+        flexDirection: isMobile ? 'column' : 'row',
+        textAlign: isMobile ? 'center' : 'left'
+    };
+
+    const certificationStepNumberStyles = {
+        width: '50px',
+        height: '50px',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        color: 'white',
+        borderRadius: '50%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontWeight: '700',
+        fontSize: '1.2rem',
+        flexShrink: 0,
+        margin: isMobile ? '0 auto' : '0'
+    };
+
+    const certificationStepContentStyles = {
+        flex: 1
+    };
+
+    const certificationStepTitleStyles = {
+        fontSize: '1.3rem',
+        fontWeight: '600',
+        color: '#1e293b',
+        marginBottom: '10px'
+    };
+
+    const certificationStepDescStyles = {
+        color: '#64748b',
+        lineHeight: '1.6'
+    };
+
+    const certificationBenefitsStyles = {
+        textAlign: 'center'
+    };
+
+    const certificationBenefitsTitleStyles = {
+        fontSize: '2.5rem',
+        fontWeight: '700',
+        marginBottom: '50px',
+        color: '#1e293b'
+    };
+
+    const certificationBenefitsGridStyles = {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+        gap: '30px'
+    };
+
+    const certificationBenefitCardStyles = {
+        background: 'white',
+        padding: '40px 30px',
+        borderRadius: '16px',
+        boxShadow: '0 8px 20px -5px rgba(0, 0, 0, 0.1)',
+        border: '1px solid #e2e8f0',
+        textAlign: 'center'
+    };
+
+    const certificationBenefitIconStyles = {
+        fontSize: '3rem',
+        marginBottom: '20px',
+        display: 'block'
+    };
+
+    const certificationBenefitTitleStyles = {
+        fontSize: '1.3rem',
+        fontWeight: '600',
+        color: '#1e293b',
+        marginBottom: '15px'
+    };
+
+    const certificationBenefitDescStyles = {
+        color: '#64748b',
+        lineHeight: '1.6',
+        fontSize: '0.95rem'
+    };
+
     const testimonialsSectionStyles = {
         padding: '120px 0', position: 'relative', backgroundColor: '#FFFFFF', zIndex: 1
     };
@@ -392,6 +705,104 @@ const Services = () => {
     const testimonialCompanyStyles = {
         fontSize: '0.9rem', color: '#667EEA', fontWeight: '500'
     };
+
+    // --- CERTIFICATION SECTION COMPONENT ---
+    const CertificationSection = () => (
+        <section style={certificationSectionStyles}>
+            <div style={servicesContainerStyles}>
+                <div style={certificationHeaderStyles}>
+                    <h2 style={certificationTitleStyles}>Certification Assistance Program</h2>
+                    <p style={certificationSubtitleStyles}>
+                        Comprehensive support to help you achieve industry-recognized certifications and advance your career
+                    </p>
+                </div>
+                
+                <div style={certificationFeaturesStyles}>
+                    <div style={certificationMainCardStyles}>
+                        <div style={certificationIconContainerStyles}>
+                            <span style={certificationMainIconStyles}>🎓</span>
+                        </div>
+                        <h3 style={certificationMainTitleStyles}>Why Certifications Matter</h3>
+                        <p style={certificationMainDescStyles}>
+                            Industry certifications validate your skills, increase your earning potential by 20-30%, 
+                            and make you stand out to employers. We provide end-to-end support to help you achieve 
+                            the most valuable certifications in your field.
+                        </p>
+                    </div>
+                    
+                    <div style={certificationGridStyles}>
+                        {certificationPrograms.map((program, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                viewport={{ once: true }}
+                                whileHover={{ y: -5, scale: 1.02 }}
+                            >
+                                <div style={certificationCardStyles}>
+                                    <div style={certificationCardIconStyles}>{program.icon}</div>
+                                    <h4 style={certificationCardTitleStyles}>{program.title}</h4>
+                                    <ul style={certificationListStyles}>
+                                        {program.certifications.map((cert, idx) => (
+                                            <li key={idx} style={certificationListItemStyles}>{cert}</li>
+                                        ))}
+                                    </ul>
+                                    <div style={certificationSuccessRateStyles}>
+                                        Success Rate: {program.successRate}
+                                    </div>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+                
+                <div style={certificationProcessStyles}>
+                    <h3 style={certificationProcessTitleStyles}>Our Certification Process</h3>
+                    <div style={certificationStepsStyles}>
+                        {certificationSteps.map((step, index) => (
+                            <motion.div
+                                key={index}
+                                style={certificationStepStyles}
+                                initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                viewport={{ once: true }}
+                            >
+                                <div style={certificationStepNumberStyles}>{index + 1}</div>
+                                <div style={certificationStepContentStyles}>
+                                    <h4 style={certificationStepTitleStyles}>{step.title}</h4>
+                                    <p style={certificationStepDescStyles}>{step.description}</p>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+                
+                <div style={certificationBenefitsStyles}>
+                    <h3 style={certificationBenefitsTitleStyles}>Certification Benefits</h3>
+                    <div style={certificationBenefitsGridStyles}>
+                        {certificationBenefits.map((benefit, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                viewport={{ once: true }}
+                                whileHover={{ y: -5 }}
+                            >
+                                <div style={certificationBenefitCardStyles}>
+                                    <div style={certificationBenefitIconStyles}>{benefit.icon}</div>
+                                    <h4 style={certificationBenefitTitleStyles}>{benefit.title}</h4>
+                                    <p style={certificationBenefitDescStyles}>{benefit.description}</p>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
 
     return (
         <>
@@ -496,7 +907,10 @@ const Services = () => {
                         <ShapeDivider position="bottom" color="#FFFFFF" />
                     </motion.section>
                 )}
-                
+
+                {/* CERTIFICATION ASSISTANCE SECTION */}
+                <CertificationSection />
+
                 <section style={testimonialsSectionStyles}>
                     <div style={servicesContainerStyles}>
                         <h2 style={{...sectionHeaderStyles, textAlign: 'center', marginBottom: '60px' }}>Loved by Professionals Worldwide</h2>

@@ -67,34 +67,36 @@ const ITConsultancy = () => {
       color: 'purple'
     }
   ];
-
-  const vendorServices = [
-    {
-      id: 1,
-      title: 'Vendor Recruitment',
-      description: 'Connect with top-tier IT vendors for specialized project requirements.',
-      icon: '🤝',
-      benefits: [
-        'Pre-vetted vendor network',
-        'Quality assurance',
-        'Competitive pricing',
-        'Project management support'
-      ]
-    },
-    {
-      id: 2,
-      title: 'Partnership Program',
-      description: 'Join our vendor network and access exclusive project opportunities.',
-      icon: '🔗',
-      benefits: [
-        'Regular project assignments',
-        'Skill development support',
-        'Performance-based rewards',
-        'Long-term partnerships'
-      ]
-    }
-  ];
-
+const vendorServices = [
+  {
+    id: 1,
+    title: 'Talent Scouting Services',
+    description: 'Need specific talent with particular skill sets? We scout and deliver qualified professionals tailored to your exact requirements.',
+    icon: '🎯',
+    benefits: [
+      'Custom talent acquisition based on your specifications',
+      'Pre-screened candidates with verified skills',
+      'Flexible team sizes - from 1 to 100+ professionals',
+      'Rapid deployment within 2-4 weeks',
+      'Skills assessment and technical interviews',
+      'Performance guarantee and replacement support'
+    ]
+  },
+  {
+    id: 2,
+    title: 'Dedicated Team Solutions',
+    description: 'Scale your workforce instantly with our dedicated teams matched to your technology stack and project requirements.',
+    icon: '👥',
+    benefits: [
+      'Full-stack development teams',
+      'Specialized skill-based squads (DevOps, AI/ML, etc.)',
+      'Project-based or long-term engagements',
+      'Seamless integration with your existing team',
+      'Regular progress reports and KPI tracking',
+      'Flexible scaling up or down as needed'
+    ]
+  }
+];
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -308,22 +310,20 @@ const ITConsultancy = () => {
     textAlign: 'center',
     marginBottom: '48px'
   };
+const vendorTitleStyles = {
+  fontSize: window.innerWidth <= 768 ? '2rem' : '3rem',
+  marginBottom: '16px',
+  color: '#1f2937',
+  fontWeight: '600'
+};
 
-  const vendorTitleStyles = {
-    fontSize: window.innerWidth <= 768 ? '2rem' : '3rem',
-    marginBottom: '16px',
-    color: '#1f2937',
-    fontWeight: '600'
-  };
-
-  const vendorSubtitleStyles = {
-    fontSize: '1.125rem',
-    color: '#6b7280',
-    maxWidth: '600px',
-    margin: '0 auto',
-    lineHeight: '1.6'
-  };
-
+const vendorSubtitleStyles = {
+  fontSize: '1.125rem',
+  color: '#6b7280',
+  maxWidth: '700px', // Increased width for longer text
+  margin: '0 auto',
+  lineHeight: '1.6'
+};
   const vendorServicesStyles = {
     display: 'grid',
     gridTemplateColumns: window.innerWidth <= 768 
@@ -545,10 +545,10 @@ const ITConsultancy = () => {
           transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
         >
           <div style={vendorHeaderStyles}>
-            <h3 style={vendorTitleStyles}>Vendor Partnership & Recruitment</h3>
-            <p style={vendorSubtitleStyles}>
-              We offer comprehensive vendor recruitment services and partnership opportunities
-            </p>
+            <h3 style={vendorTitleStyles}>Talent Scouting & Team Solutions</h3>
+<p style={vendorSubtitleStyles}>
+  Need specific talent with particular skill sets? We scout, assess, and deliver qualified professionals tailored to your exact project requirements and team size needs.
+</p>
           </div>
 
           <div style={vendorServicesStyles}>
@@ -603,8 +603,8 @@ const ITConsultancy = () => {
                     style={vendorCtaStyles}
                   >
                     <Button variant="primary">
-                      {service.id === 1 ? 'Find Vendors' : 'Join Network'}
-                    </Button>
+  {service.id === 1 ? 'Request Talent' : 'Build My Team'}
+</Button>
                   </motion.div>
                 </Card>
               </motion.div>

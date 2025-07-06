@@ -105,19 +105,19 @@ const IndustryRequirements = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
+        staggerChildren: 0.1, // Reduced from 0.15 for faster animation
         duration: 0.6
       }
     }
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 20 }, // Reduced from y: 30
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.5,
+        duration: 0.4, // Reduced from 0.5
         ease: "easeOut"
       }
     }
@@ -167,7 +167,7 @@ const IndustryRequirements = () => {
   };
 
   const requirementsContainerStyles = {
-    maxWidth: '1200px',
+    maxWidth: '1400px', // Increased from 1200px for better 3-column layout
     margin: '0 auto',
     padding: window.innerWidth <= 768 ? '0 16px' : '0 24px',
     position: 'relative',
@@ -176,7 +176,7 @@ const IndustryRequirements = () => {
 
   const requirementsHeaderStyles = {
     textAlign: 'center',
-    marginBottom: '64px'
+    marginBottom: '50px' // Reduced from 64px
   };
 
   const requirementsTitleStyles = {
@@ -199,15 +199,21 @@ const IndustryRequirements = () => {
     lineHeight: '1.6'
   };
 
+  // UPDATED GRID STYLES - 3x3 Layout
   const requirementsGridStyles = {
     display: 'grid',
     gridTemplateColumns: window.innerWidth <= 768 
       ? '1fr' 
-      : 'repeat(auto-fit, minmax(380px, 1fr))',
-    gap: window.innerWidth <= 768 ? '16px' : '24px',
-    marginBottom: '64px'
+      : window.innerWidth <= 1024
+      ? 'repeat(2, 1fr)' // 2 columns for tablet
+      : 'repeat(3, 1fr)', // Exactly 3 columns for desktop
+    gap: window.innerWidth <= 768 ? '16px' : '20px', // Reduced gap from 24px
+    marginBottom: '50px', // Reduced from 64px
+    maxWidth: '1300px', // Constrain grid width
+    margin: '0 auto 50px auto'
   };
 
+  // UPDATED CARD STYLES - Reduced Height
   const requirementCardStyles = (isHovered) => ({
     position: 'relative',
     overflow: 'hidden',
@@ -215,27 +221,33 @@ const IndustryRequirements = () => {
     backdropFilter: 'blur(10px)',
     border: isHovered ? '1px solid #4f46e5' : '1px solid rgba(255, 255, 255, 0.3)',
     boxShadow: isHovered 
-      ? '0 8px 12px rgba(0, 0, 0, 0.1), 0 20px 25px rgba(0, 0, 0, 0.08)'
-      : '0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 25px rgba(0, 0, 0, 0.08)',
-    transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
-    transform: isHovered ? 'translateY(-8px) scale(1.02)' : 'translateY(0) scale(1)',
-    borderRadius: '16px'
+      ? '0 6px 10px rgba(0, 0, 0, 0.1), 0 15px 20px rgba(0, 0, 0, 0.08)'
+      : '0 3px 5px rgba(0, 0, 0, 0.05), 0 8px 20px rgba(0, 0, 0, 0.06)',
+    transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
+    transform: isHovered ? 'translateY(-6px) scale(1.01)' : 'translateY(0) scale(1)',
+    borderRadius: '12px', // Reduced from 16px
+    height: 'auto',
+    maxHeight: '440px', // Set maximum height for consistency
+    display: 'flex',
+    flexDirection: 'column'
   });
 
+  // UPDATED HEADER STYLES - Reduced Padding
   const requirementHeaderStyles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: window.innerWidth <= 768 ? 'flex-start' : 'center',
-    padding: '16px 24px',
+    padding: '12px 16px', // Reduced from '16px 24px'
     background: '#f9fafb',
     borderBottom: '1px solid #e5e7eb',
     flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
-    gap: window.innerWidth <= 768 ? '8px' : '12px'
+    gap: window.innerWidth <= 768 ? '6px' : '8px', // Reduced gaps
+    minHeight: '50px' // Fixed header height
   };
 
   const requirementMetaStyles = {
     display: 'flex',
-    gap: '12px',
+    gap: '8px', // Reduced from 12px
     alignItems: 'center',
     flexWrap: 'wrap'
   };
@@ -243,9 +255,9 @@ const IndustryRequirements = () => {
   const industryTagStyles = {
     background: '#ede9fe',
     color: '#6366f1',
-    padding: '4px 12px',
-    borderRadius: '8px',
-    fontSize: '0.75rem',
+    padding: '3px 8px', // Reduced padding
+    borderRadius: '6px', // Reduced border radius
+    fontSize: '0.7rem', // Reduced font size
     fontWeight: '600',
     textTransform: 'uppercase',
     letterSpacing: '0.5px'
@@ -254,9 +266,9 @@ const IndustryRequirements = () => {
   const urgencyBadgeStyles = (urgency) => {
     const colors = getUrgencyColor(urgency);
     return {
-      padding: '4px 12px',
-      borderRadius: '8px',
-      fontSize: '0.75rem',
+      padding: '3px 8px', // Reduced padding
+      borderRadius: '6px', // Reduced border radius
+      fontSize: '0.7rem', // Reduced font size
       fontWeight: '600',
       textTransform: 'uppercase',
       letterSpacing: '0.5px',
@@ -267,88 +279,104 @@ const IndustryRequirements = () => {
   };
 
   const openingsCountStyles = {
-    fontSize: '0.875rem',
+    fontSize: '0.8rem', // Reduced font size
     color: '#6b7280',
     fontWeight: '500'
   };
 
+  // UPDATED CONTENT STYLES - Reduced Padding
   const requirementContentStyles = {
-    padding: window.innerWidth <= 768 ? '16px' : '24px'
+    padding: window.innerWidth <= 768 ? '12px 16px' : '16px', // Reduced padding
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
   };
 
   const jobTitleStyles = {
-    fontSize: '1.25rem',
+    fontSize: '1.1rem', // Reduced from 1.25rem
     fontWeight: '600',
     color: '#1f2937',
-    marginBottom: '8px'
+    marginBottom: '6px', // Reduced margin
+    lineHeight: '1.3'
   };
 
   const companyNameStyles = {
-    fontSize: '1rem',
+    fontSize: '0.9rem', // Reduced font size
     color: '#6b7280',
-    marginBottom: '16px',
+    marginBottom: '12px', // Reduced margin
     fontWeight: '500'
   };
 
+  // UPDATED JOB DETAILS - More Compact
   const jobDetailsStyles = {
-    marginBottom: '24px'
+    marginBottom: '16px' // Reduced from 24px
   };
 
   const detailItemStyles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '12px',
-    padding: '8px 0',
+    marginBottom: '8px', // Reduced from 12px
+    padding: '4px 0', // Reduced padding
     borderBottom: '1px solid #f3f4f6'
   };
 
   const detailLabelStyles = {
-    fontSize: '0.875rem',
+    fontSize: '0.8rem', // Reduced font size
     color: '#6b7280',
     fontWeight: '500'
   };
 
   const detailValueStyles = {
-    fontSize: '0.875rem',
+    fontSize: '0.8rem', // Reduced font size
     color: '#1f2937',
     fontWeight: '600'
   };
 
+  // UPDATED SKILLS SECTION - More Compact
   const skillsSectionStyles = {
-    marginBottom: '24px'
+    marginBottom: '16px' // Reduced from 24px
   };
 
   const skillsTitleStyles = {
-    fontSize: '0.875rem',
+    fontSize: '0.8rem', // Reduced font size
     color: '#1f2937',
     fontWeight: '600',
-    marginBottom: '12px'
+    marginBottom: '8px' // Reduced margin
   };
+const skillsTagsStyles = {
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: '8px', // Increased gap for better spacing
+  minHeight: '60px',
+  alignItems: 'flex-start'
+};
 
-  const skillsTagsStyles = {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '8px'
-  };
-
-  const skillTagStyles = (isHovered) => ({
-    background: '#e0f2fe',
-    color: '#0891b2',
-    padding: '4px 8px',
-    borderRadius: '6px',
-    fontSize: '0.75rem',
-    fontWeight: '500',
-    border: '1px solid #7dd3fc',
-    transform: isHovered ? 'scale(1.05)' : 'scale(1)',
-    transition: 'transform 0.1s ease',
-    cursor: 'pointer'
-  });
-
+const skillTagStyles = (isHovered) => ({
+  background: isHovered 
+    ? 'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)'
+    : 'linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%)',
+  color: isHovered ? '#ffffff' : '#475569',
+  padding: '6px 12px', // Better padding
+  borderRadius: '8px', // More rounded
+  fontSize: '0.75rem', // Slightly larger
+  fontWeight: '600', // Bolder
+  border: isHovered ? 'none' : '1px solid #cbd5e1',
+  transform: isHovered ? 'scale(1.05) translateY(-1px)' : 'scale(1)',
+  transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)', // Smoother transition
+  cursor: 'pointer',
+  boxShadow: isHovered 
+    ? '0 4px 12px rgba(79, 70, 229, 0.4)' 
+    : '0 1px 3px rgba(0, 0, 0, 0.1)',
+  whiteSpace: 'nowrap'
+});
+  // UPDATED ACTIONS - Reduced Spacing
   const requirementActionsStyles = {
     display: 'flex',
-    gap: '12px',
-    flexDirection: window.innerWidth <= 768 ? 'column' : 'row'
+    gap: '8px', // Reduced gap
+    flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
+    marginTop: 'auto' // Push to bottom
   };
 
   const actionButtonStyles = (variant = 'primary') => {
@@ -360,35 +388,38 @@ const IndustryRequirements = () => {
         : '#ffffff',
       color: isPrimary ? '#ffffff' : '#4f46e5',
       border: isPrimary ? 'none' : '2px solid #4f46e5',
-      padding: '12px 16px',
-      borderRadius: '8px',
+      padding: '8px 12px', // Reduced padding
+      borderRadius: '6px', // Reduced border radius
       fontWeight: '600',
       cursor: 'pointer',
       transition: 'all 0.2s ease',
-      boxShadow: isPrimary ? '0 4px 6px rgba(79, 70, 229, 0.25)' : 'none',
-      fontSize: '0.875rem'
+      boxShadow: isPrimary ? '0 3px 5px rgba(79, 70, 229, 0.25)' : 'none',
+      fontSize: '0.8rem' // Reduced font size
     };
   };
 
+  // UPDATED CTA SECTION - Slightly Smaller
   const ctaSectionStyles = {
     textAlign: 'center',
-    padding: window.innerWidth <= 768 ? '32px' : '48px',
+    padding: window.innerWidth <= 768 ? '24px' : '36px', // Reduced padding
     background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
     color: '#ffffff',
     borderRadius: '16px',
-    boxShadow: '0 25px 50px rgba(245, 158, 11, 0.25)'
+    boxShadow: '0 25px 50px rgba(245, 158, 11, 0.25)',
+    maxWidth: '800px', // Constrain width
+    margin: '0 auto'
   };
 
   const ctaTitleStyles = {
-    fontSize: window.innerWidth <= 768 ? '2rem' : '3rem',
+    fontSize: window.innerWidth <= 768 ? '1.8rem' : '2.5rem', // Reduced size
     fontWeight: '700',
     marginBottom: '16px',
     textShadow: '0 2px 4px rgba(0, 0, 0, 0.2)'
   };
 
   const ctaTextStyles = {
-    fontSize: window.innerWidth <= 768 ? '1rem' : '1.125rem',
-    marginBottom: '32px',
+    fontSize: window.innerWidth <= 768 ? '0.95rem' : '1rem', // Reduced size
+    marginBottom: '24px', // Reduced margin
     opacity: 0.9,
     lineHeight: '1.6'
   };
@@ -397,19 +428,44 @@ const IndustryRequirements = () => {
     background: '#ffffff',
     color: '#f59e0b',
     border: 'none',
-    padding: '16px 32px',
+    padding: '12px 24px', // Reduced padding
     borderRadius: '12px',
-    fontSize: window.innerWidth <= 768 ? '1rem' : '1.125rem',
+    fontSize: window.innerWidth <= 768 ? '0.95rem' : '1rem', // Reduced size
     fontWeight: '700',
     cursor: 'pointer',
     transition: 'all 0.2s ease',
     boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)'
   };
 
+  // CSS for responsive grid adjustments
+  const responsiveStyles = `
+    @media (max-width: 1200px) {
+      .requirements-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 18px !important;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .requirements-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+      
+      .requirement-card {
+        max-height: none !important;
+        height: auto !important;
+      }
+    }
+  `;
+
   return (
     <>
-      {/* Inject keyframes */}
-      <style>{pulseKeyframes}</style>
+      {/* Inject keyframes and responsive styles */}
+      <style>
+        {pulseKeyframes}
+        {responsiveStyles}
+      </style>
       
       <section style={requirementsSectionStyles} id="requirements">
         <div style={backgroundOverlayStyles} />
@@ -431,6 +487,7 @@ const IndustryRequirements = () => {
 
           <motion.div 
             style={requirementsGridStyles}
+            className="requirements-grid"
             variants={containerVariants}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
@@ -439,13 +496,14 @@ const IndustryRequirements = () => {
               <motion.div
                 key={req.id}
                 variants={cardVariants}
-                whileHover={{ y: -6, scale: 1.02 }}
-                transition={{ duration: 0.3 }}
+                whileHover={{ y: -4, scale: 1.01 }}
+                transition={{ duration: 0.2 }}
                 onMouseEnter={() => setHoveredCard(req.id)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
                 <Card 
                   style={requirementCardStyles(hoveredCard === req.id)}
+                  className="requirement-card"
                   hover={false}
                 >
                   <div style={requirementHeaderStyles}>
@@ -461,39 +519,41 @@ const IndustryRequirements = () => {
                   </div>
 
                   <div style={requirementContentStyles}>
-                    <h3 style={jobTitleStyles}>{req.title}</h3>
-                    <p style={companyNameStyles}>{req.company}</p>
-                    
-                    <div style={jobDetailsStyles}>
-                      <div style={detailItemStyles}>
-                        <span style={detailLabelStyles}>📍 Location:</span>
-                        <span style={detailValueStyles}>{req.location}</span>
+                    <div>
+                      <h3 style={jobTitleStyles}>{req.title}</h3>
+                      <p style={companyNameStyles}>{req.company}</p>
+                      
+                      <div style={jobDetailsStyles}>
+                        <div style={detailItemStyles}>
+                          <span style={detailLabelStyles}>📍 Location:</span>
+                          <span style={detailValueStyles}>{req.location}</span>
+                        </div>
+                        <div style={detailItemStyles}>
+                          <span style={detailLabelStyles}>💼 Experience:</span>
+                          <span style={detailValueStyles}>{req.experience}</span>
+                        </div>
+                        <div style={{...detailItemStyles, borderBottom: 'none'}}>
+                          <span style={detailLabelStyles}>💰 Package:</span>
+                          <span style={detailValueStyles}>{req.package}</span>
+                        </div>
                       </div>
-                      <div style={detailItemStyles}>
-                        <span style={detailLabelStyles}>💼 Experience:</span>
-                        <span style={detailValueStyles}>{req.experience}</span>
-                      </div>
-                      <div style={{...detailItemStyles, borderBottom: 'none'}}>
-                        <span style={detailLabelStyles}>💰 Package:</span>
-                        <span style={detailValueStyles}>{req.package}</span>
-                      </div>
-                    </div>
 
-                    <div style={skillsSectionStyles}>
-                      <h4 style={skillsTitleStyles}>Required Skills:</h4>
-                      <div style={skillsTagsStyles}>
-                        {req.skills.map((skill, i) => (
-                          <motion.span 
-                            key={i} 
-                            style={skillTagStyles(hoveredSkill === `${req.id}-${i}`)}
-                            whileHover={{ scale: 1.05 }}
-                            transition={{ duration: 0.1 }}
-                            onMouseEnter={() => setHoveredSkill(`${req.id}-${i}`)}
-                            onMouseLeave={() => setHoveredSkill(null)}
-                          >
-                            {skill}
-                          </motion.span>
-                        ))}
+                      <div style={skillsSectionStyles}>
+                        <h4 style={skillsTitleStyles}>Required Skills:</h4>
+                        <div style={skillsTagsStyles}>
+                          {req.skills.map((skill, i) => (
+                            <motion.span 
+                              key={i} 
+                              style={skillTagStyles(hoveredSkill === `${req.id}-${i}`)}
+                              whileHover={{ scale: 1.05 }}
+                              transition={{ duration: 0.1 }}
+                              onMouseEnter={() => setHoveredSkill(`${req.id}-${i}`)}
+                              onMouseLeave={() => setHoveredSkill(null)}
+                            >
+                              {skill}
+                            </motion.span>
+                          ))}
+                        </div>
                       </div>
                     </div>
 
@@ -501,21 +561,21 @@ const IndustryRequirements = () => {
                       <motion.button 
                         style={actionButtonStyles('primary')}
                         whileHover={{ 
-                          scale: 1.05,
-                          boxShadow: '0 6px 12px rgba(79, 70, 229, 0.4)'
+                          scale: 1.02,
+                          boxShadow: '0 5px 10px rgba(79, 70, 229, 0.4)'
                         }}
-                        whileTap={{ scale: 0.95 }}
+                        whileTap={{ scale: 0.98 }}
                       >
                         Apply Now
                       </motion.button>
                       <motion.button 
                         style={actionButtonStyles('secondary')}
                         whileHover={{ 
-                          scale: 1.05,
+                          scale: 1.02,
                           background: '#4f46e5',
                           color: '#ffffff'
                         }}
-                        whileTap={{ scale: 0.95 }}
+                        whileTap={{ scale: 0.98 }}
                       >
                         View Details
                       </motion.button>

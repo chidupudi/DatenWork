@@ -115,8 +115,106 @@ const Courses = () => {
     }
   ];
 
-  const filteredCourses = activeCategory === 'all' 
-    ? courses 
+
+  // --- Styles ---
+  const coursesGridStyles = {
+    display: 'grid',
+    gridTemplateColumns:
+      window.innerWidth <= 768
+        ? '1fr'
+        : window.innerWidth <= 1024
+        ? 'repeat(2, 1fr)'
+        : 'repeat(3, 1fr)',
+    gap: '24px',
+    maxWidth: '1400px',
+    margin: '0 auto'
+  };
+
+  const courseCardStyles = (isHovered) => ({
+    background: 'white',
+    borderRadius: '16px',
+    overflow: 'hidden',
+    boxShadow: isHovered
+      ? '0 15px 30px rgba(0, 0, 0, 0.12)'
+      : '0 8px 20px rgba(0, 0, 0, 0.06)',
+    border: '1px solid rgba(0, 0, 0, 0.05)',
+    transition: 'all 0.3s ease',
+    transform: isHovered ? 'translateY(-6px)' : 'translateY(0)',
+    height: '650px',
+    display: 'flex',
+    flexDirection: 'column'
+  });
+
+  const courseHeaderStyles = (gradient) => ({
+    background: gradient,
+    padding: '20px',
+    position: 'relative',
+    overflow: 'hidden',
+    minHeight: '140px'
+  });
+
+  const courseBodyStyles = {
+    padding: '20px',
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
+  };
+
+  const courseLevelStyles = {
+    fontSize: '0.875rem',
+    color: '#6b7280',
+    marginBottom: '12px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px'
+  };
+
+  const technologiesStyles = {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '6px',
+    marginBottom: '16px',
+    minHeight: '60px'
+  };
+
+  const priceContainerStyles = {
+    marginBottom: '12px'
+  };
+
+  const courseStatsStyles = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '12px',
+    fontSize: '0.875rem',
+    color: '#6b7280'
+  };
+
+  const courseButtonStyles = {
+    width: '100%',
+    padding: '10px 20px',
+    background: 'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)',
+    color: 'white',
+    border: 'none',
+    borderRadius: '10px',
+    fontSize: '0.9rem',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 4px 12px rgba(79, 70, 229, 0.3)'
+  };
+
+  // Responsive CSS for grid
+  React.useEffect(() => {
+    const style = document.createElement('style');
+    style.innerHTML = `\n  @media (max-width: 1024px) {\n    .courses-grid {\n      grid-template-columns: repeat(2, 1fr);\n      gap: 20px;\n    }\n  }\n  @media (max-width: 768px) {\n    .courses-grid {\n      grid-template-columns: 1fr;\n      gap: 16px;\n    }\n    .course-card {\n      height: auto !important;\n      min-height: 420px;\n    }\n  }\n`;
+    document.head.appendChild(style);
+    return () => { document.head.removeChild(style); };
+  }, []);
+
+  const filteredCourses = activeCategory === 'all'
+    ? courses
     : courses.filter(course => course.category === activeCategory);
 
   return (
@@ -160,100 +258,67 @@ const Courses = () => {
             </div>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '30px' }}>
-            {filteredCourses.map(course => (
-              <Card key={course.id} style={{ padding: '30px', border: '1px solid #e2e8f0', borderRadius: '16px' }}>
-                <div style={{ marginBottom: '20px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '15px' }}>
-                    <span style={{ 
-                      background: '#e6fffa', 
-                      color: '#00b5a5', 
-                      padding: '6px 12px', 
-                      borderRadius: '20px', 
-                      fontSize: '0.85rem',
-                      fontWeight: '600',
-                      textTransform: 'uppercase'
-                    }}>
-                      {course.level}
-                    </span>
-                    <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: '1.5rem', fontWeight: '700', color: '#1a202c' }}>{course.price}</div>
-                      <div style={{ fontSize: '1rem', color: '#a0aec0', textDecoration: 'line-through' }}>{course.originalPrice}</div>
-                    </div>
+          <div className="courses-grid" style={coursesGridStyles}>
+            {filteredCourses.map(course => {
+              // Pick a gradient for the header based on category
+              const gradients = {
+                frontend: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                backend: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                fullstack: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+                data: 'linear-gradient(135deg, #30cfd0 0%, #330867 100%)',
+                mobile: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                default: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
+              };
+              const gradient = gradients[course.category] || gradients.default;
+              return (
+                <div
+                  key={course.id}
+                  className="course-card"
+                  style={courseCardStyles(false)}
+                >
+                  <div style={courseHeaderStyles(gradient)}>
+                    <div style={courseLevelStyles}>{course.level}</div>
+                    <h3 style={{ fontSize: '1.25rem', color: '#fff', margin: 0 }}>{course.title}</h3>
                   </div>
-                  
-                  <h3 style={{ fontSize: '1.5rem', marginBottom: '12px', color: '#1a202c', lineHeight: '1.3' }}>
-                    {course.title}
-                  </h3>
-                  
-                  <p style={{ color: '#4a5568', marginBottom: '20px', lineHeight: '1.6' }}>
-                    {course.description}
-                  </p>
-
-                  <div style={{ display: 'flex', gap: '20px', marginBottom: '20px', flexWrap: 'wrap' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span style={{ fontSize: '1.2rem' }}>⏱️</span>
-                      <span style={{ fontSize: '0.9rem', color: '#4a5568' }}>{course.duration}</span>
+                  <div style={courseBodyStyles}>
+                    <div>
+                      <div style={priceContainerStyles}>
+                        <span style={{ fontSize: '1.2rem', fontWeight: '700', color: '#1a202c' }}>{course.price}</span>
+                        <span style={{ fontSize: '1rem', color: '#a0aec0', textDecoration: 'line-through', marginLeft: '10px' }}>{course.originalPrice}</span>
+                      </div>
+                      <div style={courseStatsStyles}>
+                        <span>⏱️ {course.duration}</span>
+                        <span>⭐ {course.rating} ({course.students})</span>
+                        <span>👨‍🏫 {course.instructor}</span>
+                      </div>
+                      <p style={{ color: '#4a5568', marginBottom: '12px', fontSize: '0.98rem', lineHeight: '1.5' }}>{course.description}</p>
+                      <div style={technologiesStyles}>
+                        {course.technologies.map(tech => (
+                          <span key={tech} style={{ background: '#f0f4f8', color: '#4a5568', padding: '4px 12px', borderRadius: '15px', fontSize: '0.85rem', fontWeight: '500' }}>{tech}</span>
+                        ))}
+                      </div>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span style={{ fontSize: '1.2rem' }}>⭐</span>
-                      <span style={{ fontSize: '0.9rem', color: '#4a5568' }}>{course.rating} ({course.students} students)</span>
+                    <div>
+                      <div style={{ marginBottom: '12px' }}>
+                        <h4 style={{ fontSize: '1rem', marginBottom: '8px', color: '#1a202c', fontWeight: '600' }}>Course Features:</h4>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                          {course.features.map(feature => (
+                            <span key={feature} style={{ background: '#fff5f5', color: '#e53e3e', padding: '4px 12px', borderRadius: '15px', fontSize: '0.85rem', fontWeight: '500' }}>✓ {feature}</span>
+                          ))}
+                        </div>
+                      </div>
+                      <div style={{ marginBottom: '12px', padding: '10px', background: '#f7fafc', borderRadius: '10px', fontSize: '0.9rem', color: '#4a5568' }}>
+                        <strong>Next Batch Starts:</strong> {course.nextStart}
+                      </div>
+                      <div style={{ display: 'flex', gap: '10px' }}>
+                        <button style={courseButtonStyles}>Enroll Now</button>
+                        <button style={{ ...courseButtonStyles, background: 'white', color: '#4f46e5', border: '1px solid #4f46e5', boxShadow: 'none' }}>View Details</button>
+                      </div>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <span style={{ fontSize: '1.2rem' }}>👨‍🏫</span>
-                      <span style={{ fontSize: '0.9rem', color: '#4a5568' }}>{course.instructor}</span>
-                    </div>
-                  </div>
-
-                  <div style={{ marginBottom: '20px' }}>
-                    <h4 style={{ fontSize: '1rem', marginBottom: '12px', color: '#1a202c', fontWeight: '600' }}>Technologies Covered:</h4>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                      {course.technologies.map(tech => (
-                        <span key={tech} style={{ 
-                          background: '#f0f4f8', 
-                          color: '#4a5568', 
-                          padding: '4px 12px', 
-                          borderRadius: '15px', 
-                          fontSize: '0.85rem',
-                          fontWeight: '500'
-                        }}>
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div style={{ marginBottom: '20px' }}>
-                    <h4 style={{ fontSize: '1rem', marginBottom: '12px', color: '#1a202c', fontWeight: '600' }}>Course Features:</h4>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                      {course.features.map(feature => (
-                        <span key={feature} style={{ 
-                          background: '#fff5f5', 
-                          color: '#e53e3e', 
-                          padding: '4px 12px', 
-                          borderRadius: '15px', 
-                          fontSize: '0.85rem',
-                          fontWeight: '500'
-                        }}>
-                          ✓ {feature}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div style={{ marginBottom: '25px', padding: '15px', background: '#f7fafc', borderRadius: '12px' }}>
-                    <div style={{ fontSize: '0.9rem', color: '#4a5568' }}>
-                      <strong>Next Batch Starts:</strong> {course.nextStart}
-                    </div>
-                  </div>
-
-                  <div style={{ display: 'flex', gap: '12px' }}>
-                    <Button variant="primary" style={{ flex: 1 }}>Enroll Now</Button>
-                    <Button variant="outline" style={{ flex: 1 }}>View Details</Button>
                   </div>
                 </div>
-              </Card>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
