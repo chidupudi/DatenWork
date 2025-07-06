@@ -1,971 +1,1031 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronRight, Target, Eye, Star, Users, TrendingUp, Award, Zap, Shield, Globe } from 'lucide-react';
+import React, { useState } from 'react';
+import Header from '../components/common/Header';
+import Footer from '../components/sections/Footer';
+import Card from '../components/common/Card';
+import Button from '../components/common/Button';
 
 const About = () => {
-  const [scrollY, setScrollY] = useState(0);
-  const [isVisible, setIsVisible] = useState({});
-  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+  const [hoveredTeamMember, setHoveredTeamMember] = useState(null);
+  const [hoveredValue, setHoveredValue] = useState(null);
 
-  // Window resize handler
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // Scroll handler for parallax effect
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Intersection Observer for animations
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(prev => ({ ...prev, [entry.target.id]: true }));
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const elements = document.querySelectorAll('[data-animate]');
-    elements.forEach(el => observer.observe(el));
-
-    return () => observer.disconnect();
-  }, []);
-
-  const isMobile = windowWidth <= 768;
-  const isTablet = windowWidth <= 1024;
+  // Enhanced team data with 6 members
+  const team = [
+    {
+      id: 1,
+      name: 'Sarah Johnson',
+      role: 'CEO & Founder',
+      image: '👩‍💼',
+      experience: '15+ years in tech recruitment and education',
+      specialties: ['Leadership', 'Strategy', 'Business Development', 'EdTech Innovation']
+    },
+    {
+      id: 2,
+      name: 'Michael Chen',
+      role: 'CTO & Co-Founder',
+      image: '👨‍💻',
+      experience: '12+ years in software engineering and architecture',
+      specialties: ['Full Stack Development', 'Cloud Architecture', 'DevOps', 'AI/ML']
+    },
+    {
+      id: 3,
+      name: 'Emily Rodriguez',
+      role: 'Head of Training',
+      image: '👩‍🏫',
+      experience: '10+ years in education and curriculum development',
+      specialties: ['Curriculum Design', 'Learning Analytics', 'Mentorship', 'Pedagogy']
+    },
+    {
+      id: 4,
+      name: 'David Kumar',
+      role: 'Head of Placements',
+      image: '👨‍💼',
+      experience: '8+ years in corporate recruitment and HR',
+      specialties: ['Talent Acquisition', 'Corporate Relations', 'Career Counseling', 'Industry Partnerships']
+    },
+    {
+      id: 5,
+      name: 'Priya Sharma',
+      role: 'Director of Operations',
+      image: '👩‍💻',
+      experience: '9+ years in operations and project management',
+      specialties: ['Operations Excellence', 'Quality Assurance', 'Process Optimization', 'Team Management']
+    },
+    {
+      id: 6,
+      name: 'Alex Thompson',
+      role: 'Head of Technology',
+      image: '👨‍🔬',
+      experience: '11+ years in product development and innovation',
+      specialties: ['Product Strategy', 'Technical Innovation', 'Platform Development', 'User Experience']
+    }
+  ];
 
   const values = [
     {
       title: 'Excellence',
-      description: 'We maintain the highest standards in training delivery, curriculum design, and placement services.',
-      icon: Star,
-      gradient: 'linear-gradient(135deg, #3b82f6 0%, #9333ea 100%)'
+      description: 'We strive for excellence in everything we do, from training programs to placement services.',
+      icon: '⭐'
     },
     {
       title: 'Innovation',
-      description: 'We leverage cutting-edge technologies and methodologies to stay ahead of industry trends.',
-      icon: Zap,
-      gradient: 'linear-gradient(135deg, #a855f7 0%, #ec4899 100%)'
+      description: 'We continuously innovate our methods to stay ahead of industry trends and technologies.',
+      icon: '💡'
     },
     {
       title: 'Integrity',
-      description: 'We build trust through transparency, honesty, and ethical practices in all our operations.',
-      icon: Shield,
-      gradient: 'linear-gradient(135deg, #10b981 0%, #0d9488 100%)'
+      description: 'We maintain the highest standards of honesty and transparency in all our interactions.',
+      icon: '🤝'
     },
     {
       title: 'Growth',
-      description: 'We foster continuous learning and development for our students, partners, and team members.',
-      icon: TrendingUp,
-      gradient: 'linear-gradient(135deg, #f97316 0%, #dc2626 100%)'
+      description: 'We are committed to the continuous growth and development of our students and partners.',
+      icon: '📈'
+    }
+  ];
+
+  // New data arrays
+  const milestones = [
+    {
+      year: '2019',
+      title: 'Company Founded',
+      description: 'Started with a vision to bridge the gap between tech education and industry needs.',
+      stats: ['10 Students', '1 Course', '2 Founders']
+    },
+    {
+      year: '2020',
+      title: 'First 100 Placements',
+      description: 'Achieved our first major milestone with 100% placement rate in top companies.',
+      stats: ['100 Placements', '95% Success Rate', '5 Courses']
+    },
+    {
+      year: '2021',
+      title: 'Corporate Partnerships',
+      description: 'Established partnerships with 50+ leading tech companies for direct placements.',
+      stats: ['50+ Partners', '500 Students', '15 Courses']
+    },
+    {
+      year: '2022',
+      title: 'National Expansion',
+      description: 'Expanded operations to multiple cities with remote learning capabilities.',
+      stats: ['5 Cities', '1000+ Alumni', '25 Courses']
+    },
+    {
+      year: '2023',
+      title: 'Industry Recognition',
+      description: 'Received "Best Tech Training Institute" award and achieved unicorn valuation.',
+      stats: ['10 Awards', '2500+ Graduates', 'Unicorn Status']
+    },
+    {
+      year: '2024',
+      title: 'Global Reach',
+      description: 'Launched international programs and AI-powered learning platform.',
+      stats: ['Global Presence', '5000+ Students', 'AI Platform']
     }
   ];
 
   const culturePoints = [
     {
-      icon: Target,
-      title: 'Student-Centric Excellence',
-      description: 'Every strategy and decision prioritizes student success and long-term career advancement.',
-      stats: '97% Success Rate'
+      icon: '🎯',
+      title: 'Student-Centric Approach',
+      description: 'Every decision we make prioritizes student success and career advancement.'
     },
     {
-      icon: Users,
-      title: 'Industry Partnership',
-      description: 'Strategic collaborations with leading tech companies ensure curriculum relevance and job readiness.',
-      stats: '250+ Partners'
+      icon: '🤝',
+      title: 'Industry Collaboration',
+      description: 'Close partnerships with tech companies ensure our curriculum stays relevant.'
     },
     {
-      icon: Globe,
-      title: 'Global Standards',
-      description: 'International best practices and certifications prepare students for worldwide opportunities.',
-      stats: 'ISO Certified'
+      icon: '💡',
+      title: 'Innovation in Learning',
+      description: 'We continuously evolve our teaching methods using latest educational technology.'
     },
     {
-      icon: Award,
-      title: 'Proven Excellence',
-      description: 'Consistent track record of delivering exceptional results and industry recognition.',
-      stats: '5000+ Graduates'
+      icon: '🌟',
+      title: 'Excellence Standards',
+      description: 'We maintain the highest quality standards in instruction and placement services.'
+    },
+    {
+      icon: '🔄',
+      title: 'Continuous Improvement',
+      description: 'Regular feedback loops help us enhance our programs and services constantly.'
+    },
+    {
+      icon: '🌍',
+      title: 'Global Perspective',
+      description: 'Our training prepares students for both local and international opportunities.'
     }
   ];
 
-  const storyHighlights = [
-    { label: 'Students Placed', value: '5,000+', suffix: 'across 50+ countries' },
-    { label: 'Corporate Partners', value: '250+', suffix: 'leading tech companies' },
-    { label: 'Success Rate', value: '97%', suffix: 'placement guarantee' },
-    { label: 'Course Completion', value: '94%', suffix: 'student satisfaction' }
+  const awards = [
+    {
+      icon: '🏆',
+      title: 'Best Tech Training Institute 2023',
+      year: '2023',
+      description: 'Recognized for outstanding contribution to tech education and placement services.'
+    },
+    {
+      icon: '🥇',
+      title: 'Excellence in Placement Services',
+      year: '2023',
+      description: 'Awarded for achieving highest placement rates in the industry.'
+    },
+    {
+      icon: '⭐',
+      title: 'Student Choice Award',
+      year: '2022',
+      description: 'Voted as the preferred training institute by students and alumni.'
+    },
+    {
+      icon: '🎖️',
+      title: 'Innovation in Education',
+      year: '2022',
+      description: 'Recognized for innovative teaching methodologies and curriculum design.'
+    }
   ];
 
-  const AnimatedSection = ({ children, id, delay = 0, style = {} }) => (
-    <div
-      id={id}
-      data-animate
-      style={{
-        transform: isVisible[id] ? 'translateY(0)' : 'translateY(32px)',
-        opacity: isVisible[id] ? 1 : 0,
-        transition: 'all 1000ms ease-out',
-        transitionDelay: `${delay}ms`,
-        ...style
-      }}
-    >
-      {children}
-    </div>
-  );
+  const enhancedStoryText = [
+    "Founded in 2019, Datenwork emerged from a simple yet powerful vision: to democratize access to high-quality tech education and career opportunities. Our founders, having experienced the challenges of breaking into the tech industry firsthand, were determined to create a platform that would make this journey smoother for others.",
+    
+    "Starting with just 10 students in our first cohort, we've grown to become one of the most trusted names in tech training and placement. Our success is measured not just in numbers, but in the success stories of our graduates who are now thriving in their dream careers at companies like Google, Amazon, Microsoft, and countless innovative startups.",
+    
+    "What sets us apart is our holistic approach to career transformation. We don't just teach technical skills - we mentor, guide, and support our students through every step of their journey. From the initial assessment to final placement, our dedicated team ensures that each student receives personalized attention and industry-relevant training.",
+    
+    "Our methodology combines theoretical knowledge with practical application, ensuring that our graduates are not just job-ready, but industry-leading professionals. We continuously update our curriculum based on industry trends and feedback from our corporate partners, maintaining our position at the forefront of tech education.",
+    
+    "Today, with over 5,000 successful placements, partnerships with 250+ companies, and a 97% placement rate, we continue to expand our impact. Our commitment to excellence has earned us numerous industry awards and recognition, but our greatest achievement remains the success of our students and the transformation of their careers."
+  ];
 
-  // Keyframe animations
-  const fadeInKeyframes = `
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-  `;
+  // Page wrapper styles
+  const aboutPageStyles = {
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    background: '#ffffff'
+  };
+
+  // Hero section styles
+  const aboutHeroStyles = {
+    padding: '120px 0 80px',
+    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    color: 'white',
+    position: 'relative',
+    overflow: 'hidden'
+  };
+
+  const heroOverlayStyles = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: `
+      radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>')
+    `,
+    zIndex: 0
+  };
+
+  const containerStyles = {
+    maxWidth: '1200px',
+    margin: '0 auto',
+    padding: window.innerWidth <= 768 ? '0 16px' : '0 24px',
+    position: 'relative',
+    zIndex: 1
+  };
+
+  const heroContentStyles = {
+    textAlign: 'center',
+    maxWidth: '800px',
+    margin: '0 auto'
+  };
+
+  const heroTitleStyles = {
+    fontSize: window.innerWidth <= 768 ? '2.5rem' : '3.5rem',
+    marginBottom: '24px',
+    color: 'white',
+    fontWeight: '700',
+    textShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
+    fontFamily: "'Poppins', sans-serif"
+  };
+
+  const heroDescriptionStyles = {
+    fontSize: '1.25rem',
+    lineHeight: '1.8',
+    color: 'rgba(255,255,255,0.9)',
+    textShadow: '0 2px 4px rgba(0, 0, 0, 0.2)'
+  };
+
+  // Story section styles
+  const storySectionStyles = {
+    padding: '80px 0',
+    background: '#ffffff'
+  };
+
+  const storyGridStyles = {
+    display: 'grid',
+    gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))',
+    gap: '40px',
+    alignItems: 'center'
+  };
+
+  const storyContentStyles = {
+    order: window.innerWidth <= 768 ? 1 : 0
+  };
+
+  const storyTitleStyles = {
+    fontSize: '2.5rem',
+    marginBottom: '24px',
+    color: '#1a202c',
+    fontWeight: '600',
+    fontFamily: "'Poppins', sans-serif"
+  };
+
+  const storyTextStyles = {
+    fontSize: '1.1rem',
+    lineHeight: '1.8',
+    marginBottom: '20px',
+    color: '#4a5568'
+  };
+
+  const storyVisualStyles = {
+    background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+    height: '400px',
+    borderRadius: '16px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '4rem',
+    order: window.innerWidth <= 768 ? 0 : 1
+  };
+
+  // Mission & Vision Section Styles
+  const missionVisionSectionStyles = {
+    padding: '80px 0',
+    background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)'
+  };
+
+  const missionVisionGridStyles = {
+    display: 'grid',
+    gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(2, 1fr)',
+    gap: '40px'
+  };
+
+  const missionCardStyles = {
+    background: '#ffffff',
+    padding: '40px',
+    borderRadius: '16px',
+    boxShadow: '0 8px 25px rgba(0, 0, 0, 0.1)',
+    textAlign: 'center',
+    border: '1px solid #e2e8f0',
+    transition: 'all 0.3s ease'
+  };
+
+  const visionCardStyles = {
+    background: '#ffffff',
+    padding: '40px',
+    borderRadius: '16px',
+    boxShadow: '0 8px 25px rgba(0, 0, 0, 0.1)',
+    textAlign: 'center',
+    border: '1px solid #e2e8f0',
+    transition: 'all 0.3s ease'
+  };
+
+  const missionIconStyles = {
+    fontSize: '4rem',
+    marginBottom: '24px',
+    display: 'block'
+  };
+
+  const visionIconStyles = {
+    fontSize: '4rem',
+    marginBottom: '24px',
+    display: 'block'
+  };
+
+  const missionTitleStyles = {
+    fontSize: '2rem',
+    fontWeight: '600',
+    color: '#1a202c',
+    marginBottom: '20px'
+  };
+
+  const visionTitleStyles = {
+    fontSize: '2rem',
+    fontWeight: '600',
+    color: '#1a202c',
+    marginBottom: '20px'
+  };
+
+  const missionTextStyles = {
+    fontSize: '1.1rem',
+    lineHeight: '1.8',
+    color: '#4a5568'
+  };
+
+  const visionTextStyles = {
+    fontSize: '1.1rem',
+    lineHeight: '1.8',
+    color: '#4a5568'
+  };
+
+  // Milestones Section Styles
+  const milestonesSectionStyles = {
+    padding: '80px 0',
+    background: '#ffffff'
+  };
+
+  const milestonesHeaderStyles = {
+    textAlign: 'center',
+    marginBottom: '60px'
+  };
+
+  const milestonesTitleStyles = {
+    fontSize: '2.5rem',
+    marginBottom: '16px',
+    color: '#1a202c',
+    fontWeight: '600',
+    fontFamily: "'Poppins', sans-serif"
+  };
+
+  const milestonesSubtitleStyles = {
+    fontSize: '1.1rem',
+    color: '#4a5568',
+    maxWidth: '600px',
+    margin: '0 auto'
+  };
+
+  const milestonesTimelineStyles = {
+    maxWidth: '800px',
+    margin: '0 auto',
+    position: 'relative'
+  };
+
+  const milestoneItemStyles = {
+    display: 'flex',
+    marginBottom: '40px',
+    alignItems: 'flex-start',
+    gap: '30px',
+    flexDirection: window.innerWidth <= 768 ? 'column' : 'row'
+  };
+
+  const milestoneYearStyles = {
+    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    color: 'white',
+    padding: '12px 24px',
+    borderRadius: '25px',
+    fontWeight: '700',
+    fontSize: '1.1rem',
+    minWidth: '100px',
+    textAlign: 'center',
+    boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)'
+  };
+
+  const milestoneContentStyles = {
+    flex: 1,
+    background: '#f9fafb',
+    padding: '24px',
+    borderRadius: '12px',
+    border: '1px solid #e2e8f0'
+  };
+
+  const milestoneEventTitleStyles = {
+    fontSize: '1.3rem',
+    fontWeight: '600',
+    color: '#1a202c',
+    marginBottom: '8px'
+  };
+
+  const milestoneEventDescStyles = {
+    color: '#4a5568',
+    lineHeight: '1.6',
+    marginBottom: '16px'
+  };
+
+  const milestoneStatsStyles = {
+    display: 'flex',
+    gap: '12px',
+    flexWrap: 'wrap'
+  };
+
+  const milestoneStatStyles = {
+    background: '#667eea',
+    color: 'white',
+    padding: '4px 12px',
+    borderRadius: '12px',
+    fontSize: '0.875rem',
+    fontWeight: '500'
+  };
+
+  // Values section styles
+  const valuesSectionStyles = {
+    padding: '80px 0',
+    background: '#f7fafc'
+  };
+
+  const valuesHeaderStyles = {
+    textAlign: 'center',
+    marginBottom: '60px'
+  };
+
+  const valuesTitleStyles = {
+    fontSize: '2.5rem',
+    marginBottom: '16px',
+    color: '#1a202c',
+    fontWeight: '600',
+    fontFamily: "'Poppins', sans-serif"
+  };
+
+  const valuesSubtitleStyles = {
+    fontSize: '1.1rem',
+    color: '#4a5568',
+    maxWidth: '600px',
+    margin: '0 auto'
+  };
+
+  const valuesGridStyles = {
+    display: 'grid',
+    gridTemplateColumns: window.innerWidth <= 768 
+      ? '1fr' 
+      : 'repeat(auto-fit, minmax(250px, 1fr))',
+    gap: '30px'
+  };
+
+  const valueCardStyles = (isHovered) => ({
+    textAlign: 'center',
+    padding: '40px 20px',
+    background: '#ffffff',
+    borderRadius: '16px',
+    boxShadow: isHovered 
+      ? '0 8px 25px rgba(0, 0, 0, 0.15)' 
+      : '0 4px 6px rgba(0, 0, 0, 0.05)',
+    border: '1px solid #e2e8f0',
+    transition: 'all 0.3s ease',
+    transform: isHovered ? 'translateY(-5px)' : 'translateY(0)',
+    cursor: 'pointer'
+  });
+
+  const valueIconStyles = {
+    fontSize: '3rem',
+    marginBottom: '20px',
+    display: 'block'
+  };
+
+  const valueTitleStyles = {
+    fontSize: '1.5rem',
+    marginBottom: '16px',
+    color: '#1a202c',
+    fontWeight: '600'
+  };
+
+  const valueDescriptionStyles = {
+    color: '#4a5568',
+    lineHeight: '1.6'
+  };
+
+  // Team section styles
+  const teamSectionStyles = {
+    padding: '80px 0',
+    background: '#ffffff'
+  };
+
+  const teamHeaderStyles = {
+    textAlign: 'center',
+    marginBottom: '60px'
+  };
+
+  const teamTitleStyles = {
+    fontSize: '2.5rem',
+    marginBottom: '16px',
+    color: '#1a202c',
+    fontWeight: '600',
+    fontFamily: "'Poppins', sans-serif"
+  };
+
+  const teamSubtitleStyles = {
+    fontSize: '1.1rem',
+    color: '#4a5568',
+    maxWidth: '600px',
+    margin: '0 auto'
+  };
+
+  const teamGridStyles = {
+    display: 'grid',
+    gridTemplateColumns: window.innerWidth <= 768 
+      ? '1fr' 
+      : window.innerWidth <= 1024 
+      ? 'repeat(2, 1fr)' 
+      : 'repeat(3, 1fr)',
+    gap: '30px',
+    maxWidth: '1200px',
+    margin: '0 auto'
+  };
+
+  const teamCardStyles = (isHovered) => ({
+    textAlign: 'center',
+    padding: '40px 30px',
+    background: '#ffffff',
+    borderRadius: '16px',
+    boxShadow: isHovered 
+      ? '0 8px 25px rgba(0, 0, 0, 0.15)' 
+      : '0 4px 6px rgba(0, 0, 0, 0.05)',
+    border: '1px solid #e2e8f0',
+    transition: 'all 0.3s ease',
+    transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
+    cursor: 'pointer'
+  });
+
+  const teamImageStyles = {
+    fontSize: '4rem',
+    marginBottom: '20px',
+    display: 'block'
+  };
+
+  const teamNameStyles = {
+    fontSize: '1.5rem',
+    marginBottom: '8px',
+    color: '#1a202c',
+    fontWeight: '600'
+  };
+
+  const teamRoleStyles = {
+    fontSize: '1.1rem',
+    marginBottom: '16px',
+    color: '#667eea',
+    fontWeight: '600'
+  };
+
+  const teamExperienceStyles = {
+    marginBottom: '20px',
+    color: '#4a5568'
+  };
+
+  const specialtiesStyles = {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '8px',
+    justifyContent: 'center'
+  };
+
+  const specialtyTagStyles = {
+    background: '#e6fffa',
+    color: '#00b5a5',
+    padding: '4px 12px',
+    borderRadius: '20px',
+    fontSize: '0.9rem',
+    fontWeight: '500'
+  };
+
+  // Culture Section Styles
+  const cultureSectionStyles = {
+    padding: '80px 0',
+    background: 'linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%)'
+  };
+
+  const cultureHeaderStyles = {
+    textAlign: 'center',
+    marginBottom: '60px'
+  };
+
+  const cultureTitleStyles = {
+    fontSize: '2.5rem',
+    marginBottom: '16px',
+    color: '#1a202c',
+    fontWeight: '600',
+    fontFamily: "'Poppins', sans-serif"
+  };
+
+  const cultureSubtitleStyles = {
+    fontSize: '1.1rem',
+    color: '#4a5568',
+    maxWidth: '600px',
+    margin: '0 auto'
+  };
+
+  const cultureGridStyles = {
+    display: 'grid',
+    gridTemplateColumns: window.innerWidth <= 768 
+      ? '1fr' 
+      : window.innerWidth <= 1024 
+      ? 'repeat(2, 1fr)' 
+      : 'repeat(3, 1fr)',
+    gap: '30px'
+  };
+
+  const cultureItemStyles = {
+    background: '#ffffff',
+    padding: '30px',
+    borderRadius: '16px',
+    textAlign: 'center',
+    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
+    border: '1px solid #e2e8f0',
+    transition: 'all 0.3s ease'
+  };
+
+  const cultureIconStyles = {
+    fontSize: '3rem',
+    marginBottom: '20px',
+    display: 'block'
+  };
+
+  const cultureItemTitleStyles = {
+    fontSize: '1.25rem',
+    fontWeight: '600',
+    color: '#1a202c',
+    marginBottom: '12px'
+  };
+
+  const cultureItemDescStyles = {
+    color: '#4a5568',
+    lineHeight: '1.6'
+  };
+
+  // Recognition Section Styles
+  const recognitionSectionStyles = {
+    padding: '80px 0',
+    background: '#ffffff'
+  };
+
+  const recognitionHeaderStyles = {
+    textAlign: 'center',
+    marginBottom: '60px'
+  };
+
+  const recognitionTitleStyles = {
+    fontSize: '2.5rem',
+    marginBottom: '16px',
+    color: '#1a202c',
+    fontWeight: '600',
+    fontFamily: "'Poppins', sans-serif"
+  };
+
+  const recognitionSubtitleStyles = {
+    fontSize: '1.1rem',
+    color: '#4a5568',
+    maxWidth: '600px',
+    margin: '0 auto'
+  };
+
+  const awardsGridStyles = {
+    display: 'grid',
+    gridTemplateColumns: window.innerWidth <= 768 
+      ? '1fr' 
+      : 'repeat(2, 1fr)',
+    gap: '30px',
+    maxWidth: '800px',
+    margin: '0 auto'
+  };
+
+  const awardCardStyles = {
+    background: 'linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%)',
+    padding: '30px',
+    borderRadius: '16px',
+    textAlign: 'center',
+    border: '1px solid #fdba74',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 4px 15px rgba(245, 158, 11, 0.2)'
+  };
+
+  const awardIconStyles = {
+    fontSize: '3rem',
+    marginBottom: '16px',
+    display: 'block'
+  };
+
+  const awardTitleStyles = {
+    fontSize: '1.2rem',
+    fontWeight: '600',
+    color: '#1a202c',
+    marginBottom: '8px'
+  };
+
+  const awardYearStyles = {
+    fontSize: '1rem',
+    color: '#f59e0b',
+    fontWeight: '600',
+    marginBottom: '12px'
+  };
+
+  const awardDescStyles = {
+    fontSize: '0.95rem',
+    color: '#4a5568',
+    lineHeight: '1.6'
+  };
+
+  // CTA section styles
+  const ctaSectionStyles = {
+    padding: '80px 0',
+    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    color: 'white',
+    position: 'relative',
+    overflow: 'hidden'
+  };
+
+  const ctaOverlayStyles = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="circuit" width="15" height="15" patternUnits="userSpaceOnUse"><path d="M 0 7 L 3 7 L 3 5 L 12 5 L 12 10 L 15 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23circuit)"/></svg>')`,
+    opacity: 0.3,
+    zIndex: 0
+  };
+
+  const ctaContentStyles = {
+    textAlign: 'center',
+    position: 'relative',
+    zIndex: 1
+  };
+
+  const ctaTitleStyles = {
+    fontSize: '2.5rem',
+    marginBottom: '24px',
+    color: 'white',
+    fontWeight: '700',
+    textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+    fontFamily: "'Poppins', sans-serif"
+  };
+
+  const ctaTextStyles = {
+    fontSize: '1.2rem',
+    marginBottom: '40px',
+    color: 'rgba(255,255,255,0.9)',
+    maxWidth: '600px',
+    margin: '0 auto 40px',
+    lineHeight: '1.6'
+  };
+
+  const ctaActionsStyles = {
+    display: 'flex',
+    gap: '20px',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
+    alignItems: window.innerWidth <= 768 ? 'center' : 'flex-start'
+  };
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#ffffff', fontFamily: "'Inter', sans-serif" }}>
-      <style>{fadeInKeyframes}</style>
+    <div style={aboutPageStyles}>
+      <Header />
       
-      {/* Hero Section with Parallax */}
-      <section style={{
-        position: 'relative',
-        height: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        overflow: 'hidden'
-      }}>
-        {/* Background with parallax */}
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #312e81 100%)',
-          transform: `translateY(${scrollY * 0.5}px)`
-        }} />
-        
-        {/* Animated background pattern */}
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          opacity: 0.1
-        }}>
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%)',
-            transform: 'rotate(12deg) scale(1.5)',
-            animation: 'pulse 4s ease-in-out infinite'
-          }} />
-        </div>
-
-        {/* Floating elements */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, overflow: 'hidden' }}>
-          {[...Array(6)].map((_, i) => (
-            <div
-              key={i}
-              style={{
-                position: 'absolute',
-                width: '16px',
-                height: '16px',
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                borderRadius: '50%',
-                left: `${20 + i * 15}%`,
-                top: `${30 + (i % 3) * 20}%`,
-                animation: `bounce ${3 + i * 0.5}s ease-in-out infinite`,
-                animationDelay: `${i * 0.5}s`
-              }}
-            />
-          ))}
-        </div>
-
-        <div style={{
-          position: 'relative',
-          zIndex: 10,
-          textAlign: 'center',
-          color: 'white',
-          padding: '0 24px',
-          maxWidth: '896px'
-        }}>
-          <div style={{
-            animation: 'fadeIn 1s ease-out'
-          }}>
-            <div style={{
-              display: 'inline-block',
-              padding: '8px 16px',
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
-              borderRadius: '25px',
-              backdropFilter: 'blur(8px)',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
-              marginBottom: '24px'
-            }}>
-              <span style={{ fontSize: '14px', fontWeight: '500' }}>
-                Leading Technology Training & Placement
-              </span>
-            </div>
-            
-            <h1 style={{
-              fontSize: isMobile ? '48px' : '80px',
-              fontWeight: '700',
-              lineHeight: '1.1',
-              marginBottom: '24px'
-            }}>
-              Transforming
-              <span style={{
-                display: 'block',
-                background: 'linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}>
-                Tech Careers
-              </span>
-            </h1>
-            
-            <p style={{
-              fontSize: isMobile ? '18px' : '24px',
-              color: '#bfdbfe',
-              maxWidth: '768px',
-              margin: '0 auto',
-              lineHeight: '1.6',
-              marginBottom: '32px'
-            }}>
-              We bridge the gap between ambition and achievement, connecting talented individuals 
-              with leading technology companies worldwide.
+      {/* Hero Section */}
+      <section style={aboutHeroStyles}>
+        <div style={heroOverlayStyles} />
+        <div style={containerStyles}>
+          <div style={heroContentStyles}>
+            <h1 style={heroTitleStyles}>About Datenwork</h1>
+            <p style={heroDescriptionStyles}>
+              We are a leading technology training and placement company dedicated to bridging the gap between talent and opportunity. 
+              With over 5 years of experience, we've successfully placed 500+ professionals in top tech companies worldwide.
             </p>
+          </div>
+        </div>
+      </section>
 
-            <div style={{
-              display: 'flex',
-              flexDirection: isMobile ? 'column' : 'row',
-              gap: '16px',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}>
-              <button style={{
-                padding: '16px 32px',
-                background: 'linear-gradient(135deg, #2563eb 0%, #9333ea 100%)',
-                borderRadius: '25px',
-                fontWeight: '600',
-                color: 'white',
-                border: 'none',
-                cursor: 'pointer',
-                boxShadow: '0 10px 25px rgba(0, 0, 0, 0.2)',
-                transition: 'all 300ms ease',
-                transform: 'scale(1)',
-                fontSize: '16px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.transform = 'scale(1.05)';
-                e.target.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.3)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.transform = 'scale(1)';
-                e.target.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.2)';
-              }}>
-                Start Your Journey
-                <ChevronRight size={20} />
-              </button>
-              
-              <button style={{
-                padding: '16px 32px',
-                border: '2px solid rgba(255, 255, 255, 0.3)',
-                borderRadius: '25px',
-                fontWeight: '600',
-                color: 'white',
-                backgroundColor: 'transparent',
-                backdropFilter: 'blur(8px)',
-                cursor: 'pointer',
-                transition: 'all 300ms ease',
-                fontSize: '16px'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = 'transparent';
-              }}>
-                Our Programs
-              </button>
+      {/* Enhanced Story Section */}
+      <section style={storySectionStyles}>
+        <div style={containerStyles}>
+          <div style={storyGridStyles}>
+            <div style={storyContentStyles}>
+              <h2 style={storyTitleStyles}>Our Story</h2>
+              {enhancedStoryText.map((paragraph, index) => (
+                <p key={index} style={storyTextStyles}>
+                  {paragraph}
+                </p>
+              ))}
+              <Button variant="primary">Learn More About Our Journey</Button>
+            </div>
+            <div style={storyVisualStyles}>
+              🚀
             </div>
           </div>
         </div>
-
-        {/* Scroll indicator */}
-        <div style={{
-          position: 'absolute',
-          bottom: '32px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          animation: 'bounce 2s ease-in-out infinite'
-        }}>
-          <div style={{
-            width: '24px',
-            height: '40px',
-            border: '2px solid rgba(255, 255, 255, 0.3)',
-            borderRadius: '20px',
-            display: 'flex',
-            justifyContent: 'center'
-          }}>
-            <div style={{
-              width: '4px',
-              height: '12px',
-              backgroundColor: 'rgba(255, 255, 255, 0.6)',
-              borderRadius: '2px',
-              marginTop: '8px',
-              animation: 'pulse 2s ease-in-out infinite'
-            }} />
-          </div>
-        </div>
       </section>
 
-      {/* Story Section with Stats */}
-      <section style={{
-        padding: '80px 0',
-        background: 'linear-gradient(180deg, #f9fafb 0%, #ffffff 100%)'
-      }}>
-        <div style={{
-          maxWidth: '1280px',
-          margin: '0 auto',
-          padding: '0 24px'
-        }}>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isTablet ? '1fr' : '1fr 1fr',
-            gap: '64px',
-            alignItems: 'center'
-          }}>
-            <AnimatedSection id="story-content">
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                <div style={{
-                  display: 'inline-block',
-                  padding: '8px 16px',
-                  backgroundColor: '#dbeafe',
-                  color: '#2563eb',
-                  borderRadius: '25px',
-                  fontSize: '14px',
-                  fontWeight: '500',
-                  width: 'fit-content'
-                }}>
-                  Our Story
-                </div>
-                
-                <h2 style={{
-                  fontSize: isMobile ? '32px' : '48px',
-                  fontWeight: '700',
-                  color: '#111827',
-                  lineHeight: '1.1',
-                  marginBottom: '24px'
-                }}>
-                  Pioneering the Future of 
-                  <span style={{ color: '#2563eb' }}> Tech Education</span>
-                </h2>
-                
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '16px',
-                  color: '#6b7280',
-                  fontSize: '18px',
-                  lineHeight: '1.7'
-                }}>
-                  <p>
-                    Founded with a vision to democratize access to high-quality technology education, 
-                    we've evolved from a small startup to a global leader in tech talent development.
-                  </p>
-                  <p>
-                    Our innovative approach combines industry-aligned curriculum, hands-on training, 
-                    and personalized career support to ensure our graduates don't just find jobs—they 
-                    build successful, fulfilling careers.
-                  </p>
-                  <p>
-                    Today, we're proud to be the trusted partner for both aspiring professionals 
-                    seeking career transformation and leading companies building world-class teams.
-                  </p>
-                </div>
-
-                <button style={{
-                  padding: '12px 24px',
-                  backgroundColor: '#2563eb',
-                  color: 'white',
-                  borderRadius: '8px',
-                  fontWeight: '600',
-                  border: 'none',
-                  cursor: 'pointer',
-                  transition: 'all 300ms ease',
-                  boxShadow: '0 4px 15px rgba(37, 99, 235, 0.3)',
-                  fontSize: '16px',
-                  width: 'fit-content',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = '#1d4ed8';
-                  e.target.style.transform = 'scale(1.05)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = '#2563eb';
-                  e.target.style.transform = 'scale(1)';
-                }}>
-                  Discover Our Impact
-                  <ChevronRight size={16} />
-                </button>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection id="story-stats" delay={200}>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: '24px'
-              }}>
-                {storyHighlights.map((stat, index) => (
-                  <div 
-                    key={stat.label}
-                    style={{
-                      padding: '24px',
-                      backgroundColor: '#ffffff',
-                      borderRadius: '16px',
-                      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
-                      border: '1px solid #e5e7eb',
-                      transition: 'all 300ms ease',
-                      cursor: 'pointer'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.transform = 'translateY(-8px)';
-                      e.target.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.transform = 'translateY(0)';
-                      e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
-                    }}
-                  >
-                    <div style={{
-                      fontSize: '24px',
-                      fontWeight: '700',
-                      color: '#111827',
-                      marginBottom: '8px'
-                    }}>
-                      {stat.value}
-                    </div>
-                    <div style={{
-                      fontSize: '14px',
-                      fontWeight: '600',
-                      color: '#374151',
-                      marginBottom: '4px'
-                    }}>
-                      {stat.label}
-                    </div>
-                    <div style={{
-                      fontSize: '12px',
-                      color: '#6b7280'
-                    }}>
-                      {stat.suffix}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
-
-      {/* Mission & Vision */}
-      <section style={{ padding: '80px 0', backgroundColor: '#ffffff' }}>
-        <div style={{
-          maxWidth: '1280px',
-          margin: '0 auto',
-          padding: '0 24px'
-        }}>
-          <AnimatedSection id="mission-vision">
-            <div style={{ textAlign: 'center', marginBottom: '64px' }}>
-              <h2 style={{
-                fontSize: isMobile ? '32px' : '48px',
-                fontWeight: '700',
-                color: '#111827',
-                marginBottom: '24px'
-              }}>
-                Mission & Vision
-              </h2>
-              <p style={{
-                fontSize: '20px',
-                color: '#6b7280',
-                maxWidth: '768px',
-                margin: '0 auto'
-              }}>
-                Driving the future of technology education through innovation and excellence
+      {/* Mission & Vision Section */}
+      <section style={missionVisionSectionStyles}>
+        <div style={containerStyles}>
+          <div style={missionVisionGridStyles}>
+            <div style={missionCardStyles}>
+              <div style={missionIconStyles}>🎯</div>
+              <h3 style={missionTitleStyles}>Our Mission</h3>
+              <p style={missionTextStyles}>
+                To democratize access to high-quality technology education and create a bridge between 
+                talented individuals and leading tech companies. We believe that everyone deserves the 
+                opportunity to build a successful career in technology, regardless of their background 
+                or starting point.
               </p>
             </div>
-
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: isTablet ? '1fr' : '1fr 1fr',
-              gap: '48px'
-            }}>
-              <div style={{
-                position: 'relative',
-                padding: '32px',
-                background: 'linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%)',
-                borderRadius: '24px',
-                border: '1px solid #bfdbfe',
-                transition: 'all 500ms ease',
-                cursor: 'pointer'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.boxShadow = 'none';
-              }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '24px',
-                  right: '24px',
-                  width: '48px',
-                  height: '48px',
-                  background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transition: 'transform 300ms ease'
-                }}>
-                  <Target size={24} color="white" />
-                </div>
-                <h3 style={{
-                  fontSize: '24px',
-                  fontWeight: '700',
-                  color: '#111827',
-                  marginBottom: '16px'
-                }}>
-                  Our Mission
-                </h3>
-                <p style={{
-                  color: '#374151',
-                  lineHeight: '1.7',
-                  fontSize: '18px'
-                }}>
-                  To democratize access to world-class technology education and create seamless pathways 
-                  between talented individuals and leading tech companies. We believe that everyone deserves 
-                  the opportunity to build a successful career in technology, regardless of their background.
-                </p>
-              </div>
-
-              <div style={{
-                position: 'relative',
-                padding: '32px',
-                background: 'linear-gradient(135deg, #fdf4ff 0%, #fae8ff 100%)',
-                borderRadius: '24px',
-                border: '1px solid #d8b4fe',
-                transition: 'all 500ms ease',
-                cursor: 'pointer'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.boxShadow = 'none';
-              }}>
-                <div style={{
-                  position: 'absolute',
-                  top: '24px',
-                  right: '24px',
-                  width: '48px',
-                  height: '48px',
-                  background: 'linear-gradient(135deg, #a855f7 0%, #9333ea 100%)',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transition: 'transform 300ms ease'
-                }}>
-                  <Eye size={24} color="white" />
-                </div>
-                <h3 style={{
-                  fontSize: '24px',
-                  fontWeight: '700',
-                  color: '#111827',
-                  marginBottom: '16px'
-                }}>
-                  Our Vision
-                </h3>
-                <p style={{
-                  color: '#374151',
-                  lineHeight: '1.7',
-                  fontSize: '18px'
-                }}>
-                  To become the global standard for technology talent development, fostering a world where 
-                  skilled professionals drive innovation and businesses thrive through strategic technology 
-                  partnerships and continuous learning ecosystems.
-                </p>
-              </div>
+            <div style={visionCardStyles}>
+              <div style={visionIconStyles}>🔮</div>
+              <h3 style={visionTitleStyles}>Our Vision</h3>
+              <p style={visionTextStyles}>
+                To become the global leader in technology talent development, fostering a world where 
+                skilled professionals drive innovation and businesses thrive through strategic technology 
+                partnerships. We envision a future where the gap between education and industry is 
+                completely eliminated.
+              </p>
             </div>
-          </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
+      {/* Milestones Section */}
+      <section style={milestonesSectionStyles}>
+        <div style={containerStyles}>
+          <div style={milestonesHeaderStyles}>
+            <h2 style={milestonesTitleStyles}>Our Journey & Milestones</h2>
+            <p style={milestonesSubtitleStyles}>
+              Key achievements that mark our growth and impact in the tech education industry
+            </p>
+          </div>
+          <div style={milestonesTimelineStyles}>
+            {milestones.map((milestone, index) => (
+              <div key={index} style={milestoneItemStyles}>
+                <div style={milestoneYearStyles}>{milestone.year}</div>
+                <div style={milestoneContentStyles}>
+                  <h4 style={milestoneEventTitleStyles}>{milestone.title}</h4>
+                  <p style={milestoneEventDescStyles}>{milestone.description}</p>
+                  <div style={milestoneStatsStyles}>
+                    {milestone.stats?.map((stat, idx) => (
+                      <span key={idx} style={milestoneStatStyles}>{stat}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Values Section */}
-      <section style={{
-        padding: '80px 0',
-        background: 'linear-gradient(180deg, #f9fafb 0%, #ffffff 100%)'
-      }}>
-        <div style={{
-          maxWidth: '1280px',
-          margin: '0 auto',
-          padding: '0 24px'
-        }}>
-          <AnimatedSection id="values">
-            <div style={{ textAlign: 'center', marginBottom: '64px' }}>
-              <h2 style={{
-                fontSize: isMobile ? '32px' : '48px',
-                fontWeight: '700',
-                color: '#111827',
-                marginBottom: '24px'
-              }}>
-                Our Core Values
-              </h2>
-              <p style={{
-                fontSize: '20px',
-                color: '#6b7280',
-                maxWidth: '768px',
-                margin: '0 auto'
-              }}>
-                The principles that guide our decisions and shape our relationships
-              </p>
-            </div>
-
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr 1fr' : 'repeat(4, 1fr)',
-              gap: '32px'
-            }}>
-              {values.map((value, index) => {
-                const Icon = value.icon;
-                return (
-                  <AnimatedSection 
-                    key={value.title}
-                    id={`value-${index}`}
-                    delay={index * 100}
-                  >
-                    <div style={{
-                      position: 'relative',
-                      padding: '24px',
-                      backgroundColor: '#ffffff',
-                      borderRadius: '16px',
-                      boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
-                      border: '1px solid #e5e7eb',
-                      transition: 'all 500ms ease',
-                      cursor: 'pointer'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.transform = 'translateY(-8px)';
-                      e.target.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.transform = 'translateY(0)';
-                      e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
-                    }}>
-                      <div style={{
-                        width: '48px',
-                        height: '48px',
-                        background: value.gradient,
-                        borderRadius: '8px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        marginBottom: '24px',
-                        transition: 'transform 300ms ease'
-                      }}>
-                        <Icon size={24} color="white" />
-                      </div>
-                      <h3 style={{
-                        fontSize: '20px',
-                        fontWeight: '700',
-                        color: '#111827',
-                        marginBottom: '12px'
-                      }}>
-                        {value.title}
-                      </h3>
-                      <p style={{
-                        color: '#6b7280',
-                        lineHeight: '1.6'
-                      }}>
-                        {value.description}
-                      </p>
-                    </div>
-                  </AnimatedSection>
-                );
-              })}
-            </div>
-          </AnimatedSection>
+      <section style={valuesSectionStyles}>
+        <div style={containerStyles}>
+          <div style={valuesHeaderStyles}>
+            <h2 style={valuesTitleStyles}>Our Values</h2>
+            <p style={valuesSubtitleStyles}>
+              Our core values guide every decision we make and every relationship we build
+            </p>
+          </div>
+          <div style={valuesGridStyles}>
+            {values.map((value, index) => (
+              <Card 
+                key={value.title} 
+                style={valueCardStyles(hoveredValue === index)}
+                hover={false}
+                onMouseEnter={() => setHoveredValue(index)}
+                onMouseLeave={() => setHoveredValue(null)}
+              >
+                <div style={valueIconStyles}>{value.icon}</div>
+                <h3 style={valueTitleStyles}>{value.title}</h3>
+                <p style={valueDescriptionStyles}>{value.description}</p>
+              </Card>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Culture & Approach */}
-      <section style={{ padding: '80px 0', backgroundColor: '#ffffff' }}>
-        <div style={{
-          maxWidth: '1280px',
-          margin: '0 auto',
-          padding: '0 24px'
-        }}>
-          <AnimatedSection id="culture">
-            <div style={{ textAlign: 'center', marginBottom: '64px' }}>
-              <h2 style={{
-                fontSize: isMobile ? '32px' : '48px',
-                fontWeight: '700',
-                color: '#111827',
-                marginBottom: '24px'
-              }}>
-                Our Approach
-              </h2>
-              <p style={{
-                fontSize: '20px',
-                color: '#6b7280',
-                maxWidth: '768px',
-                margin: '0 auto'
-              }}>
-                Strategic methodologies that drive exceptional outcomes
-              </p>
-            </div>
+      {/* Enhanced Team Section */}
+      <section style={teamSectionStyles}>
+        <div style={containerStyles}>
+          <div style={teamHeaderStyles}>
+            <h2 style={teamTitleStyles}>Meet Our Leadership Team</h2>
+            <p style={teamSubtitleStyles}>
+              Experienced professionals driving innovation and excellence in tech education
+            </p>
+          </div>
+          <div style={teamGridStyles}>
+            {team.map((member, index) => (
+              <Card 
+                key={member.id} 
+                style={teamCardStyles(hoveredTeamMember === member.id)}
+                hover={false}
+                onMouseEnter={() => setHoveredTeamMember(member.id)}
+                onMouseLeave={() => setHoveredTeamMember(null)}
+              >
+                <div style={teamImageStyles}>{member.image}</div>
+                <h3 style={teamNameStyles}>{member.name}</h3>
+                <p style={teamRoleStyles}>{member.role}</p>
+                <p style={teamExperienceStyles}>{member.experience}</p>
+                <div style={specialtiesStyles}>
+                  {member.specialties.map((specialty, i) => (
+                    <span key={i} style={specialtyTagStyles}>{specialty}</span>
+                  ))}
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
 
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: isTablet ? '1fr' : '1fr 1fr',
-              gap: '32px'
-            }}>
-              {culturePoints.map((point, index) => {
-                const Icon = point.icon;
-                return (
-                  <AnimatedSection 
-                    key={point.title}
-                    id={`culture-${index}`}
-                    delay={index * 150}
-                  >
-                    <div style={{
-                      padding: '32px',
-                      background: 'linear-gradient(135deg, #f9fafb 0%, #ffffff 100%)',
-                      borderRadius: '24px',
-                      border: '1px solid #e5e7eb',
-                      transition: 'all 500ms ease',
-                      cursor: 'pointer'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.transform = 'translateY(-4px)';
-                      e.target.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.transform = 'translateY(0)';
-                      e.target.style.boxShadow = 'none';
-                    }}>
-                      <div style={{
-                        display: 'flex',
-                        alignItems: 'flex-start',
-                        justifyContent: 'space-between',
-                        marginBottom: '24px'
-                      }}>
-                        <div style={{
-                          width: '56px',
-                          height: '56px',
-                          background: 'linear-gradient(135deg, #3b82f6 0%, #9333ea 100%)',
-                          borderRadius: '12px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          transition: 'transform 300ms ease'
-                        }}>
-                          <Icon size={28} color="white" />
-                        </div>
-                        <div style={{ textAlign: 'right' }}>
-                          <div style={{
-                            fontSize: '24px',
-                            fontWeight: '700',
-                            color: '#2563eb'
-                          }}>
-                            {point.stats}
-                          </div>
-                        </div>
-                      </div>
-                      <h3 style={{
-                        fontSize: '20px',
-                        fontWeight: '700',
-                        color: '#111827',
-                        marginBottom: '12px'
-                      }}>
-                        {point.title}
-                      </h3>
-                      <p style={{
-                        color: '#6b7280',
-                        lineHeight: '1.6'
-                      }}>
-                        {point.description}
-                      </p>
-                    </div>
-                  </AnimatedSection>
-                );
-              })}
-            </div>
-          </AnimatedSection>
+      {/* Culture Section */}
+      <section style={cultureSectionStyles}>
+        <div style={containerStyles}>
+          <div style={cultureHeaderStyles}>
+            <h2 style={cultureTitleStyles}>Our Culture & Approach</h2>
+            <p style={cultureSubtitleStyles}>
+              The principles and practices that drive our success and student satisfaction
+            </p>
+          </div>
+          <div style={cultureGridStyles}>
+            {culturePoints.map((point, index) => (
+              <div key={index} style={cultureItemStyles}>
+                <div style={cultureIconStyles}>{point.icon}</div>
+                <h4 style={cultureItemTitleStyles}>{point.title}</h4>
+                <p style={cultureItemDescStyles}>{point.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Recognition Section */}
+      <section style={recognitionSectionStyles}>
+        <div style={containerStyles}>
+          <div style={recognitionHeaderStyles}>
+            <h2 style={recognitionTitleStyles}>Awards & Recognition</h2>
+            <p style={recognitionSubtitleStyles}>
+              Industry recognition for our commitment to excellence in tech education
+            </p>
+          </div>
+          <div style={awardsGridStyles}>
+            {awards.map((award, index) => (
+              <div key={index} style={awardCardStyles}>
+                <div style={awardIconStyles}>{award.icon}</div>
+                <h4 style={awardTitleStyles}>{award.title}</h4>
+                <p style={awardYearStyles}>{award.year}</p>
+                <p style={awardDescStyles}>{award.description}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section style={{
-        position: 'relative',
-        padding: '80px 0',
-        overflow: 'hidden'
-      }}>
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'linear-gradient(135deg, #1e3a8a 0%, #7c3aed 50%, #312e81 100%)'
-        }} />
-        
-        {/* Animated background */}
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          opacity: 0.2
-        }}>
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%)',
-            transform: 'skewY(-12deg) scale(1.5)',
-            animation: 'pulse 6s ease-in-out infinite'
-          }} />
-        </div>
-
-        <div style={{
-          position: 'relative',
-          zIndex: 10,
-          maxWidth: '896px',
-          margin: '0 auto',
-          textAlign: 'center',
-          padding: '0 24px'
-        }}>
-          <AnimatedSection id="cta">
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-              <h2 style={{
-                fontSize: isMobile ? '32px' : '64px',
-                fontWeight: '700',
-                color: 'white',
-                lineHeight: '1.1'
-              }}>
-                Ready to Transform
-                <span style={{
-                  display: 'block',
-                  background: 'linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
-                }}>
-                  Your Career?
-                </span>
-              </h2>
-              
-              <p style={{
-                fontSize: '20px',
-                color: '#bfdbfe',
-                maxWidth: '512px',
-                margin: '0 auto',
-                lineHeight: '1.6'
-              }}>
-                Join thousands of professionals who've accelerated their careers with our 
-                industry-leading training and placement programs.
-              </p>
-
-              <div style={{
-                display: 'flex',
-                flexDirection: isMobile ? 'column' : 'row',
-                gap: '16px',
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}>
-                <button style={{
-                  padding: '16px 32px',
-                  backgroundColor: '#ffffff',
-                  color: '#1e3a8a',
-                  borderRadius: '25px',
-                  fontWeight: '600',
-                  border: 'none',
-                  cursor: 'pointer',
-                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
-                  transition: 'all 300ms ease',
-                  fontSize: '16px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.transform = 'scale(1.05)';
-                  e.target.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.3)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.transform = 'scale(1)';
-                  e.target.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)';
-                }}>
-                  Explore Programs
-                  <ChevronRight size={20} />
-                </button>
-                
-                <button style={{
-                  padding: '16px 32px',
-                  border: '2px solid rgba(255, 255, 255, 0.3)',
-                  color: 'white',
-                  borderRadius: '25px',
-                  fontWeight: '600',
-                  backgroundColor: 'transparent',
-                  backdropFilter: 'blur(8px)',
-                  cursor: 'pointer',
-                  transition: 'all 300ms ease',
-                  fontSize: '16px'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.backgroundColor = 'transparent';
-                }}>
-                  Schedule Consultation
-                </button>
-              </div>
+      <section style={ctaSectionStyles}>
+        <div style={ctaOverlayStyles} />
+        <div style={containerStyles}>
+          <div style={ctaContentStyles}>
+            <h2 style={ctaTitleStyles}>Ready to Start Your Journey?</h2>
+            <p style={ctaTextStyles}>
+              Join thousands of successful professionals who transformed their careers with Datenwork
+            </p>
+            <div style={ctaActionsStyles}>
+              <Button variant="secondary" size="large">Browse Courses</Button>
+              <Button 
+                variant="outline" 
+                size="large" 
+                style={{ borderColor: 'white', color: 'white' }}
+              >
+                Contact Us
+              </Button>
             </div>
-          </AnimatedSection>
+          </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 };
