@@ -14,59 +14,73 @@ const ITConsultancy = () => {
   const [hoveredVendor, setHoveredVendor] = useState(null);
 
   const services = [
-    {
-      id: 1,
-      title: 'Digital Transformation',
-      description: 'End-to-end digital transformation solutions to modernize your business operations.',
-      icon: '🔄',
-      features: [
-        'Cloud Migration Strategy',
-        'Legacy System Modernization',
-        'Process Automation',
-        'Digital Workflow Design'
-      ],
-      color: 'blue'
-    },
-    {
-      id: 2,
-      title: 'Custom Software Development',
-      description: 'Tailored software solutions built to meet your specific business requirements.',
-      icon: '💻',
-      features: [
-        'Web Applications',
-        'Mobile App Development',
-        'API Development',
-        'Database Design'
-      ],
-      color: 'teal'
-    },
-    {
-      id: 3,
-      title: 'Cloud Solutions',
-      description: 'Comprehensive cloud services including migration, optimization, and management.',
-      icon: '☁️',
-      features: [
-        'AWS/Azure/GCP Setup',
-        'Cloud Architecture Design',
-        'DevOps Implementation',
-        'Security & Compliance'
-      ],
-      color: 'orange'
-    },
-    {
-      id: 4,
-      title: 'Data Analytics & AI',
-      description: 'Harness the power of data with advanced analytics and AI-driven insights.',
-      icon: '📊',
-      features: [
-        'Business Intelligence',
-        'Machine Learning Models',
-        'Data Visualization',
-        'Predictive Analytics'
-      ],
-      color: 'purple'
-    }
-  ];
+  {
+    id: 1,
+    title: 'Digital Transformation',
+    description: 'End-to-end digital transformation solutions to modernize your business operations.',
+    icon: '🔄',
+    features: [
+      'Cloud Migration Strategy',
+      'Legacy System Modernization',
+      'Process Automation',
+      'Digital Workflow Design'
+    ],
+    color: 'blue'
+  },
+  {
+    id: 2,
+    title: 'Custom Software Development',
+    description: 'Tailored software solutions built to meet your specific business requirements.',
+    icon: '💻',
+    features: [
+      'Web Applications',
+      'Mobile App Development',
+      'API Development',
+      'Database Design'
+    ],
+    color: 'teal'
+  },
+  {
+    id: 3,
+    title: 'Cloud Solutions',
+    description: 'Comprehensive cloud services including migration, optimization, and management.',
+    icon: '☁️',
+    features: [
+      'AWS/Azure/GCP Setup',
+      'Cloud Architecture Design',
+      'DevOps Implementation',
+      'Security & Compliance'
+    ],
+    color: 'orange'
+  },
+  {
+    id: 4,
+    title: 'Data Analytics & AI',
+    description: 'Harness the power of data with advanced analytics and AI-driven insights.',
+    icon: '📊',
+    features: [
+      'Business Intelligence',
+      'Machine Learning Models',
+      'Data Visualization',
+      'Predictive Analytics'
+    ],
+    color: 'purple'
+  },
+  {
+    id: 5,
+    title: 'Need Custom Solutions?',
+    description: 'Have specific requirements? Our expert sales team will design a tailored solution for your unique business needs.',
+    icon: '🤝',
+    features: [
+      'Free consultation & project assessment',
+      'Custom pricing for your requirements',
+      'Dedicated project manager assigned',
+      '24/7 support throughout the project'
+    ],
+    color: 'contact', // New color for contact card
+    isContactCard: true // Flag to identify this as contact card
+  }
+];
 const vendorServices = [
   {
     id: 1,
@@ -197,15 +211,16 @@ const vendorServices = [
     marginBottom: '80px'
   };
 
-  const getServiceColor = (color) => {
-    const colors = {
-      blue: { border: '#4f46e5', bg: '#ede9fe' },
-      teal: { border: '#14b8a6', bg: '#f0fdfa' },
-      orange: { border: '#f59e0b', bg: '#fef3c7' },
-      purple: { border: '#8b5cf6', bg: '#f3e8ff' }
-    };
-    return colors[color] || colors.blue;
+const getServiceColor = (color) => {
+  const colors = {
+    blue: { border: '#4f46e5', bg: '#ede9fe' },
+    teal: { border: '#14b8a6', bg: '#f0fdfa' },
+    orange: { border: '#f59e0b', bg: '#fef3c7' },
+    purple: { border: '#8b5cf6', bg: '#f3e8ff' },
+    contact: { border: '#dc2626', bg: '#fef2f2' } // Red theme for contact card
   };
+  return colors[color] || colors.blue;
+};
 
   const serviceCardStyles = (service, isHovered) => {
     const colors = getServiceColor(service.color);
@@ -524,15 +539,21 @@ const vendorSubtitleStyles = {
                   </ul>
                 </div>
                 
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  style={serviceCtaStyles}
-                >
-                  <Button variant="outline">
-                    Learn More
-                  </Button>
-                </motion.div>
+               <motion.div
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  style={serviceCtaStyles}
+>
+  {service.isContactCard ? (
+    <Button variant="primary">
+      Contact Sales Team
+    </Button>
+  ) : (
+    <Button variant="outline">
+      Learn More
+    </Button>
+  )}
+</motion.div>
               </Card>
             </motion.div>
           ))}
