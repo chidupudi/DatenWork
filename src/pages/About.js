@@ -1,625 +1,1033 @@
-// src/components/about/AboutUs.js - Professional About Us Page for Mitti Arts
-import React from 'react';
-import { 
-  Typography, 
-  Row, 
-  Col, 
-  Card, 
-  Timeline, 
-  Statistic, 
-  Tag, 
-  Space,
-  Divider,
-  Button,
-  Avatar,
-  Progress,
-  Grid,
-  Image
-} from 'antd';
-import {
-  TrophyOutlined,
-  TeamOutlined,
-  RocketOutlined,
-  HeartOutlined,
-  SafetyOutlined,
-  GlobalOutlined,
-  BookOutlined,
-  SafetyCertificateOutlined, // Changed from CertificateOutlined
-  CodeOutlined,
-  CloudOutlined,
-  MobileOutlined,
-  DatabaseOutlined,
-  BarChartOutlined,
-  RobotOutlined,
-  SecurityScanOutlined,
-  ApiOutlined,
-  DesktopOutlined,
-  TabletOutlined
-} from '@ant-design/icons';
+import React, { useState } from 'react';
+import Header from '../components/common/Header';
+import Footer from '../components/sections/Footer';
+import Card from '../components/common/Card';
+import Button from '../components/common/Button';
 
-const { Title, Text, Paragraph } = Typography;
-const { useBreakpoint } = Grid;
+const About = () => {
+  const [hoveredTeamMember, setHoveredTeamMember] = useState(null);
+  const [hoveredValue, setHoveredValue] = useState(null);
 
-const AboutUs = () => {
-  const screens = useBreakpoint();
-
-  // Tech Training Courses Data for India
-  const techCourses = [
+  // Enhanced team data with 6 members
+  const team = [
     {
-      category: "Full Stack Development",
-      icon: <CodeOutlined />,
-      color: "#1890ff",
-      courses: [
-        { name: "MERN Stack Development", provider: "Masai School", duration: "30 weeks", price: "₹3.5L" },
-        { name: "Full Stack Web Development", provider: "Coding Ninjas", duration: "6 months", price: "₹75K" },
-        { name: "Advanced React & Node.js", provider: "Scaler Academy", duration: "8 months", price: "₹2.5L" }
-      ]
+      id: 1,
+      name: 'Sarah Johnson',
+      role: 'CEO & Founder',
+      image: '👩‍💼',
+      experience: '15+ years in tech recruitment and education',
+      specialties: ['Leadership', 'Strategy', 'Business Development', 'EdTech Innovation']
     },
     {
-      category: "Data Science & AI",
-      icon: <RobotOutlined />,
-      color: "#52c41a",
-      courses: [
-        { name: "Data Science Bootcamp", provider: "UpGrad", duration: "11 months", price: "₹4.95L" },
-        { name: "Machine Learning Specialization", provider: "Great Learning", duration: "12 months", price: "₹2.8L" },
-        { name: "AI & Deep Learning", provider: "Simplilearn", duration: "8 months", price: "₹1.8L" }
-      ]
+      id: 2,
+      name: 'Michael Chen',
+      role: 'CTO & Co-Founder',
+      image: '👨‍💻',
+      experience: '12+ years in software engineering and architecture',
+      specialties: ['Full Stack Development', 'Cloud Architecture', 'DevOps', 'AI/ML']
     },
     {
-      category: "Cloud Computing",
-      icon: <CloudOutlined />,
-      color: "#fa8c16",
-      courses: [
-        { name: "AWS Solutions Architect", provider: "Whizlabs", duration: "4 months", price: "₹45K" },
-        { name: "Azure Cloud Fundamentals", provider: "Microsoft Learn", duration: "3 months", price: "₹35K" },
-        { name: "Google Cloud Platform", provider: "Qwiklabs", duration: "5 months", price: "₹55K" }
-      ]
+      id: 3,
+      name: 'Emily Rodriguez',
+      role: 'Head of Training',
+      image: '👩‍🏫',
+      experience: '10+ years in education and curriculum development',
+      specialties: ['Curriculum Design', 'Learning Analytics', 'Mentorship', 'Pedagogy']
     },
     {
-      category: "Mobile App Development",
-      icon: <MobileOutlined />,
-      color: "#722ed1",
-      courses: [
-        { name: "React Native Development", provider: "The App Brewery", duration: "6 months", price: "₹65K" },
-        { name: "Flutter App Development", provider: "Angela Yu Course", duration: "4 months", price: "₹45K" },
-        { name: "iOS Development Swift", provider: "Udacity", duration: "8 months", price: "₹85K" }
-      ]
+      id: 4,
+      name: 'David Kumar',
+      role: 'Head of Placements',
+      image: '👨‍💼',
+      experience: '8+ years in corporate recruitment and HR',
+      specialties: ['Talent Acquisition', 'Corporate Relations', 'Career Counseling', 'Industry Partnerships']
     },
     {
-      category: "Cybersecurity",
-      icon: <SecurityScanOutlined />,
-      color: "#eb2f96",
-      courses: [
-        { name: "Ethical Hacking & Penetration Testing", provider: "EC-Council", duration: "6 months", price: "₹1.2L" },
-        { name: "Cybersecurity Analyst", provider: "IBM SkillsBuild", duration: "9 months", price: "₹95K" },
-        { name: "Information Security Management", provider: "ISACA", duration: "12 months", price: "₹1.8L" }
-      ]
+      id: 5,
+      name: 'Priya Sharma',
+      role: 'Director of Operations',
+      image: '👩‍💻',
+      experience: '9+ years in operations and project management',
+      specialties: ['Operations Excellence', 'Quality Assurance', 'Process Optimization', 'Team Management']
     },
     {
-      category: "DevOps & Infrastructure",
-      icon: <ApiOutlined />,
-      color: "#13c2c2",
-      courses: [
-        { name: "DevOps Engineer Bootcamp", provider: "Edureka", duration: "6 months", price: "₹75K" },
-        { name: "Kubernetes & Docker", provider: "Linux Academy", duration: "4 months", price: "₹55K" },
-        { name: "CI/CD Pipeline Management", provider: "Jenkins Academy", duration: "3 months", price: "₹35K" }
-      ]
+      id: 6,
+      name: 'Alex Thompson',
+      role: 'Head of Technology',
+      image: '👨‍🔬',
+      experience: '11+ years in product development and innovation',
+      specialties: ['Product Strategy', 'Technical Innovation', 'Platform Development', 'User Experience']
     }
   ];
 
-  // Company milestones
-  const milestones = [
-    {
-      year: "2020",
-      title: "Foundation",
-      description: "Mitti Arts was founded with a vision to digitize traditional pottery business"
-    },
-    {
-      year: "2021",
-      title: "First Digital Platform",
-      description: "Launched our first digital invoicing system for pottery artisans"
-    },
-    {
-      year: "2022",
-      title: "Expansion",
-      description: "Extended services to 500+ pottery businesses across India"
-    },
-    {
-      year: "2023",
-      title: "Innovation",
-      description: "Introduced AI-powered inventory management for pottery businesses"
-    },
-    {
-      year: "2024",
-      title: "Market Leader",
-      description: "Became the leading digital platform for pottery business management in India"
-    }
-  ];
-
-  // Team members
-  const teamMembers = [
-    {
-      name: "Rajesh Kumar",
-      role: "Founder & CEO",
-      experience: "15+ years in traditional pottery",
-      avatar: "🧑‍💼"
-    },
-    {
-      name: "Priya Sharma",
-      role: "CTO",
-      experience: "12+ years in software development",
-      avatar: "👩‍💻"
-    },
-    {
-      name: "Arjun Reddy",
-      role: "Head of Operations",
-      experience: "10+ years in business operations",
-      avatar: "👨‍💼"
-    },
-    {
-      name: "Meera Patel",
-      role: "Lead Designer",
-      experience: "8+ years in UX/UI design",
-      avatar: "👩‍🎨"
-    }
-  ];
-
-  // Company values
   const values = [
     {
-      icon: <HeartOutlined />,
-      title: "Passion for Pottery",
-      description: "We deeply respect and celebrate the ancient art of pottery making",
-      color: "#ff4d4f"
+      title: 'Excellence',
+      description: 'We strive for excellence in everything we do, from training programs to placement services.',
+      icon: '⭐'
     },
     {
-      icon: <RocketOutlined />,
-      title: "Innovation",
-      description: "Bringing cutting-edge technology to traditional pottery businesses",
-      color: "#1890ff"
+      title: 'Innovation',
+      description: 'We continuously innovate our methods to stay ahead of industry trends and technologies.',
+      icon: '💡'
     },
     {
-      icon: <SafetyOutlined />,
-      title: "Trust & Reliability",
-      description: "Building lasting relationships with our pottery artisan partners",
-      color: "#52c41a"
+      title: 'Integrity',
+      description: 'We maintain the highest standards of honesty and transparency in all our interactions.',
+      icon: '🤝'
     },
     {
-      icon: <GlobalOutlined />,
-      title: "Global Vision",
-      description: "Taking Indian pottery craftsmanship to the world through technology",
-      color: "#fa8c16"
+      title: 'Growth',
+      description: 'We are committed to the continuous growth and development of our students and partners.',
+      icon: '📈'
     }
   ];
 
+  // New data arrays
+  const milestones = [
+    {
+      year: '2019',
+      title: 'Company Founded',
+      description: 'Started with a vision to bridge the gap between tech education and industry needs.',
+      stats: ['10 Students', '1 Course', '2 Founders']
+    },
+    {
+      year: '2020',
+      title: 'First 100 Placements',
+      description: 'Achieved our first major milestone with 100% placement rate in top companies.',
+      stats: ['100 Placements', '95% Success Rate', '5 Courses']
+    },
+    {
+      year: '2021',
+      title: 'Corporate Partnerships',
+      description: 'Established partnerships with 50+ leading tech companies for direct placements.',
+      stats: ['50+ Partners', '500 Students', '15 Courses']
+    },
+    {
+      year: '2022',
+      title: 'National Expansion',
+      description: 'Expanded operations to multiple cities with remote learning capabilities.',
+      stats: ['5 Cities', '1000+ Alumni', '25 Courses']
+    },
+    {
+      year: '2023',
+      title: 'Industry Recognition',
+      description: 'Received "Best Tech Training Institute" award and achieved unicorn valuation.',
+      stats: ['10 Awards', '2500+ Graduates', 'Unicorn Status']
+    },
+    {
+      year: '2024',
+      title: 'Global Reach',
+      description: 'Launched international programs and AI-powered learning platform.',
+      stats: ['Global Presence', '5000+ Students', 'AI Platform']
+    }
+  ];
+
+  const culturePoints = [
+    {
+      icon: '🎯',
+      title: 'Student-Centric Approach',
+      description: 'Every decision we make prioritizes student success and career advancement.'
+    },
+    {
+      icon: '🤝',
+      title: 'Industry Collaboration',
+      description: 'Close partnerships with tech companies ensure our curriculum stays relevant.'
+    },
+    {
+      icon: '💡',
+      title: 'Innovation in Learning',
+      description: 'We continuously evolve our teaching methods using latest educational technology.'
+    },
+    {
+      icon: '🌟',
+      title: 'Excellence Standards',
+      description: 'We maintain the highest quality standards in instruction and placement services.'
+    },
+    {
+      icon: '🔄',
+      title: 'Continuous Improvement',
+      description: 'Regular feedback loops help us enhance our programs and services constantly.'
+    },
+    {
+      icon: '🌍',
+      title: 'Global Perspective',
+      description: 'Our training prepares students for both local and international opportunities.'
+    }
+  ];
+
+  const awards = [
+    {
+      icon: '🏆',
+      title: 'Best Tech Training Institute 2023',
+      year: '2023',
+      description: 'Recognized for outstanding contribution to tech education and placement services.'
+    },
+    {
+      icon: '🥇',
+      title: 'Excellence in Placement Services',
+      year: '2023',
+      description: 'Awarded for achieving highest placement rates in the industry.'
+    },
+    {
+      icon: '⭐',
+      title: 'Student Choice Award',
+      year: '2022',
+      description: 'Voted as the preferred training institute by students and alumni.'
+    },
+    {
+      icon: '🎖️',
+      title: 'Innovation in Education',
+      year: '2022',
+      description: 'Recognized for innovative teaching methodologies and curriculum design.'
+    }
+  ];
+
+  const enhancedStoryText = [
+    "Founded in 2019, Datenwork emerged from a simple yet powerful vision: to democratize access to high-quality tech education and career opportunities. Our founders, having experienced the challenges of breaking into the tech industry firsthand, were determined to create a platform that would make this journey smoother for others.",
+    
+    "Starting with just 10 students in our first cohort, we've grown to become one of the most trusted names in tech training and placement. Our success is measured not just in numbers, but in the success stories of our graduates who are now thriving in their dream careers at companies like Google, Amazon, Microsoft, and countless innovative startups.",
+    
+    "What sets us apart is our holistic approach to career transformation. We don't just teach technical skills - we mentor, guide, and support our students through every step of their journey. From the initial assessment to final placement, our dedicated team ensures that each student receives personalized attention and industry-relevant training.",
+    
+    "Our methodology combines theoretical knowledge with practical application, ensuring that our graduates are not just job-ready, but industry-leading professionals. We continuously update our curriculum based on industry trends and feedback from our corporate partners, maintaining our position at the forefront of tech education.",
+    
+    "Today, with over 5,000 successful placements, partnerships with 250+ companies, and a 97% placement rate, we continue to expand our impact. Our commitment to excellence has earned us numerous industry awards and recognition, but our greatest achievement remains the success of our students and the transformation of their careers."
+  ];
+
+  // Page wrapper styles
+  const aboutPageStyles = {
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    background: '#ffffff'
+  };
+
+  // Hero section styles
+  const aboutHeroStyles = {
+    padding: '120px 0 80px',
+    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    color: 'white',
+    position: 'relative',
+    overflow: 'hidden'
+  };
+
+  const heroOverlayStyles = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: `
+      radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>')
+    `,
+    zIndex: 0
+  };
+
+  const containerStyles = {
+    maxWidth: '1200px',
+    margin: '0 auto',
+    padding: window.innerWidth <= 768 ? '0 16px' : '0 24px',
+    position: 'relative',
+    zIndex: 1
+  };
+
+  const heroContentStyles = {
+    textAlign: 'center',
+    maxWidth: '800px',
+    margin: '0 auto'
+  };
+
+  const heroTitleStyles = {
+    fontSize: window.innerWidth <= 768 ? '2.5rem' : '3.5rem',
+    marginBottom: '24px',
+    color: 'white',
+    fontWeight: '700',
+    textShadow: '0 4px 8px rgba(0, 0, 0, 0.3)',
+    fontFamily: "'Poppins', sans-serif"
+  };
+
+  const heroDescriptionStyles = {
+    fontSize: '1.25rem',
+    lineHeight: '1.8',
+    color: 'rgba(255,255,255,0.9)',
+    textShadow: '0 2px 4px rgba(0, 0, 0, 0.2)'
+  };
+
+  // Story section styles
+  const storySectionStyles = {
+    padding: '80px 0',
+    background: '#ffffff'
+  };
+
+  const storyGridStyles = {
+    display: 'grid',
+    gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(auto-fit, minmax(300px, 1fr))',
+    gap: '40px',
+    alignItems: 'center'
+  };
+
+  const storyContentStyles = {
+    order: window.innerWidth <= 768 ? 1 : 0
+  };
+
+  const storyTitleStyles = {
+    fontSize: '2.5rem',
+    marginBottom: '24px',
+    color: '#1a202c',
+    fontWeight: '600',
+    fontFamily: "'Poppins', sans-serif"
+  };
+
+  const storyTextStyles = {
+    fontSize: '1.1rem',
+    lineHeight: '1.8',
+    marginBottom: '20px',
+    color: '#4a5568'
+  };
+
+  const storyVisualStyles = {
+    background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+    height: '400px',
+    borderRadius: '16px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '4rem',
+    order: window.innerWidth <= 768 ? 0 : 1
+  };
+
+  // Mission & Vision Section Styles
+  const missionVisionSectionStyles = {
+    padding: '80px 0',
+    background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)'
+  };
+
+  const missionVisionGridStyles = {
+    display: 'grid',
+    gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(2, 1fr)',
+    gap: '40px'
+  };
+
+  const missionCardStyles = {
+    background: '#ffffff',
+    padding: '40px',
+    borderRadius: '16px',
+    boxShadow: '0 8px 25px rgba(0, 0, 0, 0.1)',
+    textAlign: 'center',
+    border: '1px solid #e2e8f0',
+    transition: 'all 0.3s ease'
+  };
+
+  const visionCardStyles = {
+    background: '#ffffff',
+    padding: '40px',
+    borderRadius: '16px',
+    boxShadow: '0 8px 25px rgba(0, 0, 0, 0.1)',
+    textAlign: 'center',
+    border: '1px solid #e2e8f0',
+    transition: 'all 0.3s ease'
+  };
+
+  const missionIconStyles = {
+    fontSize: '4rem',
+    marginBottom: '24px',
+    display: 'block'
+  };
+
+  const visionIconStyles = {
+    fontSize: '4rem',
+    marginBottom: '24px',
+    display: 'block'
+  };
+
+  const missionTitleStyles = {
+    fontSize: '2rem',
+    fontWeight: '600',
+    color: '#1a202c',
+    marginBottom: '20px'
+  };
+
+  const visionTitleStyles = {
+    fontSize: '2rem',
+    fontWeight: '600',
+    color: '#1a202c',
+    marginBottom: '20px'
+  };
+
+  const missionTextStyles = {
+    fontSize: '1.1rem',
+    lineHeight: '1.8',
+    color: '#4a5568'
+  };
+
+  const visionTextStyles = {
+    fontSize: '1.1rem',
+    lineHeight: '1.8',
+    color: '#4a5568'
+  };
+
+  // Milestones Section Styles
+  const milestonesSectionStyles = {
+    padding: '80px 0',
+    background: '#ffffff'
+  };
+
+  const milestonesHeaderStyles = {
+    textAlign: 'center',
+    marginBottom: '60px'
+  };
+
+  const milestonesTitleStyles = {
+    fontSize: '2.5rem',
+    marginBottom: '16px',
+    color: '#1a202c',
+    fontWeight: '600',
+    fontFamily: "'Poppins', sans-serif"
+  };
+
+  const milestonesSubtitleStyles = {
+    fontSize: '1.1rem',
+    color: '#4a5568',
+    maxWidth: '600px',
+    margin: '0 auto'
+  };
+
+  const milestonesTimelineStyles = {
+    maxWidth: '800px',
+    margin: '0 auto',
+    position: 'relative'
+  };
+
+  const milestoneItemStyles = {
+    display: 'flex',
+    marginBottom: '40px',
+    alignItems: 'flex-start',
+    gap: '30px',
+    flexDirection: window.innerWidth <= 768 ? 'column' : 'row'
+  };
+
+  const milestoneYearStyles = {
+    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    color: 'white',
+    padding: '12px 24px',
+    borderRadius: '25px',
+    fontWeight: '700',
+    fontSize: '1.1rem',
+    minWidth: '100px',
+    textAlign: 'center',
+    boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)'
+  };
+
+  const milestoneContentStyles = {
+    flex: 1,
+    background: '#f9fafb',
+    padding: '24px',
+    borderRadius: '12px',
+    border: '1px solid #e2e8f0'
+  };
+
+  const milestoneEventTitleStyles = {
+    fontSize: '1.3rem',
+    fontWeight: '600',
+    color: '#1a202c',
+    marginBottom: '8px'
+  };
+
+  const milestoneEventDescStyles = {
+    color: '#4a5568',
+    lineHeight: '1.6',
+    marginBottom: '16px'
+  };
+
+  const milestoneStatsStyles = {
+    display: 'flex',
+    gap: '12px',
+    flexWrap: 'wrap'
+  };
+
+  const milestoneStatStyles = {
+    background: '#667eea',
+    color: 'white',
+    padding: '4px 12px',
+    borderRadius: '12px',
+    fontSize: '0.875rem',
+    fontWeight: '500'
+  };
+
+  // Values section styles
+  const valuesSectionStyles = {
+    padding: '80px 0',
+    background: '#f7fafc'
+  };
+
+  const valuesHeaderStyles = {
+    textAlign: 'center',
+    marginBottom: '60px'
+  };
+
+  const valuesTitleStyles = {
+    fontSize: '2.5rem',
+    marginBottom: '16px',
+    color: '#1a202c',
+    fontWeight: '600',
+    fontFamily: "'Poppins', sans-serif"
+  };
+
+  const valuesSubtitleStyles = {
+    fontSize: '1.1rem',
+    color: '#4a5568',
+    maxWidth: '600px',
+    margin: '0 auto'
+  };
+
+  const valuesGridStyles = {
+    display: 'grid',
+    gridTemplateColumns: window.innerWidth <= 768 
+      ? '1fr' 
+      : 'repeat(auto-fit, minmax(250px, 1fr))',
+    gap: '30px'
+  };
+
+  const valueCardStyles = (isHovered) => ({
+    textAlign: 'center',
+    padding: '40px 20px',
+    background: '#ffffff',
+    borderRadius: '16px',
+    boxShadow: isHovered 
+      ? '0 8px 25px rgba(0, 0, 0, 0.15)' 
+      : '0 4px 6px rgba(0, 0, 0, 0.05)',
+    border: '1px solid #e2e8f0',
+    transition: 'all 0.3s ease',
+    transform: isHovered ? 'translateY(-5px)' : 'translateY(0)',
+    cursor: 'pointer'
+  });
+
+  const valueIconStyles = {
+    fontSize: '3rem',
+    marginBottom: '20px',
+    display: 'block'
+  };
+
+  const valueTitleStyles = {
+    fontSize: '1.5rem',
+    marginBottom: '16px',
+    color: '#1a202c',
+    fontWeight: '600'
+  };
+
+  const valueDescriptionStyles = {
+    color: '#4a5568',
+    lineHeight: '1.6'
+  };
+
+  // Team section styles
+  const teamSectionStyles = {
+    padding: '80px 0',
+    background: '#ffffff'
+  };
+
+  const teamHeaderStyles = {
+    textAlign: 'center',
+    marginBottom: '60px'
+  };
+
+  const teamTitleStyles = {
+    fontSize: '2.5rem',
+    marginBottom: '16px',
+    color: '#1a202c',
+    fontWeight: '600',
+    fontFamily: "'Poppins', sans-serif"
+  };
+
+  const teamSubtitleStyles = {
+    fontSize: '1.1rem',
+    color: '#4a5568',
+    maxWidth: '600px',
+    margin: '0 auto'
+  };
+
+  const teamGridStyles = {
+    display: 'grid',
+    gridTemplateColumns: window.innerWidth <= 768 
+      ? '1fr' 
+      : window.innerWidth <= 1024 
+      ? 'repeat(2, 1fr)' 
+      : 'repeat(3, 1fr)',
+    gap: '30px',
+    maxWidth: '1200px',
+    margin: '0 auto'
+  };
+
+  const teamCardStyles = (isHovered) => ({
+    textAlign: 'center',
+    padding: '40px 30px',
+    background: '#ffffff',
+    borderRadius: '16px',
+    boxShadow: isHovered 
+      ? '0 8px 25px rgba(0, 0, 0, 0.15)' 
+      : '0 4px 6px rgba(0, 0, 0, 0.05)',
+    border: '1px solid #e2e8f0',
+    transition: 'all 0.3s ease',
+    transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
+    cursor: 'pointer'
+  });
+
+  const teamImageStyles = {
+    fontSize: '4rem',
+    marginBottom: '20px',
+    display: 'block'
+  };
+
+  const teamNameStyles = {
+    fontSize: '1.5rem',
+    marginBottom: '8px',
+    color: '#1a202c',
+    fontWeight: '600'
+  };
+
+  const teamRoleStyles = {
+    fontSize: '1.1rem',
+    marginBottom: '16px',
+    color: '#667eea',
+    fontWeight: '600'
+  };
+
+  const teamExperienceStyles = {
+    marginBottom: '20px',
+    color: '#4a5568'
+  };
+
+  const specialtiesStyles = {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '8px',
+    justifyContent: 'center'
+  };
+
+  const specialtyTagStyles = {
+    background: '#e6fffa',
+    color: '#00b5a5',
+    padding: '4px 12px',
+    borderRadius: '20px',
+    fontSize: '0.9rem',
+    fontWeight: '500'
+  };
+
+  // Culture Section Styles
+  const cultureSectionStyles = {
+    padding: '80px 0',
+    background: 'linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%)'
+  };
+
+  const cultureHeaderStyles = {
+    textAlign: 'center',
+    marginBottom: '60px'
+  };
+
+  const cultureTitleStyles = {
+    fontSize: '2.5rem',
+    marginBottom: '16px',
+    color: '#1a202c',
+    fontWeight: '600',
+    fontFamily: "'Poppins', sans-serif"
+  };
+
+  const cultureSubtitleStyles = {
+    fontSize: '1.1rem',
+    color: '#4a5568',
+    maxWidth: '600px',
+    margin: '0 auto'
+  };
+
+  const cultureGridStyles = {
+    display: 'grid',
+    gridTemplateColumns: window.innerWidth <= 768 
+      ? '1fr' 
+      : window.innerWidth <= 1024 
+      ? 'repeat(2, 1fr)' 
+      : 'repeat(3, 1fr)',
+    gap: '30px'
+  };
+
+  const cultureItemStyles = {
+    background: '#ffffff',
+    padding: '30px',
+    borderRadius: '16px',
+    textAlign: 'center',
+    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.05)',
+    border: '1px solid #e2e8f0',
+    transition: 'all 0.3s ease'
+  };
+
+  const cultureIconStyles = {
+    fontSize: '3rem',
+    marginBottom: '20px',
+    display: 'block'
+  };
+
+  const cultureItemTitleStyles = {
+    fontSize: '1.25rem',
+    fontWeight: '600',
+    color: '#1a202c',
+    marginBottom: '12px'
+  };
+
+  const cultureItemDescStyles = {
+    color: '#4a5568',
+    lineHeight: '1.6'
+  };
+
+  // Recognition Section Styles
+  const recognitionSectionStyles = {
+    padding: '80px 0',
+    background: '#ffffff'
+  };
+
+  const recognitionHeaderStyles = {
+    textAlign: 'center',
+    marginBottom: '60px'
+  };
+
+  const recognitionTitleStyles = {
+    fontSize: '2.5rem',
+    marginBottom: '16px',
+    color: '#1a202c',
+    fontWeight: '600',
+    fontFamily: "'Poppins', sans-serif"
+  };
+
+  const recognitionSubtitleStyles = {
+    fontSize: '1.1rem',
+    color: '#4a5568',
+    maxWidth: '600px',
+    margin: '0 auto'
+  };
+
+  const awardsGridStyles = {
+    display: 'grid',
+    gridTemplateColumns: window.innerWidth <= 768 
+      ? '1fr' 
+      : 'repeat(2, 1fr)',
+    gap: '30px',
+    maxWidth: '800px',
+    margin: '0 auto'
+  };
+
+  const awardCardStyles = {
+    background: 'linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%)',
+    padding: '30px',
+    borderRadius: '16px',
+    textAlign: 'center',
+    border: '1px solid #fdba74',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 4px 15px rgba(245, 158, 11, 0.2)'
+  };
+
+  const awardIconStyles = {
+    fontSize: '3rem',
+    marginBottom: '16px',
+    display: 'block'
+  };
+
+  const awardTitleStyles = {
+    fontSize: '1.2rem',
+    fontWeight: '600',
+    color: '#1a202c',
+    marginBottom: '8px'
+  };
+
+  const awardYearStyles = {
+    fontSize: '1rem',
+    color: '#f59e0b',
+    fontWeight: '600',
+    marginBottom: '12px'
+  };
+
+  const awardDescStyles = {
+    fontSize: '0.95rem',
+    color: '#4a5568',
+    lineHeight: '1.6'
+  };
+
+  // CTA section styles
+  const ctaSectionStyles = {
+    padding: '80px 0',
+    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    color: 'white',
+    position: 'relative',
+    overflow: 'hidden'
+  };
+
+  const ctaOverlayStyles = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="circuit" width="15" height="15" patternUnits="userSpaceOnUse"><path d="M 0 7 L 3 7 L 3 5 L 12 5 L 12 10 L 15 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23circuit)"/></svg>')`,
+    opacity: 0.3,
+    zIndex: 0
+  };
+
+  const ctaContentStyles = {
+    textAlign: 'center',
+    position: 'relative',
+    zIndex: 1
+  };
+
+  const ctaTitleStyles = {
+    fontSize: '2.5rem',
+    marginBottom: '24px',
+    color: 'white',
+    fontWeight: '700',
+    textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+    fontFamily: "'Poppins', sans-serif"
+  };
+
+  const ctaTextStyles = {
+    fontSize: '1.2rem',
+    marginBottom: '40px',
+    color: 'rgba(255,255,255,0.9)',
+    maxWidth: '600px',
+    margin: '0 auto 40px',
+    lineHeight: '1.6'
+  };
+
+  const ctaActionsStyles = {
+    display: 'flex',
+    gap: '20px',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
+    alignItems: window.innerWidth <= 768 ? 'center' : 'flex-start'
+  };
+
   return (
-    <div style={{ padding: screens.xs ? 12 : 24, backgroundColor: '#fafafa', minHeight: '100vh' }}>
+    <div style={aboutPageStyles}>
+      <Header />
+      
       {/* Hero Section */}
-      <div style={{ 
-        background: 'linear-gradient(135deg, #8b4513 0%, #a0522d 100%)', 
-        color: 'white', 
-        padding: screens.xs ? '40px 20px' : '80px 40px', 
-        borderRadius: '16px',
-        marginBottom: 40,
-        textAlign: 'center',
-        position: 'relative',
-        overflow: 'hidden'
-      }}>
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'url("data:image/svg+xml,%3Csvg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23ffffff" fill-opacity="0.1"%3E%3Ccircle cx="3" cy="3" r="3"/%3E%3C/g%3E%3C/svg%3E")',
-          opacity: 0.3
-        }} />
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{
-            width: '80px',
-            height: '80px',
-            background: 'white',
-            borderRadius: '20px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#8b4513',
-            fontWeight: 'bold',
-            fontSize: '32px',
-            margin: '0 auto 20px'
-          }}>
-            🏺
+      <section style={aboutHeroStyles}>
+        <div style={heroOverlayStyles} />
+        <div style={containerStyles}>
+          <div style={heroContentStyles}>
+            <h1 style={heroTitleStyles}>About Datenwork</h1>
+            <p style={heroDescriptionStyles}>
+              We are a leading technology training and placement company dedicated to bridging the gap between talent and opportunity. 
+              With over 5 years of experience, we've successfully placed 500+ professionals in top tech companies worldwide.
+            </p>
           </div>
-          <Title level={1} style={{ margin: 0, color: 'white', fontSize: screens.xs ? '2.5rem' : '3.5rem' }}>
-            About Mitti Arts
-          </Title>
-          <Paragraph style={{ 
-            color: 'rgba(255,255,255,0.9)', 
-            fontSize: screens.xs ? '16px' : '20px', 
-            margin: '20px 0 0',
-            maxWidth: '800px',
-            marginLeft: 'auto',
-            marginRight: 'auto'
-          }}>
-            Bridging the gap between traditional pottery craftsmanship and modern business technology. 
-            We empower pottery artisans with digital tools to grow their businesses while preserving 
-            the ancient art of pottery making.
-          </Paragraph>
         </div>
-      </div>
+      </section>
 
-      {/* Company Statistics */}
-      <Row gutter={[16, 16]} style={{ marginBottom: 40 }}>
-        <Col xs={24} sm={12} md={6}>
-          <Card style={{ textAlign: 'center', border: '2px solid #8b4513' }}>
-            <Statistic
-              title="Pottery Businesses Served"
-              value={500}
-              suffix="+"
-              prefix={<TrophyOutlined />}
-              valueStyle={{ color: '#8b4513', fontSize: '2rem' }}
-            />
-          </Card>
-        </Col>
-        <Col xs={24} sm={12} md={6}>
-          <Card style={{ textAlign: 'center', border: '2px solid #52c41a' }}>
-            <Statistic
-              title="Invoices Generated"
-              value={25000}
-              suffix="+"
-              prefix={<BarChartOutlined />}
-              valueStyle={{ color: '#52c41a', fontSize: '2rem' }}
-            />
-          </Card>
-        </Col>
-        <Col xs={24} sm={12} md={6}>
-          <Card style={{ textAlign: 'center', border: '2px solid #1890ff' }}>
-            <Statistic
-              title="Cities Covered"
-              value={50}
-              suffix="+"
-              prefix={<GlobalOutlined />}
-              valueStyle={{ color: '#1890ff', fontSize: '2rem' }}
-            />
-          </Card>
-        </Col>
-        <Col xs={24} sm={12} md={6}>
-          <Card style={{ textAlign: 'center', border: '2px solid #fa8c16' }}>
-            <Statistic
-              title="Happy Artisans"
-              value={1200}
-              suffix="+"
-              prefix={<HeartOutlined />}
-              valueStyle={{ color: '#fa8c16', fontSize: '2rem' }}
-            />
-          </Card>
-        </Col>
-      </Row>
-
-      {/* Our Story */}
-      <Row gutter={[32, 32]} style={{ marginBottom: 40 }}>
-        <Col xs={24} lg={12}>
-          <Card style={{ height: '100%' }}>
-            <Title level={2} style={{ color: '#8b4513' }}>
-              <BookOutlined /> Our Story
-            </Title>
-            <Paragraph style={{ fontSize: '16px', lineHeight: '1.8' }}>
-              Founded in 2020, Mitti Arts emerged from a deep appreciation for India's rich pottery tradition 
-              and a vision to empower pottery artisans with modern business tools. Our founders, coming from 
-              both traditional pottery backgrounds and cutting-edge technology, recognized the need to bridge 
-              this gap.
-            </Paragraph>
-            <Paragraph style={{ fontSize: '16px', lineHeight: '1.8' }}>
-              What started as a simple digital invoicing system has evolved into a comprehensive business 
-              management platform that serves hundreds of pottery businesses across India. We've helped 
-              traditional artisans increase their revenue by up to 300% while maintaining the authenticity 
-              of their craft.
-            </Paragraph>
-            <Paragraph style={{ fontSize: '16px', lineHeight: '1.8' }}>
-              Today, Mitti Arts stands as a testament to how technology can preserve and enhance traditional 
-              arts and crafts, creating sustainable livelihoods for artisan communities while bringing 
-              beautiful pottery to customers worldwide.
-            </Paragraph>
-          </Card>
-        </Col>
-        <Col xs={24} lg={12}>
-          <Card style={{ height: '100%' }}>
-            <Title level={2} style={{ color: '#8b4513' }}>
-              <RocketOutlined /> Our Mission
-            </Title>
-            <div style={{ marginBottom: 24 }}>
-              <Tag color="#8b4513" style={{ fontSize: '14px', padding: '8px 16px' }}>
-                🎯 Empower Artisans
-              </Tag>
-              <Tag color="#52c41a" style={{ fontSize: '14px', padding: '8px 16px', marginTop: 8 }}>
-                🚀 Drive Innovation
-              </Tag>
-              <Tag color="#1890ff" style={{ fontSize: '14px', padding: '8px 16px', marginTop: 8 }}>
-                🌍 Global Reach
-              </Tag>
-            </div>
-            <Paragraph style={{ fontSize: '16px', lineHeight: '1.8' }}>
-              <strong>To democratize business technology for pottery artisans</strong> by providing 
-              accessible, affordable, and culturally-sensitive digital tools that help them grow their 
-              businesses without losing their traditional identity.
-            </Paragraph>
-            <Divider />
-            <Title level={4} style={{ color: '#8b4513' }}>Our Vision</Title>
-            <Paragraph style={{ fontSize: '16px', lineHeight: '1.8' }}>
-              To become the global platform that connects pottery artisans with customers worldwide, 
-              creating a sustainable ecosystem where traditional craftsmanship thrives in the digital age.
-            </Paragraph>
-          </Card>
-        </Col>
-      </Row>
-
-      {/* Company Values */}
-      <Card style={{ marginBottom: 40 }}>
-        <Title level={2} style={{ textAlign: 'center', color: '#8b4513', marginBottom: 32 }}>
-          Our Core Values
-        </Title>
-        <Row gutter={[24, 24]}>
-          {values.map((value, index) => (
-            <Col xs={24} sm={12} md={6} key={index}>
-              <div style={{ textAlign: 'center', padding: '24px' }}>
-                <div style={{
-                  width: '60px',
-                  height: '60px',
-                  borderRadius: '50%',
-                  background: value.color,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  margin: '0 auto 16px',
-                  fontSize: '24px',
-                  color: 'white'
-                }}>
-                  {value.icon}
-                </div>
-                <Title level={4} style={{ color: value.color, marginBottom: 8 }}>
-                  {value.title}
-                </Title>
-                <Text style={{ fontSize: '14px', color: '#666' }}>
-                  {value.description}
-                </Text>
-              </div>
-            </Col>
-          ))}
-        </Row>
-      </Card>
-
-      {/* Company Timeline */}
-      <Row gutter={[32, 32]} style={{ marginBottom: 40 }}>
-        <Col xs={24} lg={14}>
-          <Card>
-            <Title level={2} style={{ color: '#8b4513' }}>
-              <TrophyOutlined /> Our Journey
-            </Title>
-            <Timeline
-              mode={screens.xs ? 'left' : 'alternate'}
-              items={milestones.map((milestone, index) => ({
-                color: index === milestones.length - 1 ? '#52c41a' : '#8b4513',
-                children: (
-                  <div>
-                    <Title level={4} style={{ color: '#8b4513', margin: 0 }}>
-                      {milestone.year}
-                    </Title>
-                    <Title level={5} style={{ margin: '8px 0 4px' }}>
-                      {milestone.title}
-                    </Title>
-                    <Text style={{ color: '#666' }}>
-                      {milestone.description}
-                    </Text>
-                  </div>
-                )
-              }))}
-            />
-          </Card>
-        </Col>
-        <Col xs={24} lg={10}>
-          <Card>
-            <Title level={2} style={{ color: '#8b4513' }}>
-              <TeamOutlined /> Our Team
-            </Title>
-            <Space direction="vertical" style={{ width: '100%' }} size="large">
-              {teamMembers.map((member, index) => (
-                <div key={index} style={{ 
-                  padding: '16px', 
-                  border: '1px solid #f0f0f0', 
-                  borderRadius: '8px',
-                  background: '#fafafa'
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                    <div style={{ 
-                      fontSize: '32px',
-                      width: '50px',
-                      height: '50px',
-                      borderRadius: '50%',
-                      background: '#8b4513',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}>
-                      {member.avatar}
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <Title level={5} style={{ margin: 0 }}>{member.name}</Title>
-                      <Text style={{ color: '#8b4513', fontWeight: 'bold' }}>
-                        {member.role}
-                      </Text>
-                      <br />
-                      <Text style={{ fontSize: '12px', color: '#666' }}>
-                        {member.experience}
-                      </Text>
-                    </div>
-                  </div>
-                </div>
+      {/* Enhanced Story Section */}
+      <section style={storySectionStyles}>
+        <div style={containerStyles}>
+          <div style={storyGridStyles}>
+            <div style={storyContentStyles}>
+              <h2 style={storyTitleStyles}>Our Story</h2>
+              {enhancedStoryText.map((paragraph, index) => (
+                <p key={index} style={storyTextStyles}>
+                  {paragraph}
+                </p>
               ))}
-            </Space>
-          </Card>
-        </Col>
-      </Row>
-
-      {/* Tech Training & Courses Section */}
-      <Card style={{ marginBottom: 40 }}>
-        <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <Title level={2} style={{ color: '#8b4513' }}>
-            <SafetyCertificateOutlined /> Tech Training & Professional Courses in India
-          </Title>
-          <Paragraph style={{ fontSize: '16px', color: '#666', maxWidth: '800px', margin: '0 auto' }}>
-            As a technology-driven company, we believe in continuous learning. Here are some of the best 
-            tech training programs and professional courses available in India for aspiring developers, 
-            data scientists, and tech professionals.
-          </Paragraph>
-        </div>
-
-        <Row gutter={[24, 24]}>
-          {techCourses.map((category, index) => (
-            <Col xs={24} lg={12} key={index}>
-              <Card 
-                size="small" 
-                style={{ 
-                  border: `2px solid ${category.color}`,
-                  borderRadius: '12px'
-                }}
-              >
-                <div style={{ 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  gap: 12, 
-                  marginBottom: 16 
-                }}>
-                  <div style={{
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '8px',
-                    background: category.color,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'white',
-                    fontSize: '18px'
-                  }}>
-                    {category.icon}
-                  </div>
-                  <Title level={4} style={{ margin: 0, color: category.color }}>
-                    {category.category}
-                  </Title>
-                </div>
-                
-                <Space direction="vertical" style={{ width: '100%' }} size="small">
-                  {category.courses.map((course, courseIndex) => (
-                    <div 
-                      key={courseIndex}
-                      style={{ 
-                        padding: '12px',
-                        background: '#fafafa',
-                        borderRadius: '6px',
-                        border: '1px solid #f0f0f0'
-                      }}
-                    >
-                      <div style={{ 
-                        display: 'flex', 
-                        justifyContent: 'space-between', 
-                        alignItems: 'flex-start',
-                        marginBottom: 4
-                      }}>
-                        <Text strong style={{ color: '#333' }}>{course.name}</Text>
-                        <Tag color={category.color} style={{ fontSize: '10px' }}>
-                          {course.price}
-                        </Tag>
-                      </div>
-                      <div style={{ fontSize: '12px', color: '#666' }}>
-                        <Text>Provider: <strong>{course.provider}</strong></Text>
-                        <br />
-                        <Text>Duration: <strong>{course.duration}</strong></Text>
-                      </div>
-                    </div>
-                  ))}
-                </Space>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-
-        <div style={{ 
-          textAlign: 'center', 
-          marginTop: 32, 
-          padding: '24px',
-          background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
-          borderRadius: '12px',
-          border: '1px solid #1890ff'
-        }}>
-          <Title level={4} style={{ color: '#1890ff', marginBottom: 16 }}>
-            💡 Why We Support Tech Education
-          </Title>
-          <Paragraph style={{ fontSize: '16px', color: '#666', marginBottom: 16 }}>
-            At Mitti Arts, we believe that technology should be accessible to everyone. Just as we're 
-            digitizing traditional pottery businesses, we encourage continuous learning and skill 
-            development in the tech industry.
-          </Paragraph>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 16, flexWrap: 'wrap' }}>
-            <Tag color="#1890ff" style={{ padding: '8px 16px' }}>🚀 Innovation</Tag>
-            <Tag color="#52c41a" style={{ padding: '8px 16px' }}>📚 Learning</Tag>
-            <Tag color="#fa8c16" style={{ padding: '8px 16px' }}>💼 Career Growth</Tag>
-            <Tag color="#722ed1" style={{ padding: '8px 16px' }}>🌟 Excellence</Tag>
+              <Button variant="primary">Learn More About Our Journey</Button>
+            </div>
+            <div style={storyVisualStyles}>
+              🚀
+            </div>
           </div>
         </div>
-      </Card>
+      </section>
 
-      {/* Call to Action */}
-      <Card style={{ 
-        textAlign: 'center',
-        background: 'linear-gradient(135deg, #8b4513 0%, #a0522d 100%)',
-        border: 'none',
-        color: 'white'
-      }}>
-        <Title level={2} style={{ color: 'white', marginBottom: 16 }}>
-          Ready to Transform Your Pottery Business?
-        </Title>
-        <Paragraph style={{ 
-          color: 'rgba(255,255,255,0.9)', 
-          fontSize: '18px',
-          marginBottom: 24,
-          maxWidth: '600px',
-          margin: '0 auto 24px'
-        }}>
-          Join hundreds of pottery artisans who have already digitized their businesses with Mitti Arts. 
-          Start your journey today and experience the perfect blend of tradition and technology.
-        </Paragraph>
-        <Space size="large" wrap>
-          <Button 
-            type="primary" 
-            size="large"
-            style={{ 
-              background: 'white',
-              borderColor: 'white',
-              color: '#8b4513',
-              fontWeight: 'bold',
-              height: '48px',
-              padding: '0 32px'
-            }}
-          >
-            Get Started Today
-          </Button>
-          <Button 
-            type="default" 
-            size="large"
-            style={{ 
-              background: 'transparent',
-              borderColor: 'white',
-              color: 'white',
-              fontWeight: 'bold',
-              height: '48px',
-              padding: '0 32px'
-            }}
-          >
-            Contact Us
-          </Button>
-        </Space>
-      </Card>
+      {/* Mission & Vision Section */}
+      <section style={missionVisionSectionStyles}>
+        <div style={containerStyles}>
+          <div style={missionVisionGridStyles}>
+            <div style={missionCardStyles}>
+              <div style={missionIconStyles}>🎯</div>
+              <h3 style={missionTitleStyles}>Our Mission</h3>
+              <p style={missionTextStyles}>
+                To democratize access to high-quality technology education and create a bridge between 
+                talented individuals and leading tech companies. We believe that everyone deserves the 
+                opportunity to build a successful career in technology, regardless of their background 
+                or starting point.
+              </p>
+            </div>
+            <div style={visionCardStyles}>
+              <div style={visionIconStyles}>🔮</div>
+              <h3 style={visionTitleStyles}>Our Vision</h3>
+              <p style={visionTextStyles}>
+                To become the global leader in technology talent development, fostering a world where 
+                skilled professionals drive innovation and businesses thrive through strategic technology 
+                partnerships. We envision a future where the gap between education and industry is 
+                completely eliminated.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Milestones Section */}
+      <section style={milestonesSectionStyles}>
+        <div style={containerStyles}>
+          <div style={milestonesHeaderStyles}>
+            <h2 style={milestonesTitleStyles}>Our Journey & Milestones</h2>
+            <p style={milestonesSubtitleStyles}>
+              Key achievements that mark our growth and impact in the tech education industry
+            </p>
+          </div>
+          <div style={milestonesTimelineStyles}>
+            {milestones.map((milestone, index) => (
+              <div key={index} style={milestoneItemStyles}>
+                <div style={milestoneYearStyles}>{milestone.year}</div>
+                <div style={milestoneContentStyles}>
+                  <h4 style={milestoneEventTitleStyles}>{milestone.title}</h4>
+                  <p style={milestoneEventDescStyles}>{milestone.description}</p>
+                  <div style={milestoneStatsStyles}>
+                    {milestone.stats?.map((stat, idx) => (
+                      <span key={idx} style={milestoneStatStyles}>{stat}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Values Section */}
+      <section style={valuesSectionStyles}>
+        <div style={containerStyles}>
+          <div style={valuesHeaderStyles}>
+            <h2 style={valuesTitleStyles}>Our Values</h2>
+            <p style={valuesSubtitleStyles}>
+              Our core values guide every decision we make and every relationship we build
+            </p>
+          </div>
+          <div style={valuesGridStyles}>
+            {values.map((value, index) => (
+              <Card 
+                key={value.title} 
+                style={valueCardStyles(hoveredValue === index)}
+                hover={false}
+                onMouseEnter={() => setHoveredValue(index)}
+                onMouseLeave={() => setHoveredValue(null)}
+              >
+                <div style={valueIconStyles}>{value.icon}</div>
+                <h3 style={valueTitleStyles}>{value.title}</h3>
+                <p style={valueDescriptionStyles}>{value.description}</p>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Enhanced Team Section */}
+      <section style={teamSectionStyles}>
+        <div style={containerStyles}>
+          <div style={teamHeaderStyles}>
+            <h2 style={teamTitleStyles}>Meet Our Leadership Team</h2>
+            <p style={teamSubtitleStyles}>
+              Experienced professionals driving innovation and excellence in tech education
+            </p>
+          </div>
+          <div style={teamGridStyles}>
+            {team.map((member, index) => (
+              <Card 
+                key={member.id} 
+                style={teamCardStyles(hoveredTeamMember === member.id)}
+                hover={false}
+                onMouseEnter={() => setHoveredTeamMember(member.id)}
+                onMouseLeave={() => setHoveredTeamMember(null)}
+              >
+                <div style={teamImageStyles}>{member.image}</div>
+                <h3 style={teamNameStyles}>{member.name}</h3>
+                <p style={teamRoleStyles}>{member.role}</p>
+                <p style={teamExperienceStyles}>{member.experience}</p>
+                <div style={specialtiesStyles}>
+                  {member.specialties.map((specialty, i) => (
+                    <span key={i} style={specialtyTagStyles}>{specialty}</span>
+                  ))}
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Culture Section */}
+      <section style={cultureSectionStyles}>
+        <div style={containerStyles}>
+          <div style={cultureHeaderStyles}>
+            <h2 style={cultureTitleStyles}>Our Culture & Approach</h2>
+            <p style={cultureSubtitleStyles}>
+              The principles and practices that drive our success and student satisfaction
+            </p>
+          </div>
+          <div style={cultureGridStyles}>
+            {culturePoints.map((point, index) => (
+              <div key={index} style={cultureItemStyles}>
+                <div style={cultureIconStyles}>{point.icon}</div>
+                <h4 style={cultureItemTitleStyles}>{point.title}</h4>
+                <p style={cultureItemDescStyles}>{point.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Recognition Section */}
+      <section style={recognitionSectionStyles}>
+        <div style={containerStyles}>
+          <div style={recognitionHeaderStyles}>
+            <h2 style={recognitionTitleStyles}>Awards & Recognition</h2>
+            <p style={recognitionSubtitleStyles}>
+              Industry recognition for our commitment to excellence in tech education
+            </p>
+          </div>
+          <div style={awardsGridStyles}>
+            {awards.map((award, index) => (
+              <div key={index} style={awardCardStyles}>
+                <div style={awardIconStyles}>{award.icon}</div>
+                <h4 style={awardTitleStyles}>{award.title}</h4>
+                <p style={awardYearStyles}>{award.year}</p>
+                <p style={awardDescStyles}>{award.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section style={ctaSectionStyles}>
+        <div style={ctaOverlayStyles} />
+        <div style={containerStyles}>
+          <div style={ctaContentStyles}>
+            <h2 style={ctaTitleStyles}>Ready to Start Your Journey?</h2>
+            <p style={ctaTextStyles}>
+              Join thousands of successful professionals who transformed their careers with Datenwork
+            </p>
+            <div style={ctaActionsStyles}>
+              <Button variant="secondary" size="large">Browse Courses</Button>
+              <Button 
+                variant="outline" 
+                size="large" 
+                style={{ borderColor: 'white', color: 'white' }}
+              >
+                Contact Us
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Footer />
     </div>
   );
 };
 
-export default AboutUs;
+export default About;
