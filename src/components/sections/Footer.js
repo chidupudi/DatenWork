@@ -156,41 +156,7 @@ const Footer = () => {
             <p style={footerDescriptionStyles}>
               Empowering careers through technology education and strategic placements.
             </p>
-            <div style={socialLinksStyles}>
-              <a 
-                href="https://linkedin.com/company/datenwork" 
-                aria-label="LinkedIn" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={socialLinkStyles(0)}
-                onMouseEnter={() => setHoveredSocial(0)}
-                onMouseLeave={() => setHoveredSocial(null)}
-              >
-                💼
-              </a>
-              <a 
-                href="https://twitter.com/datenwork" 
-                aria-label="Twitter" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={socialLinkStyles(1)}
-                onMouseEnter={() => setHoveredSocial(1)}
-                onMouseLeave={() => setHoveredSocial(null)}
-              >
-                🐦
-              </a>
-              <a 
-                href="https://github.com/datenwork" 
-                aria-label="GitHub" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={socialLinkStyles(2)}
-                onMouseEnter={() => setHoveredSocial(2)}
-                onMouseLeave={() => setHoveredSocial(null)}
-              >
-                ⚡
-              </a>
-            </div>
+            
           </div>
           
           <div style={footerSectionStyles}>

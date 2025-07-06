@@ -4,14 +4,12 @@ import { Link, useLocation } from 'react-router-dom';
 // Import your logo file from its location
 import logoSrc from '../../assets/logo.png';
 
-// Logo colors for the dark professional theme
-const logoColors = {
-  teal: '#2d7a7a',
-  tealLight: '#368686', 
-  tealDark: '#1f5555',
-  orange: '#d4935c',
-  orangeLight: '#e6a972',
-  orangeDark: '#b8804a'
+// Professional 2-color theme for training & placements company
+const brandColors = {
+  primary: '#fff', // Professional blue (matching logo)
+  primaryDark: '#413C58', // Darker blue for depth
+  white: '#413C58',
+  whiteTransparent: '#413C58'
 };
 
 const Header = () => {
@@ -24,15 +22,15 @@ const Header = () => {
 
   const isActive = (path) => location.pathname === path;
 
-  // DARK PROFESSIONAL THEME STYLES
+  // PROFESSIONAL 2-COLOR THEME STYLES
   const headerStyles = {
     position: 'sticky',
     top: 0,
-    background: `linear-gradient(135deg, ${logoColors.tealDark} 0%, #1a1a1a 100%)`,
-    borderBottom: `2px solid ${logoColors.orange}`,
+    background: brandColors.primary,
+    borderBottom: `3px solid ${brandColors.primaryDark}`,
     zIndex: 100,
     transition: 'all 0.3s ease',
-    boxShadow: '0 4px 20px rgba(0,0,0,0.4)'
+    boxShadow: '0 4px 20px rgba(37, 99, 235, 0.15)'
   };
 
   const headerContainerStyles = {
@@ -49,14 +47,24 @@ const Header = () => {
     textDecoration: 'none',
     display: 'flex',
     alignItems: 'center',
+    gap: '16px',
     transition: 'transform 0.2s ease'
   };
 
   const logoImageStyles = {
-    height: '70px',
+    height: '50px',
     width: 'auto',
-    filter: 'brightness(1.1)', // Slightly brighten logo for dark background
+    filter: 'brightness(1.1)',
     transition: 'transform 0.2s ease'
+  };
+
+  const titleTextStyles = {
+    fontSize: '32px',
+    fontWeight: '700',
+    color: brandColors.white,
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    letterSpacing: '-0.8px',
+    transition: 'opacity 0.2s ease'
   };
 
   const navListStyles = {
@@ -68,32 +76,31 @@ const Header = () => {
     alignItems: 'center',
   };
 
-  // Updated for dark theme with orange active states
   const navLinkStyles = (path) => ({
     fontWeight: '600',
-    color: isActive(path) ? logoColors.orange : '#ffffff',
-    transition: 'all 0.15s ease',
-    position: 'relative',
+    fontSize: '16px',
+    color: isActive(path) ? brandColors.primary : brandColors.white,
+    transition: 'all 0.2s ease',
     textDecoration: 'none',
-    padding: '8px 16px',
+    padding: '10px 20px',
     borderRadius: '8px',
-    background: isActive(path) ? `${logoColors.orange}20` : 'transparent',
-    border: isActive(path) ? `2px solid ${logoColors.orange}` : '2px solid transparent'
+    background: isActive(path) ? brandColors.white : 'transparent',
+    border: `2px solid ${isActive(path) ? brandColors.white : 'transparent'}`
   });
 
-  // Dark professional CTA button
   const ctaButtonStyles = {
-    background: `linear-gradient(135deg, ${logoColors.orange} 0%, ${logoColors.orangeLight} 100%)`,
-    color: 'white',
-    padding: '12px 24px',
-    borderRadius: '12px',
-    fontWeight: '600',
+    background: brandColors.white,
+    color: brandColors.primary,
+    padding: '12px 28px',
+    borderRadius: '8px',
+    fontWeight: '700',
+    fontSize: '16px',
     transition: 'all 0.3s ease',
-    boxShadow: `0 4px 15px ${logoColors.orange}40`,
+    boxShadow: '0 4px 15px rgba(255, 255, 255, 0.2)',
     textDecoration: 'none',
     display: 'inline-flex',
     alignItems: 'center',
-    border: 'none',
+    border: `2px solid ${brandColors.white}`,
     cursor: 'pointer'
   };
 
@@ -107,11 +114,10 @@ const Header = () => {
     cursor: 'pointer'
   };
 
-  // White hamburger lines for dark background
   const hamburgerSpanStyles = {
     width: '24px',
-    height: '2px',
-    background: '#ffffff',
+    height: '3px',
+    background: brandColors.white,
     transition: 'all 0.2s ease',
     borderRadius: '1px'
   };
@@ -121,7 +127,6 @@ const Header = () => {
         transition: 'all 0.3s ease-in-out',
     };
 
-    // Desktop styles
     if (window.innerWidth > 768) {
         return {
             ...baseStyles,
@@ -130,17 +135,16 @@ const Header = () => {
         };
     }
     
-    // Mobile styles with dark theme
     return {
         ...baseStyles,
         position: 'absolute',
         top: '80px',
         left: 0,
         right: 0,
-        background: `linear-gradient(135deg, ${logoColors.tealDark} 0%, #2a2a2a 100%)`,
+        background: brandColors.primary,
         flexDirection: 'column',
-        borderTop: `2px solid ${logoColors.orange}`,
-        boxShadow: '0 4px 20px rgba(0,0,0,0.6)',
+        borderTop: `3px solid ${brandColors.primaryDark}`,
+        boxShadow: '0 8px 25px rgba(37, 99, 235, 0.3)',
         transform: isMenuOpen ? 'translateY(0)' : 'translateY(-120%)',
         opacity: isMenuOpen ? 1 : 0,
         visibility: isMenuOpen ? 'visible' : 'hidden',
@@ -151,18 +155,30 @@ const Header = () => {
   return (
     <header style={headerStyles}>
       <div style={headerContainerStyles}>
-        {/* Logo with hover effect */}
+        {/* Logo and Title */}
         <Link 
           to="/" 
           style={logoLinkStyles}
-          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'scale(1.02)';
+            e.currentTarget.querySelector('.title-text').style.opacity = '0.9';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'scale(1)';
+            e.currentTarget.querySelector('.title-text').style.opacity = '1';
+          }}
         >
           <img 
             src={logoSrc} 
             alt="Datenwork Logo" 
             style={logoImageStyles} 
           />
+          <span 
+            className="title-text"
+            style={titleTextStyles}
+          >
+            Datenwork
+          </span>
         </Link>
         
         <nav style={getNavStyles()}>
@@ -176,12 +192,16 @@ const Header = () => {
                  style={navLinkStyles('/')}
                  onClick={() => setIsMenuOpen(false)}
                  onMouseEnter={(e) => {
-                   e.target.style.color = logoColors.orangeLight;
-                   e.target.style.background = `${logoColors.orangeLight}15`;
+                   if (!isActive('/')) {
+                     e.target.style.background = brandColors.whiteTransparent;
+                     e.target.style.color = brandColors.primary;
+                   }
                  }}
                  onMouseLeave={(e) => {
-                   e.target.style.color = isActive('/') ? logoColors.orange : '#ffffff';
-                   e.target.style.background = isActive('/') ? `${logoColors.orange}20` : 'transparent';
+                   if (!isActive('/')) {
+                     e.target.style.background = 'transparent';
+                     e.target.style.color = brandColors.white;
+                   }
                  }}
                >
                  Home
@@ -193,12 +213,16 @@ const Header = () => {
                  style={navLinkStyles('/courses')}
                  onClick={() => setIsMenuOpen(false)}
                  onMouseEnter={(e) => {
-                   e.target.style.color = logoColors.orangeLight;
-                   e.target.style.background = `${logoColors.orangeLight}15`;
+                   if (!isActive('/courses')) {
+                     e.target.style.background = brandColors.whiteTransparent;
+                     e.target.style.color = brandColors.primary;
+                   }
                  }}
                  onMouseLeave={(e) => {
-                   e.target.style.color = isActive('/courses') ? logoColors.orange : '#ffffff';
-                   e.target.style.background = isActive('/courses') ? `${logoColors.orange}20` : 'transparent';
+                   if (!isActive('/courses')) {
+                     e.target.style.background = 'transparent';
+                     e.target.style.color = brandColors.white;
+                   }
                  }}
                >
                  Courses
@@ -210,12 +234,16 @@ const Header = () => {
                  style={navLinkStyles('/services')}
                  onClick={() => setIsMenuOpen(false)}
                  onMouseEnter={(e) => {
-                   e.target.style.color = logoColors.orangeLight;
-                   e.target.style.background = `${logoColors.orangeLight}15`;
+                   if (!isActive('/services')) {
+                     e.target.style.background = brandColors.whiteTransparent;
+                     e.target.style.color = brandColors.primary;
+                   }
                  }}
                  onMouseLeave={(e) => {
-                   e.target.style.color = isActive('/services') ? logoColors.orange : '#ffffff';
-                   e.target.style.background = isActive('/services') ? `${logoColors.orange}20` : 'transparent';
+                   if (!isActive('/services')) {
+                     e.target.style.background = 'transparent';
+                     e.target.style.color = brandColors.white;
+                   }
                  }}
                >
                  Services
@@ -227,12 +255,16 @@ const Header = () => {
                  style={navLinkStyles('/about')}
                  onClick={() => setIsMenuOpen(false)}
                  onMouseEnter={(e) => {
-                   e.target.style.color = logoColors.orangeLight;
-                   e.target.style.background = `${logoColors.orangeLight}15`;
+                   if (!isActive('/about')) {
+                     e.target.style.background = brandColors.whiteTransparent;
+                     e.target.style.color = brandColors.primary;
+                   }
                  }}
                  onMouseLeave={(e) => {
-                   e.target.style.color = isActive('/about') ? logoColors.orange : '#ffffff';
-                   e.target.style.background = isActive('/about') ? `${logoColors.orange}20` : 'transparent';
+                   if (!isActive('/about')) {
+                     e.target.style.background = 'transparent';
+                     e.target.style.color = brandColors.white;
+                   }
                  }}
                >
                  About Us
@@ -244,12 +276,16 @@ const Header = () => {
                  style={navLinkStyles('/contact')}
                  onClick={() => setIsMenuOpen(false)}
                  onMouseEnter={(e) => {
-                   e.target.style.color = logoColors.orangeLight;
-                   e.target.style.background = `${logoColors.orangeLight}15`;
+                   if (!isActive('/contact')) {
+                     e.target.style.background = brandColors.whiteTransparent;
+                     e.target.style.color = brandColors.primary;
+                   }
                  }}
                  onMouseLeave={(e) => {
-                   e.target.style.color = isActive('/contact') ? logoColors.orange : '#ffffff';
-                   e.target.style.background = isActive('/contact') ? `${logoColors.orange}20` : 'transparent';
+                   if (!isActive('/contact')) {
+                     e.target.style.background = 'transparent';
+                     e.target.style.color = brandColors.white;
+                   }
                  }}
                >
                 Contact
@@ -258,35 +294,35 @@ const Header = () => {
           </ul>
         </nav>
 
-        {/* CTA Button with enhanced hover effects */}
+        {/* CTA Button */}
         <div style={{ display: window.innerWidth <= 768 ? 'none' : 'block' }}>
           <Link 
-            to="/about" 
+            to="/contact" 
             style={ctaButtonStyles}
             onMouseEnter={(e) => {
-              e.target.style.transform = 'translateY(-2px) scale(1.05)';
-              e.target.style.boxShadow = `0 8px 25px ${logoColors.orange}60`;
-              e.target.style.background = `linear-gradient(135deg, ${logoColors.orangeLight} 0%, ${logoColors.orange} 100%)`;
+              e.target.style.transform = 'translateY(-2px)';
+              e.target.style.background = brandColors.whiteTransparent;
+              e.target.style.boxShadow = '0 6px 20px rgba(255, 255, 255, 0.3)';
             }}
             onMouseLeave={(e) => {
-              e.target.style.transform = 'translateY(0) scale(1)';
-              e.target.style.boxShadow = `0 4px 15px ${logoColors.orange}40`;
-              e.target.style.background = `linear-gradient(135deg, ${logoColors.orange} 0%, ${logoColors.orangeLight} 100%)`;
+              e.target.style.transform = 'translateY(0)';
+              e.target.style.background = brandColors.white;
+              e.target.style.boxShadow = '0 4px 15px rgba(255, 255, 255, 0.2)';
             }}
           >
             Get Started
           </Link>
         </div>
 
-        {/* Hamburger Menu Button */}
+        {/* Hamburger Menu */}
         <button 
           style={{...hamburgerStyles, display: window.innerWidth <= 768 ? 'flex' : 'none'}}
           onClick={toggleMenu}
           aria-label="Toggle menu"
         >
-          <span style={{...hamburgerSpanStyles, transform: isMenuOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none'}}></span>
+          <span style={{...hamburgerSpanStyles, transform: isMenuOpen ? 'rotate(45deg) translate(6px, 6px)' : 'none'}}></span>
           <span style={{...hamburgerSpanStyles, opacity: isMenuOpen ? 0 : 1}}></span>
-          <span style={{...hamburgerSpanStyles, transform: isMenuOpen ? 'rotate(-45deg) translate(5px, -5px)' : 'none'}}></span>
+          <span style={{...hamburgerSpanStyles, transform: isMenuOpen ? 'rotate(-45deg) translate(6px, -6px)' : 'none'}}></span>
         </button>
       </div>
     </header>

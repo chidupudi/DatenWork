@@ -346,7 +346,7 @@ const PlacementServices = () => {
             <span style={titleUnderlineStyles}></span>
           </h2>
           <p style={subtitleStyles}>
-            Your success is our commitment. Join hundreds of placed students.
+            Your success is our commitment.
           </p>
         </motion.div>
 

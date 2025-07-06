@@ -508,7 +508,7 @@ const skillTagStyles = (isHovered) => ({
                 >
                   <div style={requirementHeaderStyles}>
                     <div style={requirementMetaStyles}>
-                      <span style={industryTagStyles}>{req.industry}</span>
+                     
                       <span style={urgencyBadgeStyles(req.urgency)}>
                         {req.urgency}
                       </span>

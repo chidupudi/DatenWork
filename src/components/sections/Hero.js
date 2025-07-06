@@ -429,6 +429,7 @@ const Hero = () => {
                   <option value="fullstack" style={{color: '#000'}}>Full Stack Development</option>
                   <option value="python" style={{color: '#000'}}>Python Programming</option>
                   <option value="data-science" style={{color: '#000'}}>Data Science</option>
+                  <option value="mainframe" style={{color: '#000'}}>Mainframe</option>
                 </motion.select>
                 
                 <motion.button

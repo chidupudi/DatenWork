@@ -164,9 +164,9 @@ const About = () => {
       description: 'Within 6 months of course completion'
     },
     {
-      number: '₹16 LPA',
+      number: '₹8.5 LPA',
       label: 'Average Package',
-      description: 'Highest recorded: ₹45 LPA'
+      description: 'Highest recorded: ₹24 LPA'
     }
   ];
 
@@ -990,7 +990,7 @@ const About = () => {
               >
                 <h2 style={ctaTitleStyles}>Ready to Transform Your Career?</h2>
                 <p style={ctaTextStyles}>
-                  Join thousands of successful professionals who transformed their careers with Datenwork. 
+                  Join hundreds of successful professionals who transformed their careers with Datenwork. 
                   Start your journey towards a rewarding tech career today.
                 </p>
                 <div style={ctaActionsStyles}>

@@ -33,73 +33,73 @@ const TrainingCourses = () => {
     {
   id: 1,
   title: 'Mainframe Training & Placement Program',
-  duration: '30 hours',
+  duration: '40 hours',
   level: 'Beginner to Job-Ready',
-  technologies: ['COBOL', 'JCL', 'DB2', 'CICS', 'IBM z/OS'],
-  price: '₹1,79,000',
-  originalPrice: '₹2,99,000',
+  technologies: ['COBOL', 'JCL', 'DB2', 'CICS', 'IBM z/OS', 'VSAM'],
+  price: '₹30,000',//2.5lacks
+  originalPrice: '₹60,000',
   discount: '40% OFF',
   icon: '🖥️',
   gradient: 'linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)',
   rating: 4.8,
-  students: 850
+  students: 187
 },
 
     {
       id: 2,
       title: 'Data Science with Python',
-      duration: '14 weeks',
+      duration: '60 hours',
       level: 'Beginner to Advanced',
-      technologies: ['Python', 'Pandas', 'TensorFlow', 'Scikit-learn'],
-      price: '₹2,25,000',
-      originalPrice: '₹3,24,000',
+      technologies: ['Python', 'Pandas', 'TensorFlow', 'Scikit-learn', 'SQL',],
+      price: '₹50,000',
+      originalPrice: '₹60,000',
       discount: '31% OFF',
       icon: '🤖',
       gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
       rating: 4.9,
-      students: 543
+      students: 88
     },
     {
       id: 3,
       title: 'React.js Mastery Course',
-      duration: '10 weeks',
+      duration: '55 hours',
       level: 'Intermediate',
       technologies: ['React', 'Redux', 'TypeScript', 'Jest'],
-      price: '₹1,58,000',
-      originalPrice: '₹2,41,000',
+      price: '₹45,000',
+      originalPrice: '₹60,000',
       discount: '34% OFF',
       icon: '⚛️',
       gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
       rating: 4.8,
-      students: 890
+      students: 120
     },
     {
       id: 4,
       title: 'Node.js Backend Development',
-      duration: '12 weeks',
+      duration: '55 hours',
       level: 'Intermediate',
       technologies: ['Node.js', 'Express', 'PostgreSQL', 'AWS'],
-      price: '₹1,83,000',
-      originalPrice: '₹2,66,000',
+      price: '₹50,000',
+      originalPrice: '₹60,000',
       discount: '31% OFF',
       icon: '🔐',
       gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
       rating: 4.7,
-      students: 654
+      students: 93
     },
     {
       id: 5,
       title: 'React Native Mobile Development',
-      duration: '12 weeks',
+      duration: '60 hours',
       level: 'Intermediate',
       technologies: ['React Native', 'Expo', 'Redux', 'Firebase'],
-      price: '₹2,00,000',
-      originalPrice: '₹2,83,000',
+      price: '₹45,000',
+      originalPrice: '₹60,000',
       discount: '29% OFF',
       icon: '📱',
       gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
       rating: 4.8,
-      students: 432
+      students: 65
     }
   ];
 
@@ -441,7 +441,7 @@ const TrainingCourses = () => {
             <span style={titleUnderlineStyles}></span>
           </h2>
           <p style={subtitleStyles}>
-            Industry-relevant courses designed to make you job-ready
+            Industry-relevant courses designed to make you Job-Ready
           </p>
         </motion.div>
 
