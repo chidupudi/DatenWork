@@ -483,7 +483,7 @@ const vendorSubtitleStyles = {
 
   return (
     <section style={consultancySectionStyles} id="consultancy">
-      <div style={backgroundOverlayStyles} />
+      {/* <div style={backgroundOverlayStyles} /> */}
       <div style={decorativeCircleStyles} />
       
       <div style={consultancyContainerStyles}>

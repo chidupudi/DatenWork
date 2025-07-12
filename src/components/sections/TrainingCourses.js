@@ -97,7 +97,7 @@ const TrainingCourses = () => {
       originalPrice: '₹60,000',
       discount: '29% OFF',
       icon: '📱',
-      gradient: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+      gradient: 'linear-gradient(135deg, #a8eaaa 0%, #867165 90%)',
       rating: 4.8,
       students: 65
     }

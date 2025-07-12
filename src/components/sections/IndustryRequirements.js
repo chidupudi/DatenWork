@@ -468,7 +468,7 @@ const skillTagStyles = (isHovered) => ({
       </style>
       
       <section style={requirementsSectionStyles} id="requirements">
-        <div style={backgroundOverlayStyles} />
+        {/* <div style={backgroundOverlayStyles} /> */}
         <div style={decorativeCircleStyles} />
         
         <div style={requirementsContainerStyles}>
