@@ -5,25 +5,55 @@ const Footer = () => {
   const [hoveredSocial, setHoveredSocial] = useState(null);
   const [hoveredLink, setHoveredLink] = useState(null);
 
-  // Main footer styles
+  // Main footer styles with grid background
   const footerStyles = {
-    background: '#374151',
-    color: '#d1d5db',
-    padding: '64px 0 32px'
+    background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%)',
+    color: '#ffffff',
+    padding: '64px 0 32px',
+    position: 'relative',
+    overflow: 'hidden'
+  };
+
+  // Grid pattern overlay (same as other pages)
+  const footerOverlayStyles = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: `
+      radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(30, 64, 175, 0.08) 0%, transparent 50%),
+      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>')
+    `,
+    zIndex: 0
+  };
+
+  // Dark overlay for better text readability
+  const footerDarkOverlayStyles = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: 'rgba(15, 23, 42, 0.4)',
+    zIndex: 0
   };
 
   const footerContainerStyles = {
     maxWidth: '1200px',
     margin: '0 auto',
-    padding: '0 24px'
+    padding: window.innerWidth <= 768 ? '0 20px' : '0 24px',
+    position: 'relative',
+    zIndex: 2
   };
 
   const footerContentStyles = {
     display: 'grid',
     gridTemplateColumns: window.innerWidth <= 768 
       ? '1fr' 
-      : '2fr 1fr 1fr 1.5fr',
-    gap: window.innerWidth <= 768 ? '24px' : '32px',
+      : '2fr 1fr 1fr 1fr',
+    gap: window.innerWidth <= 768 ? '32px' : '40px',
     marginBottom: '48px'
   };
 
@@ -32,24 +62,33 @@ const Footer = () => {
   };
 
   const sectionHeadingStyles = {
-    color: 'white',
-    marginBottom: '16px',
-    fontWeight: '600',
-    fontSize: '1.125rem'
+    color: '#ffffff',
+    marginBottom: '20px',
+    fontWeight: '700',
+    fontSize: window.innerWidth <= 768 ? '1.1rem' : '1.25rem',
+    background: 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    backgroundClip: 'text'
   };
 
   const footerLogoStyles = {
     fontFamily: "'Poppins', sans-serif",
-    fontSize: '1.5rem',
-    color: '#4f46e5',
-    marginBottom: '16px',
+    fontSize: window.innerWidth <= 768 ? '1.8rem' : '2rem',
+    background: 'linear-gradient(135deg, #4f46e5 0%, #14b8a6 100%)',
+    WebkitBackgroundClip: 'text',
+    WebkitTextFillColor: 'transparent',
+    backgroundClip: 'text',
+    marginBottom: '20px',
     fontWeight: '800'
   };
 
   const footerDescriptionStyles = {
-    marginBottom: '24px',
-    lineHeight: '1.6',
-    color: '#d1d5db'
+    marginBottom: '32px',
+    lineHeight: '1.7',
+    color: '#e2e8f0',
+    fontSize: window.innerWidth <= 768 ? '0.95rem' : '1rem',
+    opacity: '0.9'
   };
 
   const socialLinksStyles = {
@@ -63,16 +102,19 @@ const Footer = () => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '40px',
-    height: '40px',
+    width: '44px',
+    height: '44px',
     background: hoveredSocial === index 
-      ? '#4f46e5' 
+      ? 'linear-gradient(135deg, #4f46e5 0%, #14b8a6 100%)' 
       : 'rgba(255, 255, 255, 0.1)',
-    borderRadius: '8px',
-    transition: 'all 0.2s ease',
-    fontSize: '1.125rem',
+    borderRadius: '12px',
+    transition: 'all 0.3s ease',
+    fontSize: '1.25rem',
     textDecoration: 'none',
-    transform: hoveredSocial === index ? 'translateY(-2px)' : 'translateY(0)'
+    color: '#ffffff',
+    transform: hoveredSocial === index ? 'translateY(-3px) scale(1.05)' : 'translateY(0) scale(1)',
+    boxShadow: hoveredSocial === index ? '0 8px 20px rgba(79, 70, 229, 0.3)' : 'none',
+    border: '1px solid rgba(255, 255, 255, 0.1)'
   });
 
   const listStyles = {
@@ -82,48 +124,38 @@ const Footer = () => {
   };
 
   const listItemStyles = {
-    marginBottom: '8px'
+    marginBottom: '12px'
   };
 
   const linkStyles = (linkKey) => ({
-    color: hoveredLink === linkKey ? '#4f46e5' : '#d1d5db',
-    transition: 'color 0.15s ease',
-    textDecoration: 'none'
+    color: hoveredLink === linkKey ? '#4f46e5' : '#e2e8f0',
+    transition: 'all 0.3s ease',
+    textDecoration: 'none',
+    fontSize: window.innerWidth <= 768 ? '0.9rem' : '1rem',
+    display: 'inline-block',
+    transform: hoveredLink === linkKey ? 'translateX(4px)' : 'translateX(0)',
+    fontWeight: '500'
   });
 
-  const newsletterFormStyles = {
-    display: 'flex',
-    gap: window.innerWidth <= 768 ? '8px' : '8px',
-    marginTop: '16px',
-    flexDirection: window.innerWidth <= 768 ? 'column' : 'row'
-  };
-
-  const newsletterInputStyles = {
-    flex: 1,
-    padding: '12px',
-    border: '1px solid rgba(255, 255, 255, 0.2)',
-    borderRadius: '8px',
-    background: 'rgba(255, 255, 255, 0.1)',
-    color: 'white',
-    fontSize: '0.875rem',
-    outline: 'none'
-  };
-
-  const newsletterButtonStyles = {
-    padding: '12px 16px',
-    background: '#4f46e5',
-    color: 'white',
-    borderRadius: '8px',
-    fontWeight: '600',
-    transition: 'background 0.15s ease',
+  const getStartedButtonStyles = {
+    background: 'linear-gradient(135deg, #4f46e5 0%, #14b8a6 100%)',
+    color: '#ffffff',
     border: 'none',
+    padding: window.innerWidth <= 768 ? '14px 24px' : '16px 32px',
+    borderRadius: '12px',
+    fontSize: window.innerWidth <= 768 ? '1rem' : '1.1rem',
+    fontWeight: '700',
     cursor: 'pointer',
-    fontSize: '0.875rem'
+    transition: 'all 0.3s ease',
+    boxShadow: '0 8px 20px rgba(79, 70, 229, 0.3)',
+    width: window.innerWidth <= 768 ? '100%' : 'auto',
+    textTransform: 'uppercase',
+    letterSpacing: '0.5px'
   };
 
   const footerBottomStyles = {
-    borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-    paddingTop: '24px',
+    borderTop: '1px solid rgba(255, 255, 255, 0.15)',
+    paddingTop: '32px',
     display: 'flex',
     justifyContent: window.innerWidth <= 768 ? 'center' : 'space-between',
     alignItems: 'center',
@@ -141,24 +173,48 @@ const Footer = () => {
   };
 
   const footerLinkStyles = (linkKey) => ({
-    color: hoveredLink === linkKey ? '#4f46e5' : '#d1d5db',
-    fontSize: '0.875rem',
-    transition: 'color 0.15s ease',
-    textDecoration: 'none'
+    color: hoveredLink === linkKey ? '#4f46e5' : '#e2e8f0',
+    fontSize: '0.9rem',
+    transition: 'all 0.3s ease',
+    textDecoration: 'none',
+    fontWeight: '500',
+    transform: hoveredLink === linkKey ? 'translateY(-1px)' : 'translateY(0)'
   });
+
+  const copyrightStyles = {
+    margin: 0,
+    fontSize: '0.9rem',
+    color: '#cbd5e1',
+    fontWeight: '500'
+  };
+
+  const socialIcons = [
+    { icon: '📘', label: 'Facebook', href: '#' },
+    { icon: '🐦', label: 'Twitter', href: '#' },
+    { icon: '💼', label: 'LinkedIn', href: '#' },
+    { icon: '📷', label: 'Instagram', href: '#' },
+    { icon: '📺', label: 'YouTube', href: '#' }
+  ];
 
   return (
     <footer style={footerStyles}>
+      <div style={footerOverlayStyles} />
+      <div style={footerDarkOverlayStyles} />
+      
       <div style={footerContainerStyles}>
         <div style={footerContentStyles}>
+          {/* Company Info Section */}
           <div style={footerSectionStyles}>
             <h3 style={footerLogoStyles}>Datenwork</h3>
             <p style={footerDescriptionStyles}>
-              Empowering careers through technology education and strategic placements.
+              Empowering careers through technology education and strategic placements. 
+              Join thousands of successful professionals who transformed their careers with us.
             </p>
+            
             
           </div>
           
+          {/* Services Section */}
           <div style={footerSectionStyles}>
             <h4 style={sectionHeadingStyles}>Services</h4>
             <ul style={listStyles}>
@@ -174,7 +230,7 @@ const Footer = () => {
               </li>
               <li style={listItemStyles}>
                 <Link 
-                  to="/contact"
+                  to="/services"
                   style={linkStyles('placement')}
                   onMouseEnter={() => setHoveredLink('placement')}
                   onMouseLeave={() => setHoveredLink(null)}
@@ -184,7 +240,7 @@ const Footer = () => {
               </li>
               <li style={listItemStyles}>
                 <Link 
-                  to="/contact"
+                  to="/services"
                   style={linkStyles('consultancy')}
                   onMouseEnter={() => setHoveredLink('consultancy')}
                   onMouseLeave={() => setHoveredLink(null)}
@@ -194,17 +250,18 @@ const Footer = () => {
               </li>
               <li style={listItemStyles}>
                 <Link 
-                  to="/courses"
-                  style={linkStyles('online')}
-                  onMouseEnter={() => setHoveredLink('online')}
+                  to="/services"
+                  style={linkStyles('certification')}
+                  onMouseEnter={() => setHoveredLink('certification')}
                   onMouseLeave={() => setHoveredLink(null)}
                 >
-                  Online Courses
+                  Certifications
                 </Link>
               </li>
             </ul>
           </div>
           
+          {/* Company Section */}
           <div style={footerSectionStyles}>
             <h4 style={sectionHeadingStyles}>Company</h4>
             <ul style={listStyles}>
@@ -245,38 +302,44 @@ const Footer = () => {
                   onMouseEnter={() => setHoveredLink('blog')}
                   onMouseLeave={() => setHoveredLink(null)}
                 >
-                  Blog
+                 Success Stories
                 </Link>
               </li>
             </ul>
           </div>
           
+          {/* Get Started Section */}
           <div style={footerSectionStyles}>
-            <h4 style={sectionHeadingStyles}>Newsletter</h4>
-            <p style={{ marginBottom: '16px', fontSize: '0.875rem' }}>
-              Stay updated with our latest courses and opportunities
+            <h4 style={sectionHeadingStyles}>Ready to Start?</h4>
+            <p style={{
+              marginBottom: '24px',
+              fontSize: window.innerWidth <= 768 ? '0.9rem' : '1rem',
+              color: '#cbd5e1',
+              lineHeight: '1.6',
+              opacity: '0.9'
+            }}>
+              Transform your career with our comprehensive training programs and guaranteed job placement.
             </p>
-            <div style={newsletterFormStyles}>
-              <input 
-                type="email" 
-                placeholder="Enter your email" 
-                style={newsletterInputStyles}
-              />
-              <button 
-                type="submit" 
-                style={newsletterButtonStyles}
-                onMouseEnter={(e) => e.target.style.background = '#14b8a6'}
-                onMouseLeave={(e) => e.target.style.background = '#4f46e5'}
-              >
-                Subscribe
-              </button>
-            </div>
+            <button 
+              style={getStartedButtonStyles}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'translateY(-3px) scale(1.02)';
+                e.target.style.boxShadow = '0 12px 30px rgba(79, 70, 229, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'translateY(0) scale(1)';
+                e.target.style.boxShadow = '0 8px 20px rgba(79, 70, 229, 0.3)';
+              }}
+            >
+              Get Started Today
+            </button>
           </div>
         </div>
         
+        {/* Footer Bottom */}
         <div style={footerBottomStyles}>
-          <p style={{ margin: 0, fontSize: '0.875rem' }}>
-            &copy; 2024 Datenwork. All rights reserved.
+          <p style={copyrightStyles}>
+            &copy; 2025 Datenwork. All rights reserved.
           </p>
           <div style={footerLinksStyles}>
             <a 
@@ -295,11 +358,18 @@ const Footer = () => {
             >
               Terms of Service
             </a>
+            <a 
+              href="#support"
+              style={footerLinkStyles('support')}
+              onMouseEnter={() => setHoveredLink('support')}
+              onMouseLeave={() => setHoveredLink(null)}
+            >
+              Support
+            </a>
           </div>
         </div>
       </div>
     </footer>
   );
 };
-
 export default Footer;
