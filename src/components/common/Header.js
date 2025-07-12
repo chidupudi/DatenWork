@@ -8,8 +8,8 @@
 */
 
 import React, { useState } from 'react';
-// For real implementation, uncomment these:
-import { Link, useLocation } from 'react-router-dom';
+// ✅ UNCOMMENTED - For real implementation with React Router
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import logoSrc from '../../assets/image.png';
 
@@ -233,14 +233,14 @@ const TopBar = () => {
   );
 };
 
-// UPDATED Main Header Component with Hero Gradient
+// ✅ UPDATED Main Header Component with Working React Router Navigation
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
-  // For demo purposes - in real app, use useLocation
-  const [currentPath, setCurrentPath] = useState('/');
-  // const location = useLocation(); // Uncomment for real implementation
-  // const currentPath = location.pathname;
+  // ✅ USING REAL REACT ROUTER HOOKS
+  const location = useLocation(); // Get current location
+  const navigate = useNavigate(); // Get navigate function
+  const currentPath = location.pathname; // Get current path
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -442,16 +442,11 @@ const Header = () => {
     background: brandColors.gradient
   };
 
-  // Handle navigation with proper routing and feedback
+  // ✅ UPDATED: Handle navigation with proper React Router navigation
   const handleNavClick = (path) => {
     console.log(`Navigating to: ${path}`);
-    setCurrentPath(path); // For demo
-    setIsMenuOpen(false);
-    
-
-    
-    // For real implementation with React Router:
-    // navigate(path); // or use Link component
+    setIsMenuOpen(false); // Close mobile menu
+    navigate(path); // ✅ Actually navigate using React Router
   };
 
   const navigationItems = [
@@ -473,7 +468,7 @@ const Header = () => {
         <div style={headerOverlayStyles} />
         
         <div style={headerContainerStyles}>
-          {/* Logo and Title - with Link in real implementation */}
+          {/* Logo and Title - ✅ Now uses navigate for home link */}
           <div
             style={logoLinkStyles}
             onClick={() => handleNavClick('/')}
@@ -504,6 +499,7 @@ const Header = () => {
             }}>
               {navigationItems.map((item) => (
                 <li key={item.path} style={{ width: isMobile ? '100%' : 'auto' }}>
+                  {/* ✅ OPTION 1: Using onClick with navigate */}
                   <div
                     style={navLinkStyles(item.path)}
                     onClick={() => handleNavClick(item.path)}
@@ -526,6 +522,32 @@ const Header = () => {
                   >
                     {item.label}
                   </div>
+                  
+                  {/* ✅ OPTION 2: Alternatively, you can replace the div above with Link component:
+                  <Link
+                    to={item.path}
+                    style={navLinkStyles(item.path)}
+                    onClick={() => setIsMenuOpen(false)}
+                    onMouseEnter={(e) => {
+                      if (!isActive(item.path)) {
+                        e.target.style.background = brandColors.headerHover;
+                        e.target.style.color = brandColors.primary;
+                        e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                        e.target.style.backdropFilter = 'blur(10px)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isActive(item.path)) {
+                        e.target.style.background = 'transparent';
+                        e.target.style.color = brandColors.headerText;
+                        e.target.style.borderColor = 'transparent';
+                        e.target.style.backdropFilter = 'none';
+                      }
+                    }}
+                  >
+                    {item.label}
+                  </Link>
+                  */}
                 </li>
               ))}
               
