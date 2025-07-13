@@ -169,15 +169,17 @@ const Courses = () => {
 
   // Updated hero background with the new gradient
   const heroSectionStyles = {
-    padding: '120px 0 80px',
+    padding: '70px 0 80px',
     background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%)',
     color: 'white',
     position: 'relative',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    
   };
 
   // Hero background effects with grid pattern (exact same as Hero component)
   const heroOverlayStyles = {
+
     position: 'absolute',
     top: 0,
     left: 0,

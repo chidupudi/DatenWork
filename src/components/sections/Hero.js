@@ -156,7 +156,7 @@ const Hero = () => {
   const heroStyles = {
     background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%)',
     color: 'white',
-    minHeight: '100vh',
+    minHeight: '60vh',
     display: 'flex',
     alignItems: 'center',
     position: 'relative',
@@ -194,7 +194,7 @@ const Hero = () => {
   const heroContainerStyles = {
     maxWidth: '1200px',
     margin: '0 auto',
-    padding: '0 24px',
+    padding: '0 px',
     display: 'grid',
     gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : '1fr 1fr',
     gap: window.innerWidth <= 768 ? '40px' : '60px',
@@ -214,9 +214,10 @@ const Hero = () => {
   // Professional title styling
   const heroTitleStyles = {
     fontSize: window.innerWidth <= 768 ? '2.5rem' : 'clamp(2.5rem, 5vw, 3.8rem)',
+    marginTop: '-10px',
     fontWeight: '700',
     lineHeight: '1.1',
-    marginBottom: '24px',
+    marginBottom: '12px',
     background: 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #cbd5e1 100%)',
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',

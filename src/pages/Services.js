@@ -84,12 +84,12 @@ const Services = () => {
 
   // Hero section styles with grid background
   const heroSectionStyles = {
-    padding: '50px 0 80px',
+    padding: '10px 0 20px 10px',
     background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%)',
     color: 'white',
     position: 'relative',
     overflow: 'hidden',
-    minHeight: '60vh',
+    minHeight: '20vh',
     display: 'flex',
     alignItems: 'center'
   };
@@ -126,7 +126,8 @@ const Services = () => {
     padding: '0 24px',
     position: 'relative',
     zIndex: 2,
-    textAlign: 'center'
+    textAlign: 'center',
+    maxHeight: '80vh',
   };
 
   const heroTitleStyles = {
