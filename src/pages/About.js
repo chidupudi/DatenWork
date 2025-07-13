@@ -114,7 +114,7 @@ const About = () => {
     },
     {
       title: 'Industry Partnership',
-      description: 'Strong collaborations with 250+ tech companies including startups, MNCs, and product companies ensure our training meets real market demands.',
+      description: 'Strong collaborations with 50+ tech companies including startups, MNCs, and product companies ensure our training meets real market demands.',
       icon: '🤝',
       color: '#14b8a6'
     },

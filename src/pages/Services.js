@@ -84,17 +84,15 @@ const Services = () => {
 
   // Hero section styles with grid background
   const heroSectionStyles = {
-    padding: '10px 0 20px 10px',
+    padding: '50px 0 80px',
     background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%)',
     color: 'white',
     position: 'relative',
     overflow: 'hidden',
-    minHeight: '2vh', 
-    height: '90vh',
+    minHeight: '60vh',
     display: 'flex',
     alignItems: 'center'
   };
-
   // Grid pattern overlay (exact same as Hero component)
   const heroOverlayStyles = {
     position: 'absolute',
@@ -127,9 +125,8 @@ const Services = () => {
     padding: '0 24px',
     position: 'relative',
     zIndex: 2,
-    textAlign: 'center',
-    maxHeight: '80vh',
-  };
+    textAlign: 'center'
+};
 
   const heroTitleStyles = {
     fontSize: window.innerWidth <= 768 ? '2.5rem' : 'clamp(2.5rem, 5vw, 3.8rem)',
