@@ -3,10 +3,9 @@ import Header from '../components/common/Header';
 import Hero from '../components/sections/Hero';
 import TrainingCourses from '../components/sections/TrainingCourses';
 import PlacementServices from '../components/sections/PlacementServices';
+import TransformationStories from '../components/sections/TransformationStories'; // <-- Added import
 import IndustryRequirements from '../components/sections/IndustryRequirements';
 import ITConsultancy from '../components/sections/ITConsultancy';
-import Testimonials from '../components/sections/Testimonials';
-import Services from '../components/sections/Services';
 import Footer from '../components/sections/Footer';
 
 // Circuit Board Background Component with Fixed Particle Animation
@@ -315,11 +314,6 @@ const Home = () => {
             <Hero />
           </div>
           
-          {/* Services Section */}
-          {/* <div style={standardSectionWrapper}>
-            <Services />
-          </div> */}
-          
           {/* Training Courses Section */}
           <div style={standardSectionWrapper}>
             <TrainingCourses />
@@ -328,6 +322,11 @@ const Home = () => {
           {/* Placement Services Section */}
           <div style={standardSectionWrapper}>
             <PlacementServices />
+          </div>
+
+          {/* Transformation Stories Section - Added here */}
+          <div style={standardSectionWrapper}>
+            <TransformationStories />
           </div>
           
           {/* Industry Requirements Section */}

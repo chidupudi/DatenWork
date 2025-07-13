@@ -89,7 +89,8 @@ const Services = () => {
     color: 'white',
     position: 'relative',
     overflow: 'hidden',
-    minHeight: '20vh',
+    minHeight: '2vh', 
+    height: '90vh',
     display: 'flex',
     alignItems: 'center'
   };
@@ -166,6 +167,7 @@ const Services = () => {
     backdropFilter: 'blur(20px)',
     border: isHovered ? '2px solid rgba(59, 130, 246, 0.5)' : '1px solid rgba(255, 255, 255, 0.15)',
     borderRadius: '20px',
+    
     padding: '12px 24px',
     textAlign: 'center',
     transition: 'all 0.3s ease',
