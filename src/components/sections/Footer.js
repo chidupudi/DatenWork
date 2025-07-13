@@ -342,34 +342,35 @@ const Footer = () => {
             &copy; 2025 Datenwork. All rights reserved.
           </p>
           <div style={footerLinksStyles}>
-            <a 
-              href="#privacy"
+            <Link 
+              to="/terms"
               style={footerLinkStyles('privacy')}
               onMouseEnter={() => setHoveredLink('privacy')}
               onMouseLeave={() => setHoveredLink(null)}
             >
               Privacy Policy
-            </a>
-            <a 
-              href="#terms"
+            </Link>
+            <Link 
+              to="/terms"
               style={footerLinkStyles('terms')}
               onMouseEnter={() => setHoveredLink('terms')}
               onMouseLeave={() => setHoveredLink(null)}
             >
-              Terms of Service
-            </a>
-            <a 
-              href="#support"
+              Terms & Conditions
+            </Link>
+            <Link 
+              to="/contact"
               style={footerLinkStyles('support')}
               onMouseEnter={() => setHoveredLink('support')}
               onMouseLeave={() => setHoveredLink(null)}
             >
               Support
-            </a>
+            </Link>
           </div>
         </div>
       </div>
     </footer>
   );
 };
+
 export default Footer;
