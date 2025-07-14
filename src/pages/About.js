@@ -203,7 +203,7 @@ const About = () => {
       icon: '👥'
     },
     {
-      number: '250+',
+      number: '50+',
       label: 'Industry Partners',
       description: 'Including FAANG, unicorns, and emerging startups',
       icon: '🏢'
