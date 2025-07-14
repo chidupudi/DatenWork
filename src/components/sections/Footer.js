@@ -343,7 +343,7 @@ const Footer = () => {
           </p>
           <div style={footerLinksStyles}>
             <Link 
-              to="/terms"
+               to="/privacy"  // Changed from "/terms"
               style={footerLinkStyles('privacy')}
               onMouseEnter={() => setHoveredLink('privacy')}
               onMouseLeave={() => setHoveredLink(null)}

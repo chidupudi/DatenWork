@@ -6,8 +6,9 @@ import About from './pages/About';
 import Services from './pages/Services';
 import Courses from './pages/Courses';
 import Contact from './pages/Contact';
-import TermsAndConditions from './pages/Terms'; // Add this import
+import TermsAndConditions from './pages/Terms'; 
 import './styles/global.css';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
             <Route path="/services" element={<Services />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/terms" element={<TermsAndConditions />} /> {/* Add this route */}
+            <Route path="/terms" element={<TermsAndConditions />} /> 
+            <Route path="/privacy" element={<PrivacyPolicy />} /> 
           </Routes>
         </RouteWrapper>
       </div>
