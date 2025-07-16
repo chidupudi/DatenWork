@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { db } from '../../firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 const Button = ({ variant, size, children, ...props }) => {
   const baseStyles = {
@@ -65,6 +67,9 @@ const Hero = () => {
     course: ''
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', or null
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -73,9 +78,79 @@ const Hero = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const validateForm = () => {
+    const { name, email, phone, course } = formData;
+    
+    if (!name.trim()) {
+      alert('Please enter your full name');
+      return false;
+    }
+    
+    if (!email.trim() || !/\S+@\S+\.\S+/.test(email)) {
+      alert('Please enter a valid email address');
+      return false;
+    }
+    
+    if (!phone.trim()) {
+      alert('Please enter your phone number');
+      return false;
+    }
+    
+    if (!course) {
+      alert('Please select a course');
+      return false;
+    }
+    
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      // Add document to Firestore
+      const docRef = await addDoc(collection(db, 'hero_form_submissions'), {
+        name: formData.name.trim(),
+        email: formData.email.trim().toLowerCase(),
+        phone: formData.phone.trim(),
+        course: formData.course,
+        source: 'hero_section',
+        submittedAt: serverTimestamp(),
+        status: 'new'
+      });
+
+      console.log('Document written with ID: ', docRef.id);
+      
+      // Success feedback
+      setSubmitStatus('success');
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        course: ''
+      });
+
+      // Show success message
+      alert('🎉 Thank you! Your information has been submitted successfully. Our team will contact you within 24 hours.');
+
+    } catch (error) {
+      console.error('Error adding document: ', error);
+      setSubmitStatus('error');
+      alert('❌ Sorry, there was an error submitting your information. Please try again or contact us directly.');
+    } finally {
+      setIsSubmitting(false);
+      // Clear status after 5 seconds
+      setTimeout(() => setSubmitStatus(null), 5000);
+    }
   };
 
   const containerVariants = {
@@ -149,6 +224,15 @@ const Hero = () => {
       }
       100% {
         background-position: 1000px 0;
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.7;
       }
     }
   `;
@@ -310,16 +394,39 @@ const Hero = () => {
   const submitButtonStyles = {
     width: '100%',
     padding: '16px',
-    background: 'linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)',
+    background: isSubmitting 
+      ? 'linear-gradient(135deg, #9ca3af 0%, #6b7280 100%)'
+      : submitStatus === 'success'
+      ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
+      : submitStatus === 'error'
+      ? 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'
+      : 'linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)',
     border: 'none',
     borderRadius: '12px',
     color: '#ffffff',
     fontSize: '16px',
     fontWeight: '600',
-    cursor: 'pointer',
+    cursor: isSubmitting ? 'not-allowed' : 'pointer',
     transition: 'all 0.3s ease',
-    boxShadow: '0 4px 15px rgba(30, 64, 175, 0.3)',
-    marginTop: '8px'
+    boxShadow: isSubmitting 
+      ? 'none'
+      : submitStatus === 'success'
+      ? '0 4px 15px rgba(16, 185, 129, 0.3)'
+      : submitStatus === 'error'
+      ? '0 4px 15px rgba(239, 68, 68, 0.3)'
+      : '0 4px 15px rgba(30, 64, 175, 0.3)',
+    marginTop: '8px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '8px'
+  };
+
+  const getButtonText = () => {
+    if (isSubmitting) return '⏳ Submitting...';
+    if (submitStatus === 'success') return '✅ Submitted Successfully!';
+    if (submitStatus === 'error') return '❌ Try Again';
+    return 'Get Started Free';
   };
 
   return (
@@ -412,7 +519,7 @@ const Hero = () => {
             </motion.div>
           </motion.div>
           
-          {/* Professional Form Section */}
+          {/* Professional Form Section with Firebase */}
           <motion.div 
             style={joinFormContainerStyles}
             variants={itemVariants}
@@ -425,7 +532,7 @@ const Hero = () => {
               <h3 style={formTitleStyles}>Start Your Journey</h3>
               <p style={formSubtitleStyles}>Join thousands of successful tech professionals</p>
               
-              <div>
+              <form onSubmit={handleSubmit}>
                 <motion.input
                   type="text"
                   name="name"
@@ -447,6 +554,7 @@ const Hero = () => {
                     e.target.style.backgroundColor = '#f9fafb';
                   }}
                   required
+                  disabled={isSubmitting}
                 />
                 
                 <motion.input
@@ -470,6 +578,7 @@ const Hero = () => {
                     e.target.style.backgroundColor = '#f9fafb';
                   }}
                   required
+                  disabled={isSubmitting}
                 />
                 
                 <motion.input
@@ -493,6 +602,7 @@ const Hero = () => {
                     e.target.style.backgroundColor = '#f9fafb';
                   }}
                   required
+                  disabled={isSubmitting}
                 />
                 
                 <motion.select
@@ -514,6 +624,7 @@ const Hero = () => {
                     e.target.style.backgroundColor = '#f9fafb';
                   }}
                   required
+                  disabled={isSubmitting}
                 >
                   <option value="">Select Course</option>
                   <option value="react">React Development</option>
@@ -527,24 +638,20 @@ const Hero = () => {
                 <motion.button
                   type="submit"
                   style={submitButtonStyles}
-                  whileHover={{ 
+                  whileHover={!isSubmitting ? { 
                     scale: 1.02, 
                     boxShadow: '0 8px 25px rgba(30, 64, 175, 0.4)',
                     background: 'linear-gradient(135deg, #1e40af 0%, #2563eb 100%)'
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                  onMouseEnter={(e) => {
-                    e.target.style.transform = 'translateY(-2px)';
-                    e.target.style.boxShadow = '0 8px 25px rgba(30, 64, 175, 0.4)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.transform = 'translateY(0)';
-                    e.target.style.boxShadow = '0 4px 15px rgba(30, 64, 175, 0.3)';
-                  }}
+                  } : {}}
+                  whileTap={!isSubmitting ? { scale: 0.98 } : {}}
+                  disabled={isSubmitting}
                 >
-                  Get Started Free
+                  {isSubmitting && (
+                    <span style={{ animation: 'pulse 1s infinite' }}>⏳</span>
+                  )}
+                  {getButtonText()}
                 </motion.button>
-              </div>
+              </form>
             </motion.div>
           </motion.div>
         </motion.div>
