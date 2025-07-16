@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logoSrc from '../../assets/image.png';
 
-// Updated brand colors for white theme
+// Updated brand colors with dark header theme
 const brandColors = {
   primary: '#3b82f6',
   primaryDark: '#1e40af',
@@ -15,22 +15,23 @@ const brandColors = {
   hover: '#f8fafc',
   topBarBg: '#f8fafc',
   success: '#10b981',
-  // Updated header colors for white theme
-  headerBg: '#ffffff',
-  headerText: '#1e293b',
-  headerTextSecondary: '#64748b', 
-  headerBorder: '#e2e8f0',
-  headerHover: '#f1f5f9',
-  activeBackground: '#f0f9ff',
+  // Updated header colors for dark theme
+  headerBg: '#1f2937', // Using the hero title color as background
+  headerText: '#ffffff', // White text for contrast
+  headerTextSecondary: '#d1d5db', // Light gray for secondary text
+  headerBorder: '#374151', // Darker border
+  headerHover: '#374151', // Hover state
+  activeBackground: '#3b82f6', // Blue for active state
   activeBorder: '#3b82f6',
-  shadow: 'rgba(0, 0, 0, 0.1)'
+  shadow: 'rgba(0, 0, 0, 0.3)'
 };
 
-// TopBar Component (mostly unchanged as it already works well)
+// TopBar Component (keeping it light as contrast)
 const TopBar = () => {
   const [hoveredItem, setHoveredItem] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
+  const navigate = useNavigate();
 
   // Responsive hook
   useEffect(() => {
@@ -74,7 +75,7 @@ const TopBar = () => {
     alignItems: 'center',
     gap: '6px',
     fontSize: isMobile ? '12px' : '13px',
-    color: brandColors.text,
+    color: '#000000', // Black font color
     textDecoration: 'none',
     padding: '4px 8px',
     borderRadius: '6px',
@@ -95,7 +96,7 @@ const TopBar = () => {
   const coursesLabelStyles = {
     fontSize: isMobile ? '12px' : '13px',
     fontWeight: '500',
-    color: brandColors.textLight,
+    color: '#000000', // Black font color
     whiteSpace: 'nowrap'
   };
 
@@ -115,7 +116,7 @@ const TopBar = () => {
   });
 
   const handleCourseClick = (course) => {
-    console.log(`Navigate to ${course} course page`);
+    navigate('/courses');
   };
 
   const handleContactClick = (type, value) => {
@@ -177,7 +178,7 @@ const TopBar = () => {
                 color: hoveredItem === 'more-courses' ? brandColors.white : brandColors.success,
                 borderColor: `${brandColors.success}20`
               }}
-              onClick={() => console.log('Navigate to all courses')}
+              onClick={() => navigate('/courses')}
               onMouseEnter={() => setHoveredItem('more-courses')}
               onMouseLeave={() => setHoveredItem(null)}
             >
@@ -232,7 +233,7 @@ const TopBar = () => {
   );
 };
 
-// Main Header Component with White Theme
+// Main Header Component with Dark Theme
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -287,11 +288,11 @@ const Header = () => {
 
   const isActive = (path) => currentPath === path;
 
-  // Updated header styles for white theme
+  // Updated header styles for dark theme
   const headerStyles = {
     position: 'sticky',
     top: 0,
-    background: brandColors.headerBg,
+    background: brandColors.headerBg, // Dark background
     borderBottom: `1px solid ${brandColors.headerBorder}`,
     zIndex: 1000,
     transition: 'all 0.3s ease',
@@ -307,8 +308,8 @@ const Header = () => {
     right: 0,
     bottom: 0,
     background: `
-      radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.02) 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, rgba(30, 64, 175, 0.02) 0%, transparent 50%)
+      radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(30, 64, 175, 0.05) 0%, transparent 50%)
     `,
     zIndex: 0,
     pointerEvents: 'none'
@@ -342,10 +343,10 @@ const Header = () => {
     height: isMobile ? '45px' : '80px',
     width: 'auto',
     transition: 'transform 0.2s ease',
-    filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))'
+    filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))' // Darker shadow for dark background
   };
 
-  // Updated mobile navigation styles for white theme
+  // Updated mobile navigation styles for dark theme
   const getNavStyles = () => {
     if (!isMobile) {
       return {
@@ -362,7 +363,7 @@ const Header = () => {
       left: 0,
       right: 0,
       bottom: 0,
-      background: brandColors.headerBg,
+      background: brandColors.headerBg, // Dark background for mobile menu
       flexDirection: 'column',
       borderTop: `1px solid ${brandColors.headerBorder}`,
       boxShadow: `0 4px 6px -1px ${brandColors.shadow}`,
@@ -390,11 +391,11 @@ const Header = () => {
     width: isMobile ? '100%' : 'auto'
   };
 
-  // Updated nav link styles for white theme
+  // Updated nav link styles for dark theme
   const navLinkStyles = (path) => ({
     fontWeight: isActive(path) ? '600' : '500',
     fontSize: isMobile ? '18px' : '15px',
-    color: isActive(path) ? brandColors.primary : brandColors.headerText,
+    color: isActive(path) ? brandColors.white : brandColors.headerText, // White text
     transition: 'all 0.2s ease',
     textDecoration: 'none',
     padding: isMobile ? '16px 24px' : '12px 16px',
@@ -433,7 +434,7 @@ const Header = () => {
     marginTop: isMobile ? '20px' : '0'
   };
 
-  // Updated hamburger styles for white theme
+  // Updated hamburger styles for dark theme
   const hamburgerStyles = {
     display: 'flex',
     flexDirection: 'column',
@@ -464,7 +465,7 @@ const Header = () => {
     return {
       width: '22px',
       height: '2px',
-      background: brandColors.headerText, // Dark color for white background
+      background: brandColors.headerText, // White hamburger lines
       transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
       borderRadius: '1px',
       boxShadow: `0 1px 2px ${brandColors.shadow}`,
@@ -539,7 +540,7 @@ const Header = () => {
                         if (!isActive(item.path)) {
                           e.target.style.background = brandColors.headerHover;
                           e.target.style.color = brandColors.primary;
-                          e.target.style.borderColor = brandColors.border;
+                          e.target.style.borderColor = brandColors.headerBorder;
                         }
                       }}
                       onMouseLeave={(e) => {
