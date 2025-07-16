@@ -33,10 +33,9 @@ const Button = ({ variant, size, children, ...props }) => {
       boxShadow: '0 4px 15px rgba(30, 64, 175, 0.3)'
     },
     secondary: {
-      background: 'rgba(255, 255, 255, 0.1)',
-      color: '#ffffff',
-      border: '1px solid rgba(255, 255, 255, 0.3)',
-      backdropFilter: 'blur(10px)'
+      background: 'transparent',
+      color: '#1e40af',
+      border: '2px solid #1e40af'
     },
     outline: {
       background: 'transparent',
@@ -52,6 +51,9 @@ const Button = ({ variant, size, children, ...props }) => {
         if (variant === 'primary') {
           e.target.style.transform = 'translateY(-2px)';
           e.target.style.boxShadow = '0 8px 25px rgba(30, 64, 175, 0.4)';
+        } else if (variant === 'secondary') {
+          e.target.style.background = '#1e40af';
+          e.target.style.color = '#ffffff';
         } else if (variant === 'outline') {
           e.target.style.background = '#4f46e5';
           e.target.style.color = '#ffffff';
@@ -61,6 +63,9 @@ const Button = ({ variant, size, children, ...props }) => {
         e.target.style.transform = 'translateY(0)';
         if (variant === 'primary') {
           e.target.style.boxShadow = '0 4px 15px rgba(30, 64, 175, 0.3)';
+        } else if (variant === 'secondary') {
+          e.target.style.background = 'transparent';
+          e.target.style.color = '#1e40af';
         } else if (variant === 'outline') {
           e.target.style.background = 'transparent';
           e.target.style.color = '#4f46e5';
@@ -249,39 +254,13 @@ const About = () => {
   // Hero section styles with grid background (same as other pages)
   const aboutHeroStyles = {
     padding: window.innerWidth <= 768 ? '80px 0 60px' : '120px 0 80px',
-    background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%)',
-    color: 'white',
+    background: '#ffffff',
+    color: '#1f2937',
     position: 'relative',
     overflow: 'hidden',
     minHeight: window.innerWidth <= 768 ? '35vh' : '30vh',
     display: 'flex',
     alignItems: 'center'
-  };
-
-  // Grid pattern overlay (exact same as other pages)
-  const heroOverlayStyles = {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: `
-      radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, rgba(30, 64, 175, 0.08) 0%, transparent 50%),
-      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>')
-    `,
-    zIndex: 0
-  };
-
-  // Dark overlay for text readability
-  const heroDarkOverlayStyles = {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: 'rgba(15, 23, 42, 0.4)',
-    zIndex: 0
   };
 
   const containerStyles = {
@@ -303,17 +282,13 @@ const About = () => {
     fontWeight: '700',
     lineHeight: '1.1',
     marginBottom: window.innerWidth <= 768 ? '16px' : '24px',
-    background: 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #cbd5e1 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    backgroundClip: 'text',
-    textShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+    color: '#1f2937'
   };
 
   const heroDescriptionStyles = {
     fontSize: window.innerWidth <= 768 ? '1rem' : '1.3rem',
     marginBottom: window.innerWidth <= 768 ? '32px' : '48px',
-    color: '#e2e8f0',
+    color: '#6b7280',
     lineHeight: '1.6',
     fontWeight: '400',
     opacity: '0.95'
@@ -569,11 +544,9 @@ const About = () => {
   return (
     <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #ffffff 0%, #f9fafb 100%)' }}>
       <Header />
-      
-      {/* Hero Section with Grid Background */}
+
+      {/* Hero Section - Updated for plain white background */}
       <section style={aboutHeroStyles}>
-        <div style={heroOverlayStyles} />
-        <div style={heroDarkOverlayStyles} />
         <div style={containerStyles}>
           <motion.div 
             style={heroContentStyles}
@@ -591,7 +564,7 @@ const About = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <Button variant="secondary" size="large">
+              <Button variant="primary" size="large">
                 Start Your Journey
               </Button>
             </motion.div>
@@ -782,7 +755,7 @@ const About = () => {
               left: 0,
               right: 0,
               bottom: 0,
-              background: `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="tech-grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23tech-grid)"/></svg>')`,
+              background: `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="tech-grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23tech-grid)')`,
               opacity: 0.3
             }} />
             

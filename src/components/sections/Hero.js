@@ -23,10 +23,9 @@ const Button = ({ variant, size, children, ...props }) => {
       boxShadow: '0 4px 15px rgba(30, 64, 175, 0.3)'
     },
     secondary: {
-      background: 'rgba(255, 255, 255, 0.1)',
-      color: '#ffffff',
-      border: '1px solid rgba(255, 255, 255, 0.3)',
-      backdropFilter: 'blur(10px)'
+      background: 'transparent',
+      color: '#1e40af',
+      border: '2px solid #1e40af'
     }
   };
 
@@ -38,7 +37,8 @@ const Button = ({ variant, size, children, ...props }) => {
           e.target.style.transform = 'translateY(-2px)';
           e.target.style.boxShadow = '0 8px 25px rgba(30, 64, 175, 0.4)';
         } else {
-          e.target.style.background = 'rgba(255, 255, 255, 0.2)';
+          e.target.style.background = '#1e40af';
+          e.target.style.color = '#ffffff';
         }
       }}
       onMouseLeave={(e) => {
@@ -46,7 +46,8 @@ const Button = ({ variant, size, children, ...props }) => {
         if (variant === 'primary') {
           e.target.style.boxShadow = '0 4px 15px rgba(30, 64, 175, 0.3)';
         } else {
-          e.target.style.background = 'rgba(255, 255, 255, 0.1)';
+          e.target.style.background = 'transparent';
+          e.target.style.color = '#1e40af';
         }
       }}
       {...props}
@@ -152,42 +153,16 @@ const Hero = () => {
     }
   `;
 
-  // Refined hero section styles
+  // Plain hero section styles
   const heroStyles = {
-    background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%)',
-    color: 'white',
+    background: '#ffffff',
+    color: '#1f2937',
     minHeight: '60vh',
     display: 'flex',
     alignItems: 'center',
     position: 'relative',
     overflow: 'hidden',
     width: '100%'
-  };
-
-  // Subtle background overlay
-  const overlayStyles = {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: `
-      radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, rgba(30, 64, 175, 0.08) 0%, transparent 50%),
-      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>')
-    `,
-    zIndex: 0
-  };
-
-  // Subtle dark overlay
-  const darkOverlayStyles = {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: 'rgba(15, 23, 42, 0.4)',
-    zIndex: 0
   };
 
   // Container styles
@@ -218,11 +193,7 @@ const Hero = () => {
     fontWeight: '700',
     lineHeight: '1.1',
     marginBottom: '12px',
-    background: 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #cbd5e1 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    backgroundClip: 'text',
-    textShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+    color: '#1f2937',
     position: 'relative'
   };
 
@@ -230,7 +201,7 @@ const Hero = () => {
   const heroSubtitleStyles = {
     fontSize: window.innerWidth <= 768 ? '1.125rem' : '1.3rem',
     marginBottom: '36px',
-    color: '#e2e8f0',
+    color: '#6b7280',
     lineHeight: '1.6',
     fontWeight: '400',
     opacity: '0.95'
@@ -256,10 +227,9 @@ const Hero = () => {
   const statStyles = {
     textAlign: 'center',
     padding: '16px',
-    background: 'rgba(255, 255, 255, 0.05)',
+    background: '#f9fafb',
     borderRadius: '12px',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
-    backdropFilter: 'blur(10px)',
+    border: '1px solid #e5e7eb',
     transition: 'all 0.3s ease'
   };
 
@@ -268,16 +238,12 @@ const Hero = () => {
     fontSize: window.innerWidth <= 768 ? '2rem' : '2.5rem',
     fontWeight: '700',
     color: '#3b82f6',
-    marginBottom: '4px',
-    background: 'linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    backgroundClip: 'text'
+    marginBottom: '4px'
   };
 
   const statLabelStyles = {
     fontSize: '0.875rem',
-    color: '#cbd5e1',
+    color: '#6b7280',
     fontWeight: '500'
   };
 
@@ -294,15 +260,13 @@ const Hero = () => {
 
   // Enhanced form styling
   const joinFormStyles = {
-    background: 'rgba(255, 255, 255, 0.08)',
-    backdropFilter: 'blur(20px)',
-    border: '1px solid rgba(255, 255, 255, 0.15)',
+    background: '#ffffff',
+    border: '1px solid #e5e7eb',
     borderRadius: '20px',
     padding: '36px',
     width: '100%',
     maxWidth: '420px',
-    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.2)',
-    animation: 'gentleGlow 4s ease-in-out infinite',
+    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
     position: 'relative'
   };
 
@@ -310,13 +274,13 @@ const Hero = () => {
     fontSize: '1.5rem',
     fontWeight: '600',
     marginBottom: '8px',
-    color: '#ffffff',
+    color: '#1f2937',
     textAlign: 'center'
   };
 
   const formSubtitleStyles = {
     fontSize: '0.9rem',
-    color: '#cbd5e1',
+    color: '#6b7280',
     textAlign: 'center',
     marginBottom: '28px',
     opacity: '0.9'
@@ -326,15 +290,14 @@ const Hero = () => {
   const inputStyles = {
     width: '100%',
     padding: '14px 18px',
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
-    border: '1px solid rgba(255, 255, 255, 0.2)',
+    backgroundColor: '#f9fafb',
+    border: '1px solid #d1d5db',
     borderRadius: '12px',
-    color: '#ffffff',
+    color: '#1f2937',
     fontSize: '15px',
     marginBottom: '18px',
     outline: 'none',
     transition: 'all 0.3s ease',
-    backdropFilter: 'blur(10px)',
     boxSizing: 'border-box'
   };
 
@@ -364,9 +327,6 @@ const Hero = () => {
       <style>{animationKeyframes}</style>
       
       <section style={heroStyles} id="home">
-        <div style={overlayStyles} />
-        <div style={darkOverlayStyles} />
-        
         <motion.div 
           style={heroContainerStyles}
           variants={containerVariants}
@@ -418,7 +378,7 @@ const Hero = () => {
                 style={statStyles}
                 whileHover={{ 
                   scale: 1.05,
-                  background: 'rgba(255, 255, 255, 0.1)'
+                  background: '#f3f4f6'
                 }}
                 transition={{ duration: 0.2 }}
               >
@@ -430,7 +390,7 @@ const Hero = () => {
                 style={statStyles}
                 whileHover={{ 
                   scale: 1.05,
-                  background: 'rgba(255, 255, 255, 0.1)'
+                  background: '#f3f4f6'
                 }}
                 transition={{ duration: 0.2 }}
               >
@@ -442,7 +402,7 @@ const Hero = () => {
                 style={statStyles}
                 whileHover={{ 
                   scale: 1.05,
-                  background: 'rgba(255, 255, 255, 0.1)'
+                  background: '#f3f4f6'
                 }}
                 transition={{ duration: 0.2 }}
               >
@@ -475,16 +435,16 @@ const Hero = () => {
                   style={inputStyles}
                   whileFocus={{ 
                     scale: 1.02, 
-                    borderColor: 'rgba(59, 130, 246, 0.6)',
-                    backgroundColor: 'rgba(255, 255, 255, 0.12)'
+                    borderColor: '#3b82f6',
+                    backgroundColor: '#ffffff'
                   }}
                   onFocus={(e) => {
-                    e.target.style.borderColor = 'rgba(59, 130, 246, 0.6)';
-                    e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
+                    e.target.style.borderColor = '#3b82f6';
+                    e.target.style.backgroundColor = '#ffffff';
                   }}
                   onBlur={(e) => {
-                    e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                    e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+                    e.target.style.borderColor = '#d1d5db';
+                    e.target.style.backgroundColor = '#f9fafb';
                   }}
                   required
                 />
@@ -498,16 +458,16 @@ const Hero = () => {
                   style={inputStyles}
                   whileFocus={{ 
                     scale: 1.02, 
-                    borderColor: 'rgba(59, 130, 246, 0.6)',
-                    backgroundColor: 'rgba(255, 255, 255, 0.12)'
+                    borderColor: '#3b82f6',
+                    backgroundColor: '#ffffff'
                   }}
                   onFocus={(e) => {
-                    e.target.style.borderColor = 'rgba(59, 130, 246, 0.6)';
-                    e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
+                    e.target.style.borderColor = '#3b82f6';
+                    e.target.style.backgroundColor = '#ffffff';
                   }}
                   onBlur={(e) => {
-                    e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                    e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+                    e.target.style.borderColor = '#d1d5db';
+                    e.target.style.backgroundColor = '#f9fafb';
                   }}
                   required
                 />
@@ -521,16 +481,16 @@ const Hero = () => {
                   style={inputStyles}
                   whileFocus={{ 
                     scale: 1.02, 
-                    borderColor: 'rgba(59, 130, 246, 0.6)',
-                    backgroundColor: 'rgba(255, 255, 255, 0.12)'
+                    borderColor: '#3b82f6',
+                    backgroundColor: '#ffffff'
                   }}
                   onFocus={(e) => {
-                    e.target.style.borderColor = 'rgba(59, 130, 246, 0.6)';
-                    e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
+                    e.target.style.borderColor = '#3b82f6';
+                    e.target.style.backgroundColor = '#ffffff';
                   }}
                   onBlur={(e) => {
-                    e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                    e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+                    e.target.style.borderColor = '#d1d5db';
+                    e.target.style.backgroundColor = '#f9fafb';
                   }}
                   required
                 />
@@ -542,26 +502,26 @@ const Hero = () => {
                   style={selectStyles}
                   whileFocus={{ 
                     scale: 1.02, 
-                    borderColor: 'rgba(59, 130, 246, 0.6)',
-                    backgroundColor: 'rgba(255, 255, 255, 0.12)'
+                    borderColor: '#3b82f6',
+                    backgroundColor: '#ffffff'
                   }}
                   onFocus={(e) => {
-                    e.target.style.borderColor = 'rgba(59, 130, 246, 0.6)';
-                    e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
+                    e.target.style.borderColor = '#3b82f6';
+                    e.target.style.backgroundColor = '#ffffff';
                   }}
                   onBlur={(e) => {
-                    e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                    e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+                    e.target.style.borderColor = '#d1d5db';
+                    e.target.style.backgroundColor = '#f9fafb';
                   }}
                   required
                 >
-                  <option value="" style={{color: '#000', background: '#fff'}}>Select Course</option>
-                  <option value="react" style={{color: '#000', background: '#fff'}}>React Development</option>
-                  <option value="node" style={{color: '#000', background: '#fff'}}>Node.js Backend</option>
-                  <option value="fullstack" style={{color: '#000', background: '#fff'}}>Full Stack Development</option>
-                  <option value="python" style={{color: '#000', background: '#fff'}}>Python Programming</option>
-                  <option value="data-science" style={{color: '#000', background: '#fff'}}>Data Science</option>
-                  <option value="mainframe" style={{color: '#000', background: '#fff'}}>Mainframe</option>
+                  <option value="">Select Course</option>
+                  <option value="react">React Development</option>
+                  <option value="node">Node.js Backend</option>
+                  <option value="fullstack">Full Stack Development</option>
+                  <option value="python">Python Programming</option>
+                  <option value="data-science">Data Science</option>
+                  <option value="mainframe">Mainframe</option>
                 </motion.select>
                 
                 <motion.button
