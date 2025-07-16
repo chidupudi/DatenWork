@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logoSrc from '../../assets/image.png';
 
-// Updated brand colors with Hero gradient
+// Updated brand colors for white theme
 const brandColors = {
   primary: '#3b82f6',
   primaryDark: '#1e40af',
@@ -15,14 +15,18 @@ const brandColors = {
   hover: '#f8fafc',
   topBarBg: '#f8fafc',
   success: '#10b981',
-  heroGradient: 'linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%)',
-  headerText: '#ffffff',
-  headerTextSecondary: '#e2e8f0', 
-  headerBorder: 'rgba(255, 255, 255, 0.1)',
-  headerHover: 'rgba(255, 255, 255, 0.1)'
+  // Updated header colors for white theme
+  headerBg: '#ffffff',
+  headerText: '#1e293b',
+  headerTextSecondary: '#64748b', 
+  headerBorder: '#e2e8f0',
+  headerHover: '#f1f5f9',
+  activeBackground: '#f0f9ff',
+  activeBorder: '#3b82f6',
+  shadow: 'rgba(0, 0, 0, 0.1)'
 };
 
-// TopBar Component
+// TopBar Component (mostly unchanged as it already works well)
 const TopBar = () => {
   const [hoveredItem, setHoveredItem] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
@@ -77,7 +81,7 @@ const TopBar = () => {
     transition: 'all 0.3s ease',
     background: isHovered ? brandColors.white : 'transparent',
     border: `1px solid ${isHovered ? brandColors.border : 'transparent'}`,
-    boxShadow: isHovered ? '0 2px 4px rgba(0,0,0,0.1)' : 'none',
+    boxShadow: isHovered ? `0 2px 4px ${brandColors.shadow}` : 'none',
     cursor: 'pointer'
   });
 
@@ -228,7 +232,7 @@ const TopBar = () => {
   );
 };
 
-// Main Header Component with Fixed Mobile Navigation
+// Main Header Component with White Theme
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -283,17 +287,17 @@ const Header = () => {
 
   const isActive = (path) => currentPath === path;
 
-  // Header styles
+  // Updated header styles for white theme
   const headerStyles = {
     position: 'sticky',
     top: 0,
-    background: brandColors.heroGradient,
+    background: brandColors.headerBg,
     borderBottom: `1px solid ${brandColors.headerBorder}`,
-    zIndex: 1000, // Increased z-index
+    zIndex: 1000,
     transition: 'all 0.3s ease',
-    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.15)',
+    boxShadow: `0 2px 8px ${brandColors.shadow}`,
     position: 'relative',
-    overflow: 'visible' // Changed from hidden
+    overflow: 'visible'
   };
 
   const headerOverlayStyles = {
@@ -303,8 +307,8 @@ const Header = () => {
     right: 0,
     bottom: 0,
     background: `
-      radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, rgba(30, 64, 175, 0.04) 0%, transparent 50%)
+      radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.02) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(30, 64, 175, 0.02) 0%, transparent 50%)
     `,
     zIndex: 0,
     pointerEvents: 'none'
@@ -341,7 +345,7 @@ const Header = () => {
     filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))'
   };
 
-  // Fixed mobile navigation styles
+  // Updated mobile navigation styles for white theme
   const getNavStyles = () => {
     if (!isMobile) {
       return {
@@ -353,23 +357,23 @@ const Header = () => {
     }
     
     return {
-      position: 'fixed', // Changed from absolute to fixed
-      top: '70px', // Height of mobile header
+      position: 'fixed',
+      top: '70px',
       left: 0,
       right: 0,
-      bottom: 0, // Full height overlay
-      background: brandColors.heroGradient,
+      bottom: 0,
+      background: brandColors.headerBg,
       flexDirection: 'column',
       borderTop: `1px solid ${brandColors.headerBorder}`,
-      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.2)',
-      transform: isMenuOpen ? 'translateX(0)' : 'translateX(-100%)', // Slide from left
+      boxShadow: `0 4px 6px -1px ${brandColors.shadow}`,
+      transform: isMenuOpen ? 'translateX(0)' : 'translateX(-100%)',
       opacity: isMenuOpen ? 1 : 0,
       visibility: isMenuOpen ? 'visible' : 'hidden',
       padding: '20px 16px',
       overflowY: 'auto',
       backdropFilter: 'blur(20px)',
-      zIndex: 999, // High z-index for mobile menu
-      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)' // Smooth transition
+      zIndex: 999,
+      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
     };
   };
 
@@ -386,35 +390,34 @@ const Header = () => {
     width: isMobile ? '100%' : 'auto'
   };
 
+  // Updated nav link styles for white theme
   const navLinkStyles = (path) => ({
     fontWeight: isActive(path) ? '600' : '500',
-    fontSize: isMobile ? '18px' : '15px', // Larger font for mobile
+    fontSize: isMobile ? '18px' : '15px',
     color: isActive(path) ? brandColors.primary : brandColors.headerText,
     transition: 'all 0.2s ease',
     textDecoration: 'none',
-    padding: isMobile ? '16px 24px' : '12px 16px', // More padding for mobile
+    padding: isMobile ? '16px 24px' : '12px 16px',
     borderRadius: '8px',
-    background: isActive(path) ? 'rgba(255, 255, 255, 0.15)' : 'transparent',
-    border: `1px solid ${isActive(path) ? 'rgba(255, 255, 255, 0.2)' : 'transparent'}`,
+    background: isActive(path) ? brandColors.activeBackground : 'transparent',
+    border: `1px solid ${isActive(path) ? brandColors.activeBorder : 'transparent'}`,
     position: 'relative',
     display: 'flex',
     alignItems: 'center',
     width: isMobile ? '100%' : 'auto',
     justifyContent: isMobile ? 'center' : 'flex-start',
     cursor: 'pointer',
-    boxShadow: isActive(path) ? '0 2px 4px rgba(0, 0, 0, 0.1)' : 'none',
-    backdropFilter: isActive(path) ? 'blur(10px)' : 'none',
-    textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
-    marginBottom: isMobile ? '8px' : '0' // Space between mobile menu items
+    boxShadow: isActive(path) ? `0 2px 4px ${brandColors.shadow}` : 'none',
+    marginBottom: isMobile ? '8px' : '0'
   });
 
   const ctaButtonStyles = {
     background: brandColors.gradient,
     color: brandColors.white,
-    padding: isMobile ? '16px 32px' : '14px 28px', // Larger for mobile
+    padding: isMobile ? '16px 32px' : '14px 28px',
     borderRadius: '8px',
     fontWeight: '600',
-    fontSize: isMobile ? '16px' : '15px', // Larger for mobile
+    fontSize: isMobile ? '16px' : '15px',
     transition: 'all 0.3s ease',
     boxShadow: '0 2px 4px rgba(30, 64, 175, 0.2)',
     textDecoration: 'none',
@@ -426,11 +429,11 @@ const Header = () => {
     whiteSpace: 'nowrap',
     position: 'relative',
     zIndex: 3,
-    width: isMobile ? '100%' : 'auto', // Full width on mobile
+    width: isMobile ? '100%' : 'auto',
     marginTop: isMobile ? '20px' : '0'
   };
 
-  // Improved hamburger styles
+  // Updated hamburger styles for white theme
   const hamburgerStyles = {
     display: 'flex',
     flexDirection: 'column',
@@ -442,7 +445,7 @@ const Header = () => {
     borderRadius: '6px',
     transition: 'all 0.3s ease',
     position: 'relative',
-    zIndex: 1001, // Higher than mobile menu
+    zIndex: 1001,
     width: '44px',
     height: '44px',
     alignItems: 'center',
@@ -461,10 +464,10 @@ const Header = () => {
     return {
       width: '22px',
       height: '2px',
-      background: brandColors.headerText,
+      background: brandColors.headerText, // Dark color for white background
       transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
       borderRadius: '1px',
-      boxShadow: '0 1px 2px rgba(0, 0, 0, 0.1)',
+      boxShadow: `0 1px 2px ${brandColors.shadow}`,
       transform,
       opacity: isMenuOpen && index === 1 ? 0 : 1
     };
@@ -483,7 +486,7 @@ const Header = () => {
     { path: '/contact', label: 'Contact' }
   ];
 
-  // Overlay for mobile menu (to close when clicking outside)
+  // Updated overlay styles
   const overlayStyles = {
     position: 'fixed',
     top: 0,
@@ -536,8 +539,7 @@ const Header = () => {
                         if (!isActive(item.path)) {
                           e.target.style.background = brandColors.headerHover;
                           e.target.style.color = brandColors.primary;
-                          e.target.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-                          e.target.style.backdropFilter = 'blur(10px)';
+                          e.target.style.borderColor = brandColors.border;
                         }
                       }}
                       onMouseLeave={(e) => {
@@ -545,7 +547,6 @@ const Header = () => {
                           e.target.style.background = 'transparent';
                           e.target.style.color = brandColors.headerText;
                           e.target.style.borderColor = 'transparent';
-                          e.target.style.backdropFilter = 'none';
                         }
                       }}
                     >

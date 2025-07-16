@@ -167,15 +167,15 @@ const Courses = () => {
 
   const keyColor = '#413C58';
 
-  // Updated hero background with the new gradient
-  const heroSectionStyles = {
-    padding: '70px 0 80px',
-    background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%)',
-    color: 'white',
-    position: 'relative',
-    overflow: 'hidden',
-    
-  };
+ // Updated hero background with plain white
+const heroSectionStyles = {
+  padding: '70px 0 80px',
+  background: '#ffffff',
+  color: '#1f2937',
+  position: 'relative',
+  overflow: 'hidden'
+};
+
 
   // Hero background effects with grid pattern (exact same as Hero component)
   const heroOverlayStyles = {
@@ -476,49 +476,45 @@ const Courses = () => {
       <Header />
       
       {/* Hero Section with Grid Pattern (Exact Match with Hero Component) */}
-      <section className="courses-hero" style={heroSectionStyles}>
-        <div style={heroOverlayStyles} />
-        <div style={heroDarkOverlayStyles} />
-        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
-          <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto' }}>
-            <motion.h1 
-              style={{ 
-                fontSize: window.innerWidth <= 768 ? '2.5rem' : 'clamp(2.5rem, 5vw, 3.8rem)',
-                fontWeight: '700',
-                lineHeight: '1.1',
-                marginBottom: '24px',
-                background: 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #cbd5e1 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-                textShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
-                position: 'relative'
-              }}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              Professional Training Courses
-            </motion.h1>
-            <motion.p 
-              style={{ 
-                fontSize: window.innerWidth <= 768 ? '1.125rem' : '1.3rem',
-                marginBottom: '36px',
-                color: '#e2e8f0',
-                lineHeight: '1.6',
-                fontWeight: '400',
-                opacity: '0.95'
-              }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              Master in-demand skills with our comprehensive, industry-aligned courses designed by experts. 
-              Get hands-on experience and guaranteed job placement support.
-            </motion.p>
-          </div>
-        </div>
-      </section>
+
+
+<section className="courses-hero" style={heroSectionStyles}>
+  <div className="container" style={{ position: 'relative', zIndex: 2 }}>
+    <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto' }}>
+      <motion.h1 
+        style={{ 
+          fontSize: window.innerWidth <= 768 ? '2.5rem' : 'clamp(2.5rem, 5vw, 3.8rem)',
+          fontWeight: '700',
+          lineHeight: '1.1',
+          marginBottom: '24px',
+          color: '#1f2937',
+          position: 'relative'
+        }}
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        Professional Training Courses
+      </motion.h1>
+      <motion.p 
+        style={{ 
+          fontSize: window.innerWidth <= 768 ? '1.125rem' : '1.3rem',
+          marginBottom: '36px',
+          color: '#6b7280',
+          lineHeight: '1.6',
+          fontWeight: '400',
+          opacity: '0.95'
+        }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+      >
+        Master in-demand skills with our comprehensive, industry-aligned courses designed by experts. 
+        Get hands-on experience and guaranteed job placement support.
+      </motion.p>
+    </div>
+  </div>
+</section>
 
       {/* Courses Section */}
       <section style={coursesSectionStyles} id="courses" ref={ref}>

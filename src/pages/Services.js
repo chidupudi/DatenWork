@@ -85,8 +85,8 @@ const Services = () => {
   // Hero section styles with grid background
   const heroSectionStyles = {
     padding: '50px 0 80px',
-    background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%)',
-    color: 'white',
+    background: '#ffffff',
+    color: '#1f2937',
     position: 'relative',
     overflow: 'hidden',
     minHeight: '60vh',
@@ -118,7 +118,6 @@ const Services = () => {
     background: 'rgba(15, 23, 42, 0.4)',
     zIndex: 0
   };
-
   const heroContainerStyles = {
     maxWidth: '1200px',
     margin: '0 auto',
@@ -126,24 +125,21 @@ const Services = () => {
     position: 'relative',
     zIndex: 2,
     textAlign: 'center'
-};
+  };
+  
 
   const heroTitleStyles = {
     fontSize: window.innerWidth <= 768 ? '2.5rem' : 'clamp(2.5rem, 5vw, 3.8rem)',
     fontWeight: '700',
     lineHeight: '1.1',
     marginBottom: '24px',
-    background: 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #cbd5e1 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    backgroundClip: 'text',
-    textShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+    color: '#1f2937'
   };
 
   const heroSubtitleStyles = {
     fontSize: window.innerWidth <= 768 ? '1.125rem' : '1.3rem',
     marginBottom: '48px',
-    color: '#e2e8f0',
+    color: '#6b7280',
     lineHeight: '1.6',
     fontWeight: '400',
     opacity: '0.95',
@@ -159,39 +155,38 @@ const Services = () => {
     marginTop: '20px'
   };
 
-  const serviceCardStyles = (isHovered) => ({
-    background: 'rgba(255, 255, 255, 0.08)',
-    backdropFilter: 'blur(20px)',
-    border: isHovered ? '2px solid rgba(59, 130, 246, 0.5)' : '1px solid rgba(255, 255, 255, 0.15)',
-    borderRadius: '20px',
-    
-    padding: '12px 24px',
-    textAlign: 'center',
-    transition: 'all 0.3s ease',
-    transform: isHovered ? 'translateY(-8px) scale(1.02)' : 'translateY(0) scale(1)',
-    boxShadow: isHovered 
-      ? '0 20px 40px rgba(0, 0, 0, 0.3)' 
-      : '0 10px 20px rgba(0, 0, 0, 0.2)'
-  });
+// Updated service card styles for light theme
+const serviceCardStyles = (isHovered) => ({
+  background: '#ffffff',
+  border: isHovered ? '2px solid #3b82f6' : '1px solid #e5e7eb',
+  borderRadius: '20px',
+  padding: '12px 24px',
+  textAlign: 'center',
+  transition: 'all 0.3s ease',
+  transform: isHovered ? 'translateY(-8px) scale(1.02)' : 'translateY(0) scale(1)',
+  boxShadow: isHovered 
+    ? '0 20px 40px rgba(59, 130, 246, 0.15)' 
+    : '0 10px 20px rgba(0, 0, 0, 0.08)'
+});
 
-  const serviceIconStyles = {
-    fontSize: '4rem',
-    marginBottom: '24px',
-    display: 'block'
-  };
+const serviceIconStyles = {
+  fontSize: '4rem',
+  marginBottom: '24px',
+  display: 'block'
+};
 
-  const serviceTitleStyles = {
-    fontSize: '1.5rem',
-    fontWeight: '600',
-    marginBottom: '16px',
-    color: '#ffffff'
-  };
+const serviceTitleStyles = {
+  fontSize: '1.5rem',
+  fontWeight: '600',
+  marginBottom: '16px',
+  color: '#1f2937'
+};
 
-  const serviceDescStyles = {
-    color: '#cbd5e1',
-    lineHeight: '1.6',
-    fontSize: '0.95rem'
-  };
+const serviceDescStyles = {
+  color: '#6b7280',
+  lineHeight: '1.6',
+  fontSize: '0.95rem'
+};
 
   // Certifications section styles
   const certSectionStyles = {
@@ -328,57 +323,54 @@ const Services = () => {
       
       {/* Hero Section with Grid Pattern and Integrated Services */}
       <section style={heroSectionStyles}>
-        <div style={heroOverlayStyles} />
-        <div style={heroDarkOverlayStyles} />
-        
-        <motion.div 
-          style={heroContainerStyles}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          <motion.h1 
-            style={heroTitleStyles}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            Integrated Tech Solutions
-          </motion.h1>
-          
-          <motion.p 
-            style={heroSubtitleStyles}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            Driving growth through expert training, strategic placements, and robust engineering
-          </motion.p>
+  <motion.div 
+    style={heroContainerStyles}
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 1 }}
+  >
+    <motion.h1 
+      style={heroTitleStyles}
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+    >
+      Integrated Tech Solutions
+    </motion.h1>
+    
+    <motion.p 
+      style={heroSubtitleStyles}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 0.2 }}
+    >
+      Driving growth through expert training, strategic placements, and robust engineering
+    </motion.p>
 
-          <motion.div 
-            style={servicesGridStyles}
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            {mainServices.map((service) => (
-              <motion.div
-                key={service.id}
-                variants={itemVariants}
-                whileHover={{ scale: 1.02, y: -8 }}
-                onMouseEnter={() => setHoveredService(service.id)}
-                onMouseLeave={() => setHoveredService(null)}
-              >
-                <Card style={serviceCardStyles(hoveredService === service.id)}>
-                  <span style={serviceIconStyles}>{service.icon}</span>
-                  <h3 style={serviceTitleStyles}>{service.title}</h3>
-                  <p style={serviceDescStyles}>{service.description}</p>
-                </Card>
-              </motion.div>
-            ))}
-          </motion.div>
+    <motion.div 
+      style={servicesGridStyles}
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      {mainServices.map((service) => (
+        <motion.div
+          key={service.id}
+          variants={itemVariants}
+          whileHover={{ scale: 1.02, y: -8 }}
+          onMouseEnter={() => setHoveredService(service.id)}
+          onMouseLeave={() => setHoveredService(null)}
+        >
+          <Card style={serviceCardStyles(hoveredService === service.id)}>
+            <span style={serviceIconStyles}>{service.icon}</span>
+            <h3 style={serviceTitleStyles}>{service.title}</h3>
+            <p style={serviceDescStyles}>{service.description}</p>
+          </Card>
         </motion.div>
-      </section>
+      ))}
+    </motion.div>
+  </motion.div>
+</section>
 
       {/* Certificate Assistance Section */}
       <section style={certSectionStyles} ref={ref}>
