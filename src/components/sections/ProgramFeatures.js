@@ -3,46 +3,52 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useNavigate } from 'react-router-dom';
 import Card from '../common/Card';
-import Button from '../common/Button'; // 
+import Button from '../common/Button';
 
-const TrainingCourses = () => {
+const FeaturedPrograms = () => {
   const [ref, inView] = useInView({
     threshold: 0.1,
     triggerOnce: true
   });
   
   const navigate = useNavigate();
-  const [hoveredCourse, setHoveredCourse] = useState(null);
+  const [hoveredProgram, setHoveredProgram] = useState(null);
 
-  // Only keeping first 2 courses
-  const courses = [
+  // Only keeping first 2 programs from the courses page
+  const programs = [
     {
       id: 1,
-      title: 'Mainframe Training & Placement Program',
-      duration: '40 hours',
-      level: 'Beginner to Job-Ready',
-      technologies: ['COBOL', 'JCL', 'DB2', 'CICS', 'IBM z/OS', 'VSAM'],
-      price: '₹30,000',
-      originalPrice: '₹60,000',
+      title: 'Full Stack Web Development Bootcamp',
+      duration: '16 weeks',
+      level: 'Beginner to Advanced',
+      technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'JavaScript', 'HTML/CSS'],
+      price: '₹2,49,000',
+      originalPrice: '₹4,15,000',
       discount: '40% OFF',
-      icon: '🖥️',
-      gradient: 'linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)',
-      rating: 4.8,
-      students: 187
+      icon: '🚀',
+      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      rating: 4.9,
+      students: 1250,
+      instructor: 'Sarah Johnson',
+      nextStart: 'March 15, 2024',
+      features: ['1-on-1 Mentorship', 'Job Placement', 'Personal Mentor', 'Lifetime Access']
     },
     {
       id: 2,
-      title: 'Data Science with Python',
-      duration: '60 hours',
-      level: 'Beginner to Advanced',
-      technologies: ['Python', 'Pandas', 'TensorFlow', 'Scikit-learn', 'SQL'],
-      price: '₹50,000',
-      originalPrice: '₹60,000',
-      discount: '31% OFF',
-      icon: '🤖',
-      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-      rating: 4.9,
-      students: 88
+      title: 'React.js Mastery Course',
+      duration: '10 weeks',
+      level: 'Intermediate',
+      technologies: ['React', 'Redux', 'TypeScript', 'Jest', 'React Router', 'Styled Components'],
+      price: '₹2,49,000',
+      originalPrice: '₹2,71,000',
+      discount: '8% OFF',
+      icon: '⚛️',
+      gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+      rating: 4.8,
+      students: 890,
+      instructor: 'Michael Chen',
+      nextStart: 'March 22, 2024',
+      features: ['1-on-1 Sessions', 'Personal Mentor', 'Performance', 'Live Projects']
     }
   ];
 
@@ -116,7 +122,7 @@ const TrainingCourses = () => {
     lineHeight: '1.6'
   };
 
-  const coursesGridStyles = {
+  const programsGridStyles = {
     display: 'grid',
     gridTemplateColumns: window.innerWidth <= 768 
       ? '1fr' 
@@ -126,7 +132,7 @@ const TrainingCourses = () => {
     gap: '32px'
   };
 
-  const courseCardStyles = (isHovered) => ({
+  const programCardStyles = (isHovered) => ({
     background: 'white',
     borderRadius: '20px',
     overflow: 'hidden',
@@ -141,20 +147,20 @@ const TrainingCourses = () => {
     flexDirection: 'column'
   });
 
-  const courseHeaderStyles = (gradient) => ({
+  const programHeaderStyles = (gradient) => ({
     background: gradient,
     padding: '24px',
     position: 'relative',
     overflow: 'hidden'
   });
 
-  const courseIconStyles = {
+  const programIconStyles = {
     fontSize: '2.5rem',
     marginBottom: '12px',
     filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))'
   };
 
-  const courseTitleStyles = {
+  const programTitleStyles = {
     fontSize: '1.5rem',
     fontWeight: '700',
     color: 'white',
@@ -162,7 +168,7 @@ const TrainingCourses = () => {
     textShadow: '0 2px 4px rgba(0, 0, 0, 0.2)'
   };
 
-  const courseDurationStyles = {
+  const programDurationStyles = {
     fontSize: '0.875rem',
     color: 'rgba(255, 255, 255, 0.9)',
     display: 'flex',
@@ -184,14 +190,14 @@ const TrainingCourses = () => {
     fontWeight: '700'
   };
 
-  const courseBodyStyles = {
+  const programBodyStyles = {
     padding: '24px',
     flex: 1,
     display: 'flex',
     flexDirection: 'column'
   };
 
-  const courseLevelStyles = {
+  const programLevelStyles = {
     fontSize: '0.875rem',
     color: '#6b7280',
     marginBottom: '16px',
@@ -203,7 +209,6 @@ const TrainingCourses = () => {
   const levelDotStyles = (level) => {
     const colors = {
       'Beginner to Advanced': '#10b981',
-      'Beginner to Job-Ready': '#10b981',
       'Intermediate': '#f59e0b',
       'Professional': '#3b82f6',
       'Advanced': '#ef4444'
@@ -235,11 +240,40 @@ const TrainingCourses = () => {
     border: '1px solid #e5e7eb'
   };
 
+  const instructorStyles = {
+    fontSize: '0.875rem',
+    color: '#6b7280',
+    marginBottom: '12px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px'
+  };
+
+  const featuresStyles = {
+    marginBottom: '16px'
+  };
+
+  const featureListStyles = {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '6px'
+  };
+
+  const featureTagStyles = {
+    background: '#f0fdf4',
+    color: '#166534',
+    padding: '4px 8px',
+    borderRadius: '8px',
+    fontSize: '0.7rem',
+    fontWeight: '500',
+    border: '1px solid #bbf7d0'
+  };
+
   const priceContainerStyles = {
     marginBottom: '16px'
   };
 
-  const coursePriceStyles = {
+  const programPriceStyles = {
     fontSize: '1.5rem',
     fontWeight: '700',
     color: '#1f2937',
@@ -252,7 +286,7 @@ const TrainingCourses = () => {
     textDecoration: 'line-through'
   };
 
-  const courseStatsStyles = {
+  const programStatsStyles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -261,7 +295,19 @@ const TrainingCourses = () => {
     color: '#6b7280'
   };
 
-  const courseButtonStyles = {
+  const nextStartStyles = {
+    background: '#f0f9ff',
+    color: '#0369a1',
+    padding: '8px 12px',
+    borderRadius: '8px',
+    fontSize: '0.8rem',
+    fontWeight: '500',
+    textAlign: 'center',
+    marginBottom: '16px',
+    border: '1px solid #bae6fd'
+  };
+
+  const programButtonStyles = {
     width: '100%',
     padding: '12px 24px',
     background: 'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)',
@@ -275,7 +321,7 @@ const TrainingCourses = () => {
     boxShadow: '0 4px 12px rgba(79, 70, 229, 0.3)'
   };
 
-  const courseButtonHoverStyles = {
+  const programButtonHoverStyles = {
     transform: 'translateY(-2px)',
     boxShadow: '0 6px 20px rgba(79, 70, 229, 0.4)'
   };
@@ -371,7 +417,7 @@ const TrainingCourses = () => {
   });
 
   return (
-    <section style={sectionStyles} id="courses">
+    <section style={sectionStyles} id="featured-programs">
       <div style={containerStyles}>
         <motion.div 
           ref={ref}
@@ -381,65 +427,84 @@ const TrainingCourses = () => {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <h2 style={titleStyles}>
-            Popular Training Courses
+            Featured Programs
             <span style={titleUnderlineStyles}></span>
           </h2>
           <p style={subtitleStyles}>
-            Industry-relevant courses designed to make you Job-Ready
+            Comprehensive bootcamps and courses designed by industry experts for guaranteed success
           </p>
         </motion.div>
 
         <motion.div 
-          style={coursesGridStyles}
+          style={programsGridStyles}
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
         >
-          {courses.map((course) => (
+          {programs.map((program) => (
             <motion.div
-              key={course.id}
+              key={program.id}
               variants={cardVariants}
-              onMouseEnter={() => setHoveredCourse(course.id)}
-              onMouseLeave={() => setHoveredCourse(null)}
+              onMouseEnter={() => setHoveredProgram(program.id)}
+              onMouseLeave={() => setHoveredProgram(null)}
             >
-              <Card style={courseCardStyles(hoveredCourse === course.id)} hover={false}>
-                <div style={courseHeaderStyles(course.gradient)}>
-                  <div style={discountBadgeStyles}>{course.discount}</div>
-                  <div style={courseIconStyles}>{course.icon}</div>
-                  <h3 style={courseTitleStyles}>{course.title}</h3>
-                  <div style={courseDurationStyles}>
+              <Card style={programCardStyles(hoveredProgram === program.id)} hover={false}>
+                <div style={programHeaderStyles(program.gradient)}>
+                  <div style={discountBadgeStyles}>{program.discount}</div>
+                  <div style={programIconStyles}>{program.icon}</div>
+                  <h3 style={programTitleStyles}>{program.title}</h3>
+                  <div style={programDurationStyles}>
                     <span>⏱️</span>
-                    <span>{course.duration}</span>
+                    <span>{program.duration}</span>
                   </div>
                 </div>
                 
-                <div style={courseBodyStyles}>
-                  <div style={courseLevelStyles}>
-                    <span style={levelDotStyles(course.level)} />
-                    <span>{course.level}</span>
+                <div style={programBodyStyles}>
+                  <div style={programLevelStyles}>
+                    <span style={levelDotStyles(program.level)} />
+                    <span>{program.level}</span>
+                  </div>
+
+                  <div style={instructorStyles}>
+                    <span>👨‍🏫</span>
+                    <span>Instructor: {program.instructor}</span>
                   </div>
                   
                   <div style={technologiesStyles}>
-                    {course.technologies.map((tech, index) => (
+                    {program.technologies.map((tech, index) => (
                       <span key={index} style={techBadgeStyles}>
                         {tech}
                       </span>
                     ))}
                   </div>
+
+                  <div style={featuresStyles}>
+                    <div style={featureListStyles}>
+                      {program.features.map((feature, index) => (
+                        <span key={index} style={featureTagStyles}>
+                          ✓ {feature}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                   
                   <div style={priceContainerStyles}>
-                    <div style={coursePriceStyles}>{course.price}</div>
-                    <div style={originalPriceStyles}>{course.originalPrice}</div>
+                    <div style={programPriceStyles}>{program.price}</div>
+                    <div style={originalPriceStyles}>{program.originalPrice}</div>
                   </div>
 
-                  <div style={courseStatsStyles}>
-                    <span>⭐ {course.rating}</span>
-                    <span>👥 {course.students.toLocaleString()} students</span>
+                  <div style={programStatsStyles}>
+                    <span>⭐ {program.rating}</span>
+                    <span>👥 {program.students.toLocaleString()} students</span>
+                  </div>
+
+                  <div style={nextStartStyles}>
+                    <strong>Next Batch:</strong> {program.nextStart}
                   </div>
                   
                   <motion.button
-                    style={courseButtonStyles}
-                    whileHover={courseButtonHoverStyles}
+                    style={programButtonStyles}
+                    whileHover={programButtonHoverStyles}
                     whileTap={{ scale: 0.98 }}
                   >
                     Enroll Now
@@ -449,32 +514,32 @@ const TrainingCourses = () => {
             </motion.div>
           ))}
           
-          {/* View More Courses Card - 3rd Card */}
+          {/* View More Programs Card - 3rd Card */}
           <motion.div
             variants={cardVariants}
-            onMouseEnter={() => setHoveredCourse('viewMore')}
-            onMouseLeave={() => setHoveredCourse(null)}
+            onMouseEnter={() => setHoveredProgram('viewMore')}
+            onMouseLeave={() => setHoveredProgram(null)}
             onClick={() => navigate('/courses')}
           >
-            <div style={viewMoreCardStyles(hoveredCourse === 'viewMore')}>
+            <div style={viewMoreCardStyles(hoveredProgram === 'viewMore')}>
               <div style={viewMoreBackgroundPattern} />
               
-              <div style={viewMoreIconContainerStyles(hoveredCourse === 'viewMore')}>
-                <span style={viewMoreIconStyles(hoveredCourse === 'viewMore')}>
-                  {hoveredCourse === 'viewMore' ? '🚀' : '➕'}
+              <div style={viewMoreIconContainerStyles(hoveredProgram === 'viewMore')}>
+                <span style={viewMoreIconStyles(hoveredProgram === 'viewMore')}>
+                  {hoveredProgram === 'viewMore' ? '🎓' : '📚'}
                 </span>
               </div>
               
-              <h3 style={viewMoreTextStyles}>Explore More Courses</h3>
-              <p style={viewMoreSubtextStyles}>6+ specialized programs available</p>
+              <h3 style={viewMoreTextStyles}>Explore All Programs</h3>
+              <p style={viewMoreSubtextStyles}>12+ comprehensive courses available</p>
               
               <motion.button
-                style={viewMoreButtonStyles(hoveredCourse === 'viewMore')}
+                style={viewMoreButtonStyles(hoveredProgram === 'viewMore')}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                View All Courses
-                <span style={arrowStyles(hoveredCourse === 'viewMore')}>→</span>
+                View All Programs
+                <span style={arrowStyles(hoveredProgram === 'viewMore')}>→</span>
               </motion.button>
             </div>
           </motion.div>
@@ -484,4 +549,4 @@ const TrainingCourses = () => {
   );
 };
 
-export default TrainingCourses;
+export default FeaturedPrograms;

@@ -1,18 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/common/Header';
 import Footer from '../components/sections/Footer';
-// Mock components since they're not available in this environment
-
-
-
-
-const Card = ({ children, style, className, hover = true }) => (
-  <div className={className} style={style}>
-    {children}
-  </div>
-);
+import Card from '../components/common/Card';
 
 const Courses = () => {
   const [ref, inView] = useInView({
@@ -20,121 +12,183 @@ const Courses = () => {
     triggerOnce: true
   });
 
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState('all');
   const [hoveredCard, setHoveredCard] = useState(null);
-  const [hoveredTech, setHoveredTech] = useState(null);
 
+  // Updated categories with accurate counts
   const categories = [
-    { id: 'all', name: 'All Courses', count: 12 },
-    { id: 'frontend', name: 'Frontend', count: 4 },
-    { id: 'backend', name: 'Backend', count: 3 },
-    { id: 'fullstack', name: 'Full Stack', count: 2 },
-    { id: 'data', name: 'Data Science', count: 2 },
+    { id: 'all', name: 'All Courses', count: 9 },
+    { id: 'frontend', name: 'Frontend', count: 2 },
+    { id: 'backend', name: 'Backend', count: 2 },
+    { id: 'fullstack', name: 'Full Stack', count: 1 },
+    { id: 'data', name: 'Data Science', count: 3 },
     { id: 'mobile', name: 'Mobile', count: 1 }
   ];
 
+  // All courses with consistent pricing similar to first 2 courses from TrainingCourses
   const courses = [
     {
       id: 1,
-      title: 'Full Stack Web Development Bootcamp',
-      category: 'fullstack',
-      duration: '16 weeks',
-      level: 'Beginner to Advanced',
-      price: '₹2,49,000',
-      originalPrice: '₹4,15,000',
-      rating: 4.9,
-      students: 1250,
-      description: 'Master modern web development with React, Node.js, and MongoDB. Build real-world projects and get job-ready.',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'JavaScript', 'HTML/CSS'],
-      features: ['1-on-1 Mentorship', 'Job Placement', 'Personal Mentor', 'Lifetime Access'],
-      instructor: 'Sarah Johnson',
-      nextStart: 'March 15, 2024',
-      emoji: '🚀'
+      title: 'Mainframe Training & Placement Program',
+      category: 'backend',
+      duration: '40 hours',
+      level: 'Beginner to Job-Ready',
+      technologies: ['COBOL', 'JCL', 'DB2', 'CICS', 'IBM z/OS', 'VSAM'],
+      price: '₹30,000',
+      originalPrice: '₹60,000',
+      discount: '50% OFF',
+      icon: '🖥️',
+      gradient: 'linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)',
+      rating: 4.8,
+      students: 187,
+      instructor: 'Robert Kumar',
+      nextStart: 'March 25, 2024',
+      features: ['Job Guarantee', 'Industry Mentors', 'Real Projects', 'Certification']
     },
     {
       id: 2,
-      title: 'React.js Mastery Course',
-      category: 'frontend',
-      duration: '10 weeks',
-      level: 'Intermediate',
-      price: '₹2,49,000',
-      originalPrice: '₹2,71,000',
-      rating: 4.8,
-      students: 890,
-      description: 'Deep dive into React.js ecosystem including hooks, context, Redux, and testing. Build production-ready applications.',
-      technologies: ['React', 'Redux', 'TypeScript', 'Jest', 'React Router', 'Styled Components'],
-      features: ['1-on-1 Sessions', 'Personal Mentor', 'Performance', 'Live Projects'],
-      instructor: 'Michael Chen',
-      nextStart: 'March 22, 2024',
-      emoji: '⚛️'
+      title: 'Data Science with Python',
+      category: 'data',
+      duration: '60 hours',
+      level: 'Beginner to Advanced',
+      technologies: ['Python', 'Pandas', 'TensorFlow', 'Scikit-learn', 'SQL'],
+      price: '₹50,000',
+      originalPrice: '₹60,000',
+      discount: '17% OFF',
+      icon: '🤖',
+      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+      rating: 4.9,
+      students: 88,
+      instructor: 'Dr. Emily Rodriguez',
+      nextStart: 'April 5, 2024',
+      features: ['Real Datasets', 'ML Projects', 'Data Visualization', 'Career Support']
     },
     {
       id: 3,
-      title: 'Node.js Backend Development',
-      category: 'backend',
-      duration: '12 weeks',
-      level: 'Intermediate',
-      price: '₹2,49,000',
-      originalPrice: '₹2,66,000',
-      rating: 4.7,
-      students: 654,
-      description: 'Build scalable backend applications with Node.js, Express, and databases. Learn API development and deployment.',
-      technologies: ['Node.js', 'Express', 'PostgreSQL', 'MongoDB', 'Docker', 'AWS'],
-      features: ['API Design', 'Database Design', 'Security', 'Deployment'],
-      instructor: 'David Park',
-      nextStart: 'March 29, 2024',
-      emoji: '⚙️'
+      title: 'Full Stack Web Development Bootcamp',
+      category: 'fullstack',
+      duration: '80 hours',
+      level: 'Beginner to Advanced',
+      technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'JavaScript', 'HTML/CSS'],
+      price: '₹75,000',
+      originalPrice: '₹1,00,000',
+      discount: '25% OFF',
+      icon: '🚀',
+      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      rating: 4.9,
+      students: 1250,
+      instructor: 'Sarah Johnson',
+      nextStart: 'March 15, 2024',
+      features: ['1-on-1 Mentorship', 'Job Placement', 'Personal Mentor', 'Lifetime Access']
     },
     {
       id: 4,
-      title: 'Data Science with Python',
-      category: 'data',
-      duration: '14 weeks',
-      level: 'Beginner to Advanced',
-      price: '₹2,49,000',
-      originalPrice: '₹3,24,000',
-      rating: 4.9,
-      students: 543,
-      description: 'Master data science fundamentals, machine learning, and data visualization with Python and popular libraries.',
-      technologies: ['Python', 'Pandas', 'NumPy', 'Scikit-learn', 'TensorFlow', 'Matplotlib'],
-      features: ['Real Datasets', 'ML Projects', 'Data Visualization', 'Career Support'],
-      instructor: 'Dr. Emily Rodriguez',
-      nextStart: 'April 5, 2024',
-      emoji: '📊'
+      title: 'React.js Mastery Course',
+      category: 'frontend',
+      duration: '45 hours',
+      level: 'Intermediate',
+      technologies: ['React', 'Redux', 'TypeScript', 'Jest', 'React Router', 'Styled Components'],
+      price: '₹40,000',
+      originalPrice: '₹55,000',
+      discount: '27% OFF',
+      icon: '⚛️',
+      gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+      rating: 4.8,
+      students: 890,
+      instructor: 'Michael Chen',
+      nextStart: 'March 22, 2024',
+      features: ['1-on-1 Sessions', 'Personal Mentor', 'Performance', 'Live Projects']
     },
     {
       id: 5,
-      title: 'Modern JavaScript Fundamentals',
-      category: 'frontend',
-      duration: '8 weeks',
-      level: 'Beginner',
-      price: '₹2,49,000',
-      originalPrice: '₹2,68,000',
-      rating: 4.6,
-      students: 1120,
-      description: 'Learn JavaScript from basics to advanced concepts including ES6+, async programming, and DOM manipulation.',
-      technologies: ['JavaScript', 'ES6+', 'DOM', 'Fetch API', 'Async/Await', 'Modules'],
-      features: ['Interactive Coding', 'Projects', 'Code Review', 'Community'],
-      instructor: 'Alex Thompson',
-      nextStart: 'March 18, 2024',
-      emoji: '💻'
+      title: 'Node.js Backend Development',
+      category: 'backend',
+      duration: '50 hours',
+      level: 'Intermediate',
+      technologies: ['Node.js', 'Express', 'PostgreSQL', 'MongoDB', 'Docker', 'AWS'],
+      price: '₹45,000',
+      originalPrice: '₹65,000',
+      discount: '31% OFF',
+      icon: '⚙️',
+      gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+      rating: 4.7,
+      students: 654,
+      instructor: 'David Park',
+      nextStart: 'March 29, 2024',
+      features: ['API Design', 'Database Design', 'Security', 'Deployment']
     },
     {
       id: 6,
+      title: 'Modern JavaScript Fundamentals',
+      category: 'frontend',
+      duration: '35 hours',
+      level: 'Beginner',
+      technologies: ['JavaScript', 'ES6+', 'DOM', 'Fetch API', 'Async/Await', 'Modules'],
+      price: '₹25,000',
+      originalPrice: '₹40,000',
+      discount: '38% OFF',
+      icon: '💻',
+      gradient: 'linear-gradient(135deg, #a8eaaa 0%, #867165 90%)',
+      rating: 4.6,
+      students: 1120,
+      instructor: 'Alex Thompson',
+      nextStart: 'March 18, 2024',
+      features: ['Interactive Coding', 'Projects', 'Code Review', 'Community']
+    },
+    {
+      id: 7,
       title: 'React Native Mobile Development',
       category: 'mobile',
-      duration: '12 weeks',
+      duration: '55 hours',
       level: 'Intermediate',
-      price: '₹2,49,000',
-      originalPrice: '₹2,83,000',
+      technologies: ['React Native', 'Expo', 'Redux', 'Navigation', 'Firebase', 'App Store'],
+      price: '₹50,000',
+      originalPrice: '₹70,000',
+      discount: '29% OFF',
+      icon: '📱',
+      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
       rating: 4.8,
       students: 432,
-      description: 'Build cross-platform mobile apps with React Native. Learn navigation, state management, and app deployment.',
-      technologies: ['React Native', 'Expo', 'Redux', 'Navigation', 'Firebase', 'App Store'],
-      features: ['Cross Platform', 'Native Features', 'App Store Deploy', 'Portfolio Apps'],
       instructor: 'Lisa Wang',
       nextStart: 'April 12, 2024',
-      emoji: '📱'
+      features: ['Cross Platform', 'Native Features', 'App Store Deploy', 'Portfolio Apps']
+    },
+    {
+      id: 8,
+      title: 'Advanced Python Programming',
+      category: 'data',
+      duration: '65 hours',
+      level: 'Advanced',
+      technologies: ['Python', 'Django', 'Flask', 'REST APIs', 'PostgreSQL', 'Machine Learning'],
+      price: '₹55,000',
+      originalPrice: '₹75,000',
+      discount: '27% OFF',
+      icon: '🐍',
+      gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+      rating: 4.7,
+      students: 298,
+      instructor: 'Priya Sharma',
+      nextStart: 'April 8, 2024',
+      features: ['Advanced Concepts', 'Web Frameworks', 'API Development', 'Deployment']
+    },
+    {
+      id: 9,
+      title: 'Machine Learning Specialization',
+      category: 'data',
+      duration: '90 hours',
+      level: 'Advanced',
+      technologies: ['Python', 'TensorFlow', 'PyTorch', 'Scikit-learn', 'Keras', 'Deep Learning'],
+      price: '₹65,000',
+      originalPrice: '₹90,000',
+      discount: '28% OFF',
+      icon: '🧠',
+      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+      rating: 4.9,
+      students: 156,
+      instructor: 'Dr. Raj Patel',
+      nextStart: 'April 15, 2024',
+      features: ['Advanced ML', 'Deep Learning', 'Neural Networks', 'Industry Projects']
     }
   ];
 
@@ -150,12 +204,12 @@ const Courses = () => {
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.4,
+        duration: 0.5,
         ease: "easeOut"
       }
     }
@@ -165,363 +219,311 @@ const Courses = () => {
     ? courses
     : courses.filter(course => course.category === activeCategory);
 
-  const keyColor = '#413C58';
-
- // Updated hero background with plain white
-const heroSectionStyles = {
-  padding: '70px 0 80px',
-  background: '#ffffff',
-  color: '#1f2937',
-  position: 'relative',
-  overflow: 'hidden'
-};
-
-
-  // Hero background effects with grid pattern (exact same as Hero component)
-  const heroOverlayStyles = {
-
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: `
-      radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, rgba(30, 64, 175, 0.08) 0%, transparent 50%),
-      url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>')
-    `,
-    zIndex: 0
-  };
-
-  // Subtle dark overlay (same as Hero component)
-  const heroDarkOverlayStyles = {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: 'rgba(15, 23, 42, 0.4)',
-    zIndex: 0
-  };
-
-  const coursesSectionStyles = {
-    background: `linear-gradient(135deg, #f9fafb 0%, #ffffff 100%)`,
-    padding: '80px 0',
+  // Styles
+  const heroSectionStyles = {
+    padding: '70px 0 80px',
+    background: '#ffffff',
+    color: '#1f2937',
     position: 'relative',
     overflow: 'hidden'
   };
 
-  const backgroundOverlayStyles = {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: `
-      radial-gradient(circle at 25% 25%, rgba(245, 158, 11, 0.06) 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, rgba(99, 102, 241, 0.06) 0%, transparent 50%)
-    `,
-    zIndex: 0
+  const sectionStyles = {
+    background: 'transparent',
+    padding: '80px 0',
+    position: 'relative'
   };
 
-  const decorativeCircleStyles = {
-    position: 'absolute',
-    top: '15%',
-    right: '10%',
-    width: '250px',
-    height: '250px',
-    background: 'radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%)',
-    borderRadius: '50%',
-    filter: 'blur(50px)',
-    zIndex: 0
-  };
-
-  const coursesContainerStyles = {
-    maxWidth: '1400px',
+  const containerStyles = {
+    maxWidth: '1200px',
     margin: '0 auto',
-    padding: window.innerWidth <= 768 ? '0 16px' : '0 24px',
+    padding: '0 24px'
+  };
+
+  const headerStyles = {
+    textAlign: 'center',
+    marginBottom: '64px'
+  };
+
+  const titleStyles = {
+    fontSize: window.innerWidth <= 768 ? '2rem' : '2.5rem',
+    marginBottom: '16px',
+    color: '#1f2937',
+    fontWeight: '600',
+    fontFamily: "'Poppins', sans-serif",
     position: 'relative',
-    zIndex: 1
+    display: 'inline-block'
+  };
+
+  const titleUnderlineStyles = {
+    position: 'absolute',
+    bottom: '-8px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    width: '80px',
+    height: '4px',
+    background: 'linear-gradient(90deg, #4f46e5, #14b8a6)',
+    borderRadius: '2px'
+  };
+
+  const subtitleStyles = {
+    fontSize: '1.25rem',
+    color: '#6b7280',
+    maxWidth: '600px',
+    margin: '0 auto',
+    lineHeight: '1.6'
   };
 
   const coursesGridStyles = {
     display: 'grid',
     gridTemplateColumns: window.innerWidth <= 768 
       ? '1fr' 
-      : window.innerWidth <= 1024
-      ? 'repeat(2, 1fr)'
+      : window.innerWidth <= 1024 
+      ? 'repeat(2, 1fr)' 
       : 'repeat(3, 1fr)',
-    gap: window.innerWidth <= 768 ? '16px' : '24px',
-    marginBottom: '50px',
-    maxWidth: '1300px',
-    margin: '0 auto 50px auto'
+    gap: '32px'
   };
 
   const courseCardStyles = (isHovered) => ({
-    position: 'relative',
+    background: 'white',
+    borderRadius: '20px',
     overflow: 'hidden',
-    background: 'rgba(255, 255, 255, 0.97)',
-    backdropFilter: 'blur(10px)',
-    border: isHovered ? `2px solid ${keyColor}` : '1px solid rgba(65,60,88,0.08)',
     boxShadow: isHovered 
-      ? '0 8px 24px rgba(65,60,88,0.13)' 
-      : '0 2px 8px rgba(65,60,88,0.07)',
-    transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
-    transform: isHovered ? 'translateY(-6px) scale(1.015)' : 'translateY(0) scale(1)',
-    borderRadius: '16px',
-    height: 'auto',
-    maxHeight: '700px',
+      ? '0 20px 40px rgba(0, 0, 0, 0.15)' 
+      : '0 10px 25px rgba(0, 0, 0, 0.08)',
+    border: '1px solid rgba(0, 0, 0, 0.05)',
+    transition: 'all 0.3s ease',
+    transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
+    height: '100%',
     display: 'flex',
     flexDirection: 'column'
   });
 
-  const courseHeaderStyles = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: window.innerWidth <= 768 ? 'flex-start' : 'center',
-    padding: '12px 16px',
-    background: '#f3f0fa',
-    borderBottom: `1.5px solid ${keyColor}22`,
-    flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
-    gap: window.innerWidth <= 768 ? '6px' : '8px',
-    minHeight: '50px'
-  };
+  const courseHeaderStyles = (gradient) => ({
+    background: gradient,
+    padding: '24px',
+    position: 'relative',
+    overflow: 'hidden'
+  });
 
-  const courseMetaStyles = {
-    display: 'flex',
-    gap: '8px',
-    alignItems: 'center',
-    flexWrap: 'wrap'
-  };
-
-  const levelTagStyles = {
-    background: `${keyColor}11`,
-    color: keyColor,
-    padding: '3px 8px',
-    borderRadius: '6px',
-    fontSize: '0.7rem',
-    fontWeight: '600',
-    textTransform: 'uppercase',
-    letterSpacing: '0.5px',
-    border: `1px solid ${keyColor}33`
-  };
-
-  const studentsCountStyles = {
-    fontSize: '0.8rem',
-    color: '#6b7280',
-    fontWeight: '500'
-  };
-
-  const courseContentStyles = {
-    padding: window.innerWidth <= 768 ? '12px 16px' : '16px',
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between'
+  const courseIconStyles = {
+    fontSize: '2.5rem',
+    marginBottom: '12px',
+    filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))'
   };
 
   const courseTitleStyles = {
-    fontSize: '1.1rem',
-    fontWeight: '600',
-    color: '#1f2937',
-    marginBottom: '6px',
-    lineHeight: '1.3',
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px'
-  };
-
-  const courseDetailsStyles = {
-    marginBottom: '16px'
-  };
-
-  const detailItemStyles = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '8px',
-    padding: '4px 0',
-    borderBottom: '1px solid #f3f4f6'
-  };
-
-  const detailLabelStyles = {
-    fontSize: '0.8rem',
-    color: '#6b7280',
-    fontWeight: '500'
-  };
-
-  const detailValueStyles = {
-    fontSize: '0.8rem',
-    color: '#1f2937',
-    fontWeight: '600'
-  };
-
-  const priceContainerStyles = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '8px'
-  };
-
-  const priceStyles = {
-    fontSize: '0.9rem',
+    fontSize: '1.5rem',
     fontWeight: '700',
-    color: keyColor
+    color: 'white',
+    marginBottom: '8px',
+    textShadow: '0 2px 4px rgba(0, 0, 0, 0.2)'
   };
 
-  const originalPriceStyles = {
+  const courseDurationStyles = {
+    fontSize: '0.875rem',
+    color: 'rgba(255, 255, 255, 0.9)',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px'
+  };
+
+  const discountBadgeStyles = {
+    position: 'absolute',
+    top: '16px',
+    right: '16px',
+    background: 'rgba(255, 255, 255, 0.2)',
+    backdropFilter: 'blur(10px)',
+    border: '1px solid rgba(255, 255, 255, 0.3)',
+    color: 'white',
+    padding: '4px 12px',
+    borderRadius: '20px',
     fontSize: '0.75rem',
-    color: '#9ca3af',
-    textDecoration: 'line-through'
+    fontWeight: '700'
+  };
+
+  const courseBodyStyles = {
+    padding: '24px',
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column'
+  };
+
+  const courseLevelStyles = {
+    fontSize: '0.875rem',
+    color: '#6b7280',
+    marginBottom: '16px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px'
+  };
+
+  const levelDotStyles = (level) => {
+    const colors = {
+      'Beginner to Advanced': '#10b981',
+      'Beginner to Job-Ready': '#10b981',
+      'Intermediate': '#f59e0b',
+      'Professional': '#3b82f6',
+      'Advanced': '#ef4444',
+      'Beginner': '#22c55e'
+    };
+    
+    return {
+      width: '8px',
+      height: '8px',
+      borderRadius: '50%',
+      background: colors[level] || '#6b7280'
+    };
+  };
+
+  const instructorStyles = {
+    fontSize: '0.875rem',
+    color: '#6b7280',
+    marginBottom: '16px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px'
   };
 
   const technologiesStyles = {
-    marginBottom: '16px'
-  };
-
-  const techTagsStyles = {
     display: 'flex',
     flexWrap: 'wrap',
-    gap: '6px',
-    minHeight: '50px',
-    alignItems: 'flex-start'
+    gap: '8px',
+    marginBottom: '20px',
+    flex: 1
   };
 
-  const techTagStyles = (isHovered) => ({
-    background: isHovered 
-      ? `linear-gradient(135deg, ${keyColor} 0%, #6c648b 100%)`
-      : 'linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%)',
-    color: isHovered ? '#fff' : keyColor,
-    padding: '4px 8px',
-    borderRadius: '6px',
-    fontSize: '0.7rem',
-    fontWeight: '600',
-    border: isHovered ? `1.5px solid ${keyColor}` : `1px solid #cbd5e1`,
-    transform: isHovered ? 'scale(1.07) translateY(-1px)' : 'scale(1)',
-    transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-    cursor: 'pointer',
-    boxShadow: isHovered 
-      ? `0 4px 12px ${keyColor}44` 
-      : '0 1px 3px rgba(0, 0, 0, 0.1)',
-    whiteSpace: 'nowrap'
-  });
+  const techBadgeStyles = {
+    background: '#f3f4f6',
+    color: '#4b5563',
+    padding: '4px 12px',
+    borderRadius: '12px',
+    fontSize: '0.75rem',
+    fontWeight: '500',
+    border: '1px solid #e5e7eb'
+  };
 
   const featuresStyles = {
     marginBottom: '16px'
   };
 
-  const techTitleStyles = {
-    fontSize: '0.8rem',
-    color: '#1f2937',
-    fontWeight: '600',
-    marginBottom: '8px'
-  };
-
-  const featureTagsStyles = {
+  const featureListStyles = {
     display: 'flex',
     flexWrap: 'wrap',
     gap: '6px'
   };
 
   const featureTagStyles = {
-    background: `${keyColor}0a`,
-    color: keyColor,
+    background: '#f0fdf4',
+    color: '#166534',
     padding: '4px 8px',
-    borderRadius: '6px',
+    borderRadius: '8px',
     fontSize: '0.7rem',
     fontWeight: '500',
-    border: `1px solid ${keyColor}22`
+    border: '1px solid #bbf7d0'
   };
 
-  const courseActionsStyles = {
+  const priceContainerStyles = {
+    marginBottom: '16px'
+  };
+
+  const coursePriceStyles = {
+    fontSize: '1.5rem',
+    fontWeight: '700',
+    color: '#1f2937',
+    marginBottom: '4px'
+  };
+
+  const originalPriceStyles = {
+    fontSize: '1rem',
+    color: '#9ca3af',
+    textDecoration: 'line-through'
+  };
+
+  const courseStatsStyles = {
     display: 'flex',
-    gap: '8px',
-    flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
-    marginTop: 'auto'
-  };
-
-  const actionButtonStyles = (variant = 'primary') => {
-    const isPrimary = variant === 'primary';
-    return {
-      flex: 1,
-      background: isPrimary 
-        ? `linear-gradient(135deg, ${keyColor} 0%, #6c648b 100%)` 
-        : '#ffffff',
-      color: isPrimary ? '#fff' : keyColor,
-      border: isPrimary ? 'none' : `2px solid ${keyColor}`,
-      padding: '8px 12px',
-      borderRadius: '6px',
-      fontWeight: '600',
-      cursor: 'pointer',
-      transition: 'all 0.2s ease',
-      boxShadow: isPrimary ? `0 3px 5px ${keyColor}44` : 'none',
-      fontSize: '0.8rem',
-      letterSpacing: '0.5px'
-    };
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '16px',
+    fontSize: '0.875rem',
+    color: '#6b7280'
   };
 
   const nextStartStyles = {
-    background: `${keyColor}0a`,
-    color: keyColor,
+    background: '#f0f9ff',
+    color: '#0369a1',
     padding: '8px 12px',
     borderRadius: '8px',
     fontSize: '0.8rem',
     fontWeight: '500',
     textAlign: 'center',
-    marginBottom: '12px',
-    border: `1px solid ${keyColor}22`
+    marginBottom: '16px',
+    border: '1px solid #bae6fd'
+  };
+
+  const courseButtonStyles = {
+    width: '100%',
+    padding: '12px 24px',
+    background: 'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)',
+    color: 'white',
+    border: 'none',
+    borderRadius: '12px',
+    fontSize: '0.95rem',
+    fontWeight: '600',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 4px 12px rgba(79, 70, 229, 0.3)'
+  };
+
+  const courseButtonHoverStyles = {
+    transform: 'translateY(-2px)',
+    boxShadow: '0 6px 20px rgba(79, 70, 229, 0.4)'
   };
 
   return (
     <div className="courses-page">
       <Header />
       
-      {/* Hero Section with Grid Pattern (Exact Match with Hero Component) */}
-
-
-<section className="courses-hero" style={heroSectionStyles}>
-  <div className="container" style={{ position: 'relative', zIndex: 2 }}>
-    <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto' }}>
-      <motion.h1 
-        style={{ 
-          fontSize: window.innerWidth <= 768 ? '2.5rem' : 'clamp(2.5rem, 5vw, 3.8rem)',
-          fontWeight: '700',
-          lineHeight: '1.1',
-          marginBottom: '24px',
-          color: '#1f2937',
-          position: 'relative'
-        }}
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        Professional Placement 
-      </motion.h1>
-      <motion.p 
-        style={{ 
-          fontSize: window.innerWidth <= 768 ? '1.125rem' : '1.3rem',
-          marginBottom: '36px',
-          color: '#6b7280',
-          lineHeight: '1.6',
-          fontWeight: '400',
-          opacity: '0.95'
-        }}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-      >
-        Master in-demand skills with our comprehensive, industry-aligned courses designed by experts. 
-        Get hands-on experience and guaranteed job placement support.
-      </motion.p>
-    </div>
-  </div>
-</section>
+      {/* Hero Section */}
+      <section style={heroSectionStyles}>
+        <div style={{ position: 'relative', zIndex: 2 }}>
+          <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto', padding: '0 24px' }}>
+            <motion.h1 
+              style={{ 
+                fontSize: window.innerWidth <= 768 ? '2.5rem' : 'clamp(2.5rem, 5vw, 3.8rem)',
+                fontWeight: '700',
+                lineHeight: '1.1',
+                marginBottom: '24px',
+                position: 'relative'
+              }}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              Professional Training Courses
+            </motion.h1>
+            <motion.p 
+              style={{ 
+                fontSize: window.innerWidth <= 768 ? '1.125rem' : '1.3rem',
+                marginBottom: '36px',
+                lineHeight: '1.6',
+                fontWeight: '400',
+                opacity: '0.95'
+              }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              Master in-demand skills with our comprehensive, industry-aligned courses designed by experts. 
+              Get hands-on experience and guaranteed job placement support.
+            </motion.p>
+          </div>
+        </div>
+      </section>
 
       {/* Courses Section */}
-      <section style={coursesSectionStyles} id="courses" ref={ref}>
-        <div style={backgroundOverlayStyles} />
-        <div style={decorativeCircleStyles} />
-        
-        <div style={coursesContainerStyles}>
+      <section style={sectionStyles} id="courses" ref={ref}>
+        <div style={containerStyles}>
           {/* Category Filter */}
           <motion.div 
             style={{ 
@@ -541,14 +543,14 @@ const heroSectionStyles = {
                 onClick={() => setActiveCategory(category.id)}
                 style={{
                   padding: '12px 24px',
-                  border: activeCategory === category.id ? '2px solid #4facfe' : '2px solid #e2e8f0',
+                  border: activeCategory === category.id ? '2px solid #4f46e5' : '2px solid #e2e8f0',
                   borderRadius: '25px',
-                  background: activeCategory === category.id ? '#4facfe' : 'white',
+                  background: activeCategory === category.id ? '#4f46e5' : 'white',
                   color: activeCategory === category.id ? 'white' : '#4a5568',
                   cursor: 'pointer',
                   fontWeight: '500',
                   transition: 'all 0.3s ease',
-                  boxShadow: activeCategory === category.id ? '0 4px 12px rgba(79, 172, 254, 0.3)' : '0 2px 4px rgba(0,0,0,0.1)'
+                  boxShadow: activeCategory === category.id ? '0 4px 12px rgba(79, 70, 229, 0.3)' : '0 2px 4px rgba(0,0,0,0.1)'
                 }}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -558,126 +560,98 @@ const heroSectionStyles = {
             ))}
           </motion.div>
 
+          {/* Section Header */}
+          <motion.div 
+            style={headerStyles}
+            initial={{ opacity: 0, y: 30 }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <h2 style={titleStyles}>
+              {activeCategory === 'all' ? 'All Training Courses' : 
+               categories.find(cat => cat.id === activeCategory)?.name + ' Courses'}
+              <span style={titleUnderlineStyles}></span>
+            </h2>
+            <p style={subtitleStyles}>
+              Industry-relevant courses designed to make you Job-Ready
+            </p>
+          </motion.div>
+
           {/* Courses Grid */}
           <motion.div 
             style={coursesGridStyles}
-            className="courses-grid"
             variants={containerVariants}
             initial="hidden"
             animate={inView ? "visible" : "hidden"}
           >
-            {filteredCourses.map((course, index) => (
+            {filteredCourses.map((course) => (
               <motion.div
                 key={course.id}
                 variants={cardVariants}
-                whileHover={{ y: -4, scale: 1.01 }}
-                transition={{ duration: 0.2 }}
                 onMouseEnter={() => setHoveredCard(course.id)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
-                <Card 
-                  style={courseCardStyles(hoveredCard === course.id)}
-                  className="course-card"
-                  hover={false}
-                >
-                  {/* Course Header */}
-                  <div style={courseHeaderStyles}>
-                    <div style={courseMetaStyles}>
-                      <span style={levelTagStyles}>{course.level}</span>
-                    </div>
-                    <div style={studentsCountStyles}>
-                      {course.students} students
+                <Card style={courseCardStyles(hoveredCard === course.id)} hover={false}>
+                  <div style={courseHeaderStyles(course.gradient)}>
+                    <div style={discountBadgeStyles}>{course.discount}</div>
+                    <div style={courseIconStyles}>{course.icon}</div>
+                    <h3 style={courseTitleStyles}>{course.title}</h3>
+                    <div style={courseDurationStyles}>
+                      <span>⏱️</span>
+                      <span>{course.duration}</span>
                     </div>
                   </div>
-
-                  {/* Course Content */}
-                  <div style={courseContentStyles}>
-                    <div>
-                      <h3 style={courseTitleStyles}>
-                        <span style={{ fontSize: '1.2rem' }}>{course.emoji}</span>
-                        {course.title}
-                      </h3>
-                     
-                      {/* Technologies */}
-                      <div style={technologiesStyles}>
-                        <div style={techTagsStyles}>
-                          {course.technologies.map((tech, i) => (
-                            <motion.span 
-                              key={i} 
-                              style={techTagStyles(hoveredTech === `${course.id}-${i}`)}
-                              whileHover={{ scale: 1.05 }}
-                              transition={{ duration: 0.1 }}
-                              onMouseEnter={() => setHoveredTech(`${course.id}-${i}`)}
-                              onMouseLeave={() => setHoveredTech(null)}
-                            >
-                              {tech}
-                            </motion.span>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      {/* Course Details */}
-                      <div style={courseDetailsStyles}>
-                        <div style={detailItemStyles}>
-                          <span style={detailLabelStyles}>💰 Price:</span>
-                          <div style={priceContainerStyles}>
-                            <span style={priceStyles}>{course.price}</span>
-                            <span style={originalPriceStyles}>{course.originalPrice}</span>
-                          </div>
-                        </div>
-                        <div style={detailItemStyles}>
-                          <span style={detailLabelStyles}>⏱️ Duration:</span>
-                          <span style={detailValueStyles}>{course.duration}</span>
-                        </div>
-                        <div style={{...detailItemStyles, borderBottom: 'none'}}>
-                          <span style={detailLabelStyles}>⭐ Rating:</span>
-                          <span style={detailValueStyles}>{course.rating}/5.0</span>
-                        </div>
-                      </div>
-
-                      {/* Features */}
-                      <div style={featuresStyles}>
-                        <h4 style={techTitleStyles}>Course Features:</h4>
-                        <div style={featureTagsStyles}>
-                          {course.features.map((feature, i) => (
-                            <span key={i} style={featureTagStyles}>
-                              ✓ {feature}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
+                  
+                  <div style={courseBodyStyles}>
+                    <div style={courseLevelStyles}>
+                      <span style={levelDotStyles(course.level)} />
+                      <span>{course.level}</span>
                     </div>
 
-                    {/* Next Start & Actions */}
-                    <div>
-                      <div style={nextStartStyles}>
-                        <strong>Next Batch Starts:</strong> {course.nextStart}
-                      </div>
-                      
-                      <div style={courseActionsStyles}>
-                        <motion.button 
-                          style={actionButtonStyles('primary')}
-                          whileHover={{ 
-                            scale: 1.02,
-                            boxShadow: '0 5px 10px rgba(79, 70, 229, 0.4)'
-                          }}
-                          whileTap={{ scale: 0.98 }}
-                        >
-                          Enroll Now
-                        </motion.button>
-                        <motion.button 
-                          style={actionButtonStyles('secondary')}
-                          whileHover={{ 
-                            scale: 1.02,
-                            background: '#4f46e5',
-                            color: '#ffffff'
-                          }}
-                          whileTap={{ scale: 0.98 }}
-                        >
-                          View Details
-                        </motion.button>
+                    <div style={instructorStyles}>
+                      <span>👨‍🏫</span>
+                      <span>Instructor: {course.instructor}</span>
+                    </div>
+                    
+                    <div style={technologiesStyles}>
+                      {course.technologies.map((tech, index) => (
+                        <span key={index} style={techBadgeStyles}>
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div style={featuresStyles}>
+                      <div style={featureListStyles}>
+                        {course.features.map((feature, index) => (
+                          <span key={index} style={featureTagStyles}>
+                            ✓ {feature}
+                          </span>
+                        ))}
                       </div>
                     </div>
+                    
+                    <div style={priceContainerStyles}>
+                      <div style={coursePriceStyles}>{course.price}</div>
+                      <div style={originalPriceStyles}>{course.originalPrice}</div>
+                    </div>
+
+                    <div style={courseStatsStyles}>
+                      <span>⭐ {course.rating}</span>
+                      <span>👥 {course.students.toLocaleString()} students</span>
+                    </div>
+
+                    <div style={nextStartStyles}>
+                      <strong>Next Batch:</strong> {course.nextStart}
+                    </div>
+                    
+                    <motion.button
+                      style={courseButtonStyles}
+                      whileHover={courseButtonHoverStyles}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      Enroll Now
+                    </motion.button>
                   </div>
                 </Card>
               </motion.div>
@@ -688,13 +662,13 @@ const heroSectionStyles = {
 
       {/* Why Choose Section */}
       <section style={{ padding: '80px 0', background: '#f7fafc' }}>
-        <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 2rem' }}>
           <div style={{ textAlign: 'center' }}>
             <motion.h2 
               style={{ 
                 fontSize: '2.5rem', 
                 marginBottom: '24px', 
-                color: keyColor, 
+                color: '#1f2937', 
                 fontWeight: 700, 
                 letterSpacing: '1px' 
               }}
@@ -745,8 +719,8 @@ const heroSectionStyles = {
                   whileHover={{ y: -5 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <div style={{ fontSize: '3rem', marginBottom: '20px', color: keyColor }}>{item.icon}</div>
-                  <h3 style={{ fontSize: '1.5rem', marginBottom: '16px', color: keyColor, fontWeight: 600 }}>{item.title}</h3>
+                  <div style={{ fontSize: '3rem', marginBottom: '20px', color: '#4f46e5' }}>{item.icon}</div>
+                  <h3 style={{ fontSize: '1.5rem', marginBottom: '16px', color: '#1f2937', fontWeight: 600 }}>{item.title}</h3>
                   <p style={{ color: '#4a5568', lineHeight: '1.6' }}>{item.description}</p>
                 </motion.div>
               ))}

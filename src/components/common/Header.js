@@ -482,6 +482,7 @@ const Header = () => {
   const navigationItems = [
     { path: '/', label: 'Home' },
     { path: '/courses', label: 'Courses' },
+    { path: '/programs', label: 'Programs' },
     { path: '/services', label: 'Services' },
     { path: '/about', label: 'About Us' },
     { path: '/contact', label: 'Contact' }

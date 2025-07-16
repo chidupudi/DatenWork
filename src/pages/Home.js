@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Header from '../components/common/Header';
 import Hero from '../components/sections/Hero';
 import TrainingCourses from '../components/sections/TrainingCourses';
+import FeaturedPrograms from '../components/sections/ProgramFeatures'; // <-- Added import
 import PlacementServices from '../components/sections/PlacementServices';
-import TransformationStories from '../components/sections/TransformationStories'; // <-- Added import
+import TransformationStories from '../components/sections/TransformationStories';
 import IndustryRequirements from '../components/sections/IndustryRequirements';
 import ITConsultancy from '../components/sections/ITConsultancy';
 import Footer from '../components/sections/Footer';
@@ -319,12 +320,17 @@ const Home = () => {
             <TrainingCourses />
           </div>
           
+          {/* Featured Programs Section - Added here */}
+          <div style={standardSectionWrapper}>
+            <FeaturedPrograms />
+          </div>
+          
           {/* Placement Services Section */}
           <div style={standardSectionWrapper}>
             <PlacementServices />
           </div>
 
-          {/* Transformation Stories Section - Added here */}
+          {/* Transformation Stories Section */}
           <div style={standardSectionWrapper}>
             <TransformationStories />
           </div>
