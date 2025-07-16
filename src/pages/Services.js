@@ -424,9 +424,13 @@ const serviceDescStyles = {
                   real-world problem-solving abilities.
                 </p>
               </div>
-              <Button variant="primary" size={window.innerWidth <= 768 ? "medium" : "large"}>
-                Start Your Certification Journey
-              </Button>
+            <Button 
+  variant="primary" 
+  size={window.innerWidth <= 768 ? "medium" : "large"}
+  onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSe2mqWXkm0W43PxgYna5nFPwCOMshtsYhc9NPEBQCocdTiCEQ/viewform?usp=header', '_blank')}
+>
+  Start Your Certification Journey
+</Button>
             </div>
 
             <div style={certLogosStyles}>

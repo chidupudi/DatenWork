@@ -662,20 +662,11 @@ const heroSectionStyles = {
                             boxShadow: '0 5px 10px rgba(79, 70, 229, 0.4)'
                           }}
                           whileTap={{ scale: 0.98 }}
+                          onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSe2mqWXkm0W43PxgYna5nFPwCOMshtsYhc9NPEBQCocdTiCEQ/viewform?usp=header', '_blank')}
                         >
                           Enroll Now
                         </motion.button>
-                        <motion.button 
-                          style={actionButtonStyles('secondary')}
-                          whileHover={{ 
-                            scale: 1.02,
-                            background: '#4f46e5',
-                            color: '#ffffff'
-                          }}
-                          whileTap={{ scale: 0.98 }}
-                        >
-                          View Details
-                        </motion.button>
+                        
                       </div>
                     </div>
                   </div>

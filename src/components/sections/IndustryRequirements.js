@@ -567,19 +567,9 @@ const skillTagStyles = (isHovered) => ({
                         }}
                         whileTap={{ scale: 0.98 }}
                       >
-                        Apply Now
+                        Contact Us
                       </motion.button>
-                      <motion.button 
-                        style={actionButtonStyles('secondary')}
-                        whileHover={{ 
-                          scale: 1.02,
-                          background: '#4f46e5',
-                          color: '#ffffff'
-                        }}
-                        whileTap={{ scale: 0.98 }}
-                      >
-                        View Details
-                      </motion.button>
+                     
                     </div>
                   </div>
                 </Card>

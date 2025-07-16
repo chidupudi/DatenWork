@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Header from '../components/common/Header';
 import Footer from '../components/sections/Footer';
+import { db } from '../firebase';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 const Card = ({ children, style, className }) => (
   <div className={className} style={{ background: '#fff', borderRadius: '12px', boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', ...style }}>
@@ -74,6 +76,9 @@ const Contact = () => {
     interest: 'training'
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', or null
+
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
@@ -81,18 +86,83 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const validateForm = () => {
+    const { name, email, subject, message } = formData;
+    
+    if (!name.trim()) {
+      alert('Please enter your name');
+      return false;
+    }
+    
+    if (!email.trim() || !/\S+@\S+\.\S+/.test(email)) {
+      alert('Please enter a valid email address');
+      return false;
+    }
+    
+    if (!subject.trim()) {
+      alert('Please enter a subject');
+      return false;
+    }
+    
+    if (!message.trim()) {
+      alert('Please enter your message');
+      return false;
+    }
+    
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message! We will get back to you within 24 hours.');
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: '',
-      interest: 'training'
-    });
+    
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      // Add document to Firestore
+      const docRef = await addDoc(collection(db, 'contact_form_submissions'), {
+        name: formData.name.trim(),
+        email: formData.email.trim().toLowerCase(),
+        phone: formData.phone.trim(),
+        subject: formData.subject.trim(),
+        message: formData.message.trim(),
+        interest: formData.interest,
+        source: 'contact_page',
+        submittedAt: serverTimestamp(),
+        status: 'new'
+      });
+
+      console.log('Contact form submitted with ID: ', docRef.id);
+      
+      // Success feedback
+      setSubmitStatus('success');
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: '',
+        interest: 'training'
+      });
+
+      // Show success message
+      alert('🎉 Thank you for your message! We will get back to you within 24 hours.');
+
+    } catch (error) {
+      console.error('Error submitting contact form: ', error);
+      setSubmitStatus('error');
+      alert('❌ Sorry, there was an error sending your message. Please try again or contact us directly.');
+    } finally {
+      setIsSubmitting(false);
+      // Clear status after 5 seconds
+      setTimeout(() => setSubmitStatus(null), 5000);
+    }
   };
 
   const contactInfo = [
@@ -158,6 +228,33 @@ const Contact = () => {
     opacity: '0.95'
   };
 
+  // Submit button styles with status states
+  const getSubmitButtonStyles = () => ({
+    alignSelf: 'flex-start',
+    background: isSubmitting 
+      ? 'linear-gradient(135deg, #9ca3af 0%, #6b7280 100%)'
+      : submitStatus === 'success'
+      ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
+      : submitStatus === 'error'
+      ? 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'
+      : 'linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)',
+    boxShadow: isSubmitting 
+      ? 'none'
+      : submitStatus === 'success'
+      ? '0 4px 15px rgba(16, 185, 129, 0.3)'
+      : submitStatus === 'error'
+      ? '0 4px 15px rgba(239, 68, 68, 0.3)'
+      : '0 4px 15px rgba(30, 64, 175, 0.3)',
+    cursor: isSubmitting ? 'not-allowed' : 'pointer'
+  });
+
+  const getButtonText = () => {
+    if (isSubmitting) return '⏳ Sending Message...';
+    if (submitStatus === 'success') return '✅ Message Sent!';
+    if (submitStatus === 'error') return '❌ Try Again';
+    return 'Send Message';
+  };
+
   return (
     <div className="contact-page" style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #ffffff 0%, #f9fafb 100%)' }}>
       <Header />
@@ -207,13 +304,15 @@ const Contact = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
+                    disabled={isSubmitting}
                     style={{
                       padding: '15px 20px',
                       border: '2px solid #e2e8f0',
                       borderRadius: '12px',
                       fontSize: '1rem',
                       transition: 'border-color 0.3s ease',
-                      outline: 'none'
+                      outline: 'none',
+                      opacity: isSubmitting ? 0.7 : 1
                     }}
                     onFocus={(e) => e.target.style.borderColor = '#4f46e5'}
                     onBlur={(e) => e.target.style.borderColor = '#e2e8f0'}
@@ -225,13 +324,15 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
+                    disabled={isSubmitting}
                     style={{
                       padding: '15px 20px',
                       border: '2px solid #e2e8f0',
                       borderRadius: '12px',
                       fontSize: '1rem',
                       transition: 'border-color 0.3s ease',
-                      outline: 'none'
+                      outline: 'none',
+                      opacity: isSubmitting ? 0.7 : 1
                     }}
                     onFocus={(e) => e.target.style.borderColor = '#4f46e5'}
                     onBlur={(e) => e.target.style.borderColor = '#e2e8f0'}
@@ -249,13 +350,15 @@ const Contact = () => {
                     placeholder="Your Phone (+91)"
                     value={formData.phone}
                     onChange={handleInputChange}
+                    disabled={isSubmitting}
                     style={{
                       padding: '15px 20px',
                       border: '2px solid #e2e8f0',
                       borderRadius: '12px',
                       fontSize: '1rem',
                       transition: 'border-color 0.3s ease',
-                      outline: 'none'
+                      outline: 'none',
+                      opacity: isSubmitting ? 0.7 : 1
                     }}
                     onFocus={(e) => e.target.style.borderColor = '#4f46e5'}
                     onBlur={(e) => e.target.style.borderColor = '#e2e8f0'}
@@ -264,6 +367,7 @@ const Contact = () => {
                     name="interest"
                     value={formData.interest}
                     onChange={handleInputChange}
+                    disabled={isSubmitting}
                     style={{
                       padding: '15px 20px',
                       border: '2px solid #e2e8f0',
@@ -271,7 +375,8 @@ const Contact = () => {
                       fontSize: '1rem',
                       transition: 'border-color 0.3s ease',
                       background: 'white',
-                      outline: 'none'
+                      outline: 'none',
+                      opacity: isSubmitting ? 0.7 : 1
                     }}
                     onFocus={(e) => e.target.style.borderColor = '#4f46e5'}
                     onBlur={(e) => e.target.style.borderColor = '#e2e8f0'}
@@ -291,13 +396,15 @@ const Contact = () => {
                   value={formData.subject}
                   onChange={handleInputChange}
                   required
+                  disabled={isSubmitting}
                   style={{
                     padding: '15px 20px',
                     border: '2px solid #e2e8f0',
                     borderRadius: '12px',
                     fontSize: '1rem',
                     transition: 'border-color 0.3s ease',
-                    outline: 'none'
+                    outline: 'none',
+                    opacity: isSubmitting ? 0.7 : 1
                   }}
                   onFocus={(e) => e.target.style.borderColor = '#4f46e5'}
                   onBlur={(e) => e.target.style.borderColor = '#e2e8f0'}
@@ -309,6 +416,7 @@ const Contact = () => {
                   value={formData.message}
                   onChange={handleInputChange}
                   required
+                  disabled={isSubmitting}
                   rows="6"
                   style={{
                     padding: '15px 20px',
@@ -318,14 +426,21 @@ const Contact = () => {
                     resize: 'vertical',
                     fontFamily: 'inherit',
                     transition: 'border-color 0.3s ease',
-                    outline: 'none'
+                    outline: 'none',
+                    opacity: isSubmitting ? 0.7 : 1
                   }}
                   onFocus={(e) => e.target.style.borderColor = '#4f46e5'}
                   onBlur={(e) => e.target.style.borderColor = '#e2e8f0'}
                 />
 
-                <Button type="submit" variant="primary" size="large" style={{ alignSelf: 'flex-start' }}>
-                  Send Message
+                <Button 
+                  type="submit" 
+                  variant="primary" 
+                  size="large" 
+                  style={getSubmitButtonStyles()}
+                  disabled={isSubmitting}
+                >
+                  {getButtonText()}
                 </Button>
               </form>
             </div>

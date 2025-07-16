@@ -456,27 +456,34 @@ const Hero = () => {
             </motion.p>
             
             <motion.div 
-              style={heroCtaStyles}
-              variants={itemVariants}
-            >
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button variant="primary" size="large">
-                  Explore Training Programs
-                </Button>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button variant="secondary" size="large">
-                  Find Your Dream Job
-                </Button>
-              </motion.div>
-            </motion.div>
-            
+  style={heroCtaStyles}
+  variants={itemVariants}
+>
+  <motion.div
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+  >
+    <Button 
+      variant="primary" 
+      size="large"
+      onClick={() => window.location.href = '/programs'}
+    >
+      Explore Training Programs
+    </Button>
+  </motion.div>
+  <motion.div
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+  >
+    <Button 
+      variant="secondary" 
+      size="large"
+      onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSe2mqWXkm0W43PxgYna5nFPwCOMshtsYhc9NPEBQCocdTiCEQ/viewform?usp=header', '_blank')}
+    >
+      Find Your Dream Job
+    </Button>
+  </motion.div>
+</motion.div>
             <motion.div 
               style={heroStatsStyles}
               variants={itemVariants}

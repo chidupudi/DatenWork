@@ -646,12 +646,13 @@ const Courses = () => {
                     </div>
                     
                     <motion.button
-                      style={courseButtonStyles}
-                      whileHover={courseButtonHoverStyles}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      Enroll Now
-                    </motion.button>
+  style={courseButtonStyles}
+  whileHover={courseButtonHoverStyles}
+  whileTap={{ scale: 0.98 }}
+  onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSe2mqWXkm0W43PxgYna5nFPwCOMshtsYhc9NPEBQCocdTiCEQ/viewform?usp=header', '_blank')}
+>
+  Enroll Now
+</motion.button>
                   </div>
                 </Card>
               </motion.div>
