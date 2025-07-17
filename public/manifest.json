@@ -1,6 +1,14 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Datenwork",
+  "name": "Datenwork - Technology Training & Placement",
+  "description": "Leading technology training and placement company with 97% success rate. Transform your tech career with guaranteed placements.",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#4f46e5",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,18 +16,46 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "favicon-16x16.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "16x16"
     },
     {
-      "src": "logo512.png",
+      "src": "favicon-32x32.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "32x32"
+    },
+    {
+      "src": "android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "180x180"
     }
   ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "categories": ["education", "business", "productivity"],
+  "screenshots": [
+    {
+      "src": "screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    },
+    {
+      "src": "screenshot-mobile.png", 
+      "sizes": "640x1136",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ]
 }
