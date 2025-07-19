@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Layout, Menu, Avatar, Dropdown, Button, message } from 'antd';
 import { 
   DashboardOutlined, 
@@ -23,7 +23,7 @@ const AdminDashboard = ({ children, activeKey = 'dashboard' }) => {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
+  const handleLogout = useCallback(async () => {
     try {
       await logout();
       message.success('Logged out successfully');
@@ -31,9 +31,9 @@ const AdminDashboard = ({ children, activeKey = 'dashboard' }) => {
     } catch (error) {
       message.error('Failed to log out');
     }
-  };
+  }, [logout, navigate]);
 
-  const menuItems = [
+  const menuItems = useMemo(() => [
     {
       key: 'dashboard',
       icon: <DashboardOutlined />,
@@ -82,9 +82,9 @@ const AdminDashboard = ({ children, activeKey = 'dashboard' }) => {
       label: 'Company Info',
       onClick: () => navigate('/admin/settings')
     }
-  ];
+  ], [navigate]);
 
-  const userMenuItems = [
+  const userMenuItems = useMemo(() => [
     {
       key: 'profile',
       icon: <UserOutlined />,
@@ -96,7 +96,7 @@ const AdminDashboard = ({ children, activeKey = 'dashboard' }) => {
       label: 'Logout',
       onClick: handleLogout
     }
-  ];
+  ], [handleLogout]);
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -184,7 +184,8 @@ const AdminDashboard = ({ children, activeKey = 'dashboard' }) => {
       
       <Layout style={{
         marginLeft: collapsed ? 80 : 260,
-        transition: 'all 0.2s ease'
+        transition: 'margin-left 0.2s cubic-bezier(0.4, 0, 0.2, 1)', // Smooth easing
+        willChange: 'margin-left' // Performance hint
       }}>
         <Header style={{
           background: 'white',

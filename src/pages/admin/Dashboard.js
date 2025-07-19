@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Card, Row, Col, Statistic, Progress, Table, Tag, Button, message } from 'antd';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { Card, Row, Col, Progress, Table, Tag, Button, message } from 'antd';
 import { 
   UserOutlined, 
   BookOutlined, 
@@ -9,40 +9,55 @@ import {
   EyeOutlined,
   PlusOutlined,
   DatabaseOutlined,
-  CloudSyncOutlined
+  ReloadOutlined
 } from '@ant-design/icons';
 import AdminDashboard from '../../components/admin/AdminDashboard';
 import { analyticsService, coursesService, jobsService, migrateInitialData } from '../../services/firebaseData';
 
 const Dashboard = () => {
-  const [analytics, setAnalytics] = useState([]);
   const [courses, setCourses] = useState([]);
   const [jobs, setJobs] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [migrating, setMigrating] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState(null);
 
-  useEffect(() => {
-    loadDashboardData();
-  }, []);
-
-  const loadDashboardData = async () => {
+  const loadDashboardData = useCallback(async (isRefresh = false) => {
     try {
-      setLoading(true);
-      const [analyticsData, coursesData, jobsData] = await Promise.all([
+      if (isRefresh) {
+        setRefreshing(true);
+      }
+      
+      const [, coursesData, jobsData] = await Promise.all([
         analyticsService.getAnalytics(),
         coursesService.getAll(),
         jobsService.getAll()
       ]);
       
-      setAnalytics(analyticsData);
       setCourses(coursesData);
       setJobs(jobsData);
+      setLastUpdated(new Date());
+      
+      if (isRefresh) {
+        message.success('Dashboard data refreshed successfully');
+      }
     } catch (error) {
       console.error('Error loading dashboard data:', error);
+      message.error('Failed to load dashboard data');
     } finally {
-      setLoading(false);
+      setRefreshing(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    loadDashboardData();
+    
+    // Auto-refresh every 5 minutes
+    const interval = setInterval(() => {
+      loadDashboardData(true);
+    }, 300000);
+
+    return () => clearInterval(interval);
+  }, [loadDashboardData]);
 
   const handleMigration = async () => {
     try {
@@ -67,8 +82,8 @@ const Dashboard = () => {
     }
   };
 
-  // Stats data
-  const statsData = [
+  // Memoized stats data for performance
+  const statsData = useMemo(() => [
     {
       title: 'Total Students',
       value: 2847,
@@ -86,8 +101,8 @@ const Dashboard = () => {
       bgColor: 'rgba(82, 196, 26, 0.1)'
     },
     {
-      title: 'Job Placements',
-      value: 634,
+      title: 'Job Openings',
+      value: jobs.length || 12,
       icon: <TrophyOutlined />,
       trend: '+8.7%',
       color: '#faad14',
@@ -101,7 +116,7 @@ const Dashboard = () => {
       color: '#f759ab',
       bgColor: 'rgba(247, 89, 171, 0.1)'
     }
-  ];
+  ], [courses.length, jobs.length]);
 
   // Recent activities
   const recentActivities = [
@@ -226,7 +241,30 @@ const Dashboard = () => {
                 Welcome back! Here's what's happening with your platform.
               </p>
             </div>
-            <div style={{ display: 'flex', gap: '12px' }}>
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              {lastUpdated && (
+                <div style={{
+                  fontSize: '12px',
+                  color: '#6b7280',
+                  alignSelf: 'center',
+                  marginRight: '16px'
+                }}>
+                  Last updated: {lastUpdated.toLocaleTimeString()}
+                </div>
+              )}
+              <Button 
+                type="default"
+                icon={<ReloadOutlined />}
+                onClick={() => loadDashboardData(true)}
+                loading={refreshing}
+                style={{
+                  borderRadius: '8px',
+                  height: '40px',
+                  fontWeight: '600'
+                }}
+              >
+                Refresh
+              </Button>
               <Button 
                 type="default"
                 icon={<DatabaseOutlined />}

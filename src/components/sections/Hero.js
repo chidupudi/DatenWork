@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { db } from '../../firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { heroService } from '../../services/firebaseData';
 
 const Button = ({ variant, size, children, ...props }) => {
   const baseStyles = {
@@ -66,9 +67,49 @@ const Hero = () => {
     phone: '',
     course: ''
   });
+  
+  const [heroContent, setHeroContent] = useState({
+    title: "Empowering Talent, Driving Global Tech Success",
+    subtitle: "Transform your career with expert training, guaranteed placements, and world-class consultancy services",
+    formTitle: "Start Your Journey",
+    formSubtitle: "Join thousands of successful tech professionals",
+    statistics: [
+      { number: "600+", label: "Successful Placements" },
+      { number: "6+", label: "Years Experience" },
+      { number: "50+", label: "Placement Companies" }
+    ],
+    buttons: [
+      { text: "Explore Training Programs", link: "/programs", variant: "primary" },
+      { text: "Find Your Dream Job", link: "https://docs.google.com/forms/d/e/1FAIpQLSe2mqWXkm0W43PxgYna5nFPwCOMshtsYhc9NPEBQCocdTiCEQ/viewform?usp=header", variant: "secondary" }
+    ],
+    courseOptions: [
+      { value: "react", label: "React Development" },
+      { value: "node", label: "Node.js Backend" },
+      { value: "fullstack", label: "Full Stack Development" },
+      { value: "python", label: "Python Programming" },
+      { value: "data-science", label: "Data Science" },
+      { value: "mainframe", label: "Mainframe" }
+    ]
+  });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', or null
+  
+  // Load hero content from Firebase
+  useEffect(() => {
+    const loadHeroContent = async () => {
+      try {
+        const data = await heroService.get();
+        if (data && data.length > 0) {
+          setHeroContent(data[0]);
+        }
+      } catch (error) {
+        console.error('Error loading hero content:', error);
+      }
+    };
+    
+    loadHeroContent();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -445,84 +486,67 @@ const Hero = () => {
               style={heroTitleStyles}
               variants={itemVariants}
             >
-              Empowering Talent, Driving Global Tech Success
+              {heroContent.title}
             </motion.h1>
             
             <motion.p 
               style={heroSubtitleStyles}
               variants={itemVariants}
             >
-              Transform your career with expert training, guaranteed placements, and world-class consultancy services
+              {heroContent.subtitle}
             </motion.p>
             
             <motion.div 
-  style={heroCtaStyles}
-  variants={itemVariants}
->
-  <motion.div
-    whileHover={{ scale: 1.05 }}
-    whileTap={{ scale: 0.95 }}
-  >
-    <Button 
-      variant="primary" 
-      size="large"
-      onClick={() => window.location.href = '/programs'}
-    >
-      Explore Training Programs
-    </Button>
-  </motion.div>
-  <motion.div
-    whileHover={{ scale: 1.05 }}
-    whileTap={{ scale: 0.95 }}
-  >
-    <Button 
-      variant="secondary" 
-      size="large"
-      onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSe2mqWXkm0W43PxgYna5nFPwCOMshtsYhc9NPEBQCocdTiCEQ/viewform?usp=header', '_blank')}
-    >
-      Find Your Dream Job
-    </Button>
-  </motion.div>
-</motion.div>
+              style={heroCtaStyles}
+              variants={itemVariants}
+            >
+              {heroContent.buttons?.map((button, index) => (
+                <motion.div
+                  key={index}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button 
+                    variant={button.variant || "primary"} 
+                    size="large"
+                    onClick={() => {
+                      if (button.link?.startsWith('http')) {
+                        window.open(button.link, '_blank');
+                      } else {
+                        window.location.href = button.link;
+                      }
+                    }}
+                  >
+                    {button.text}
+                  </Button>
+                </motion.div>
+              ))}
+            </motion.div>
             <motion.div 
               style={heroStatsStyles}
               variants={itemVariants}
             >
-              <motion.div 
-                style={statStyles}
-                whileHover={{ 
-                  scale: 1.05,
-                  background: '#f3f4f6'
-                }}
-                transition={{ duration: 0.2 }}
-              >
-                <span style={statNumberStyles}>600+</span>
-                <span style={statLabelStyles}>Successful Placements</span>
-              </motion.div>
-              
-              <motion.div 
-                style={statStyles}
-                whileHover={{ 
-                  scale: 1.05,
-                  background: '#f3f4f6'
-                }}
-                transition={{ duration: 0.2 }}
-              >
-                <span style={statNumberStyles}>6+</span>
-                <span style={statLabelStyles}>Years Experience</span>
-              </motion.div>
-              
-              <motion.div 
-                style={statStyles}
-                whileHover={{ 
-                  scale: 1.05,
-                  background: '#f3f4f6'
-                }}
-                transition={{ duration: 0.2 }}
-              >
-                <span style={statNumberStyles}>50+</span>
-                <span style={statLabelStyles}>Placement Companies</span>
-              </motion.div>
+              {heroContent.statistics?.map((stat, index) => (
+                <motion.div 
+                  key={index}
+                  style={statStyles}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ 
+                    duration: 0.6, 
+                    delay: index * 0.1,
+                    ease: "easeOut"
+                  }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    background: '#f3f4f6',
+                    transition: { duration: 0.2 }
+                  }}
+                >
+                  <span style={statNumberStyles}>{stat.number}</span>
+                  <span style={statLabelStyles}>{stat.label}</span>
+                </motion.div>
+              ))}
             </motion.div>
           </motion.div>
           
@@ -536,8 +560,8 @@ const Hero = () => {
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.3 }}
             >
-              <h3 style={formTitleStyles}>Start Your Journey</h3>
-              <p style={formSubtitleStyles}>Join thousands of successful tech professionals</p>
+              <h3 style={formTitleStyles}>{heroContent.formTitle}</h3>
+              <p style={formSubtitleStyles}>{heroContent.formSubtitle}</p>
               
               <form onSubmit={handleSubmit}>
                 <motion.input
@@ -634,12 +658,11 @@ const Hero = () => {
                   disabled={isSubmitting}
                 >
                   <option value="">Select Course</option>
-                  <option value="react">React Development</option>
-                  <option value="node">Node.js Backend</option>
-                  <option value="fullstack">Full Stack Development</option>
-                  <option value="python">Python Programming</option>
-                  <option value="data-science">Data Science</option>
-                  <option value="mainframe">Mainframe</option>
+                  {heroContent.courseOptions?.map((option, index) => (
+                    <option key={index} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
                 </motion.select>
                 
                 <motion.button

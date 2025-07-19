@@ -8,13 +8,16 @@ const RouteWrapper = ({ children }) => {
   const location = useLocation();
 
   useEffect(() => {
+    // Scroll to top on route change
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    
     // Check if location actually changed (not just a re-render)
     if (previousLocation && previousLocation.pathname !== location.pathname) {
       setIsLoading(true);
-      // Shorter loading time for better UX
+      // Optimized loading time for better UX
       setTimeout(() => {
         setIsLoading(false);
-      }, 1000);
+      }, 800);
     }
     setPreviousLocation(location);
   }, [location, previousLocation]);

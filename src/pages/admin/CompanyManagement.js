@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, Form, Input, Button, message, Row, Col, Space, Tag } from 'antd';
 import { 
   SaveOutlined,
@@ -19,11 +19,7 @@ const CompanyManagement = () => {
   const [companyInfo, setCompanyInfo] = useState(null);
   const [form] = Form.useForm();
 
-  useEffect(() => {
-    loadCompanyInfo();
-  }, []);
-
-  const loadCompanyInfo = async () => {
+  const loadCompanyInfo = useCallback(async () => {
     setLoading(true);
     try {
       const companyData = await companyService.get();
@@ -42,7 +38,11 @@ const CompanyManagement = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [form]);
+
+  useEffect(() => {
+    loadCompanyInfo();
+  }, [loadCompanyInfo]);
 
   const handleSave = async (values) => {
     try {

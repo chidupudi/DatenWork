@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import Header from '../components/common/Header';
 import Hero from '../components/sections/Hero';
 import TrainingCourses from '../components/sections/TrainingCourses';
@@ -9,19 +9,29 @@ import IndustryRequirements from '../components/sections/IndustryRequirements';
 import ITConsultancy from '../components/sections/ITConsultancy';
 import Footer from '../components/sections/Footer';
 
-// Circuit Board Background Component with Fixed Particle Animation
-const CircuitBoardBackground = () => {
+// Circuit Board Background Component with Optimized Animation
+const CircuitBoardBackground = React.memo(() => {
   const [particles, setParticles] = useState([]);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // Generate random particles
-    const newParticles = Array.from({ length: 25 }, (_, i) => ({
+    // Generate optimized particles - reduced for better performance
+    const newParticles = Array.from({ length: 15 }, (_, i) => ({
       id: i,
       path: Math.floor(Math.random() * 6),
-      delay: Math.random() * 5,
-      duration: 4 + Math.random() * 3
+      delay: Math.random() * 4,
+      duration: 3 + Math.random() * 2
     }));
     setParticles(newParticles);
+
+    // Performance optimization: hide background when scrolled
+    const handleScroll = () => {
+      const scrolled = window.scrollY > window.innerHeight;
+      setIsVisible(!scrolled);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const containerStyle = {
@@ -33,7 +43,9 @@ const CircuitBoardBackground = () => {
     background: 'linear-gradient(135deg, #f0f4f8 0%, #e6f2ff 50%, #f0f4f8 100%)',
     overflow: 'hidden',
     zIndex: -1,
-    opacity: 0.3 // Reduced opacity
+    opacity: isVisible ? 0.3 : 0,
+    transition: 'opacity 0.3s ease',
+    willChange: 'opacity' // Performance hint
   };
 
   const svgStyle = {
@@ -71,11 +83,6 @@ const CircuitBoardBackground = () => {
     filter: 'url(#glow)'
   };
 
-  const nodeStyle = {
-    fill: '#60a5fa',
-    filter: 'url(#glow)',
-    animation: 'nodePulse 3s ease-in-out infinite'
-  };
 
   const gridPatternStyle = {
     stroke: '#dbeafe',
@@ -98,6 +105,10 @@ const CircuitBoardBackground = () => {
       }
     }
   `;
+
+  if (!isVisible) {
+    return null; // Don't render when not visible for better performance
+  }
 
   return (
     <div style={containerStyle}>
@@ -239,63 +250,59 @@ const CircuitBoardBackground = () => {
       </svg>
     </div>
   );
-};
+});
 
-const Home = () => {
-  // Main page wrapper styles
-  const homeStyles = {
+const Home = React.memo(() => {
+  // Performance-optimized main page wrapper styles
+  const homeStyles = useMemo(() => ({
     minHeight: '100vh',
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
     overflow: 'hidden',
     position: 'relative',
-    background: 'linear-gradient(135deg, #ffffff 0%, #f9fafb 100%)'
-  };
+    background: 'linear-gradient(135deg, #ffffff 0%, #f9fafb 100%)',
+    willChange: 'transform' // Performance hint
+  }), []);
 
-  // Main content wrapper styles
-  const mainContentStyles = {
+  // Memoized styles for better performance
+  const mainContentStyles = useMemo(() => ({
     flex: 1,
     width: '100%',
     position: 'relative',
     zIndex: 1
-  };
+  }), []);
 
-  // Section wrapper styles - no gaps, seamless flow
-  const sectionWrapperStyles = {
+  const sectionWrapperStyles = useMemo(() => ({
     width: '100%',
     position: 'relative',
     zIndex: 1,
     background: 'transparent'
-  };
+  }), []);
 
-  // Hero section specific wrapper
-  const heroWrapperStyles = {
+  const heroWrapperStyles = useMemo(() => ({
     ...sectionWrapperStyles,
     background: 'transparent',
     position: 'relative',
     overflow: 'hidden'
-  };
+  }), [sectionWrapperStyles]);
 
-  // Standard section wrapper - no padding between sections
-  const standardSectionWrapper = {
+  const standardSectionWrapper = useMemo(() => ({
     ...sectionWrapperStyles,
     margin: 0,
     padding: 0
-  };
+  }), [sectionWrapperStyles]);
 
-  // Header wrapper with proper z-index
-  const headerWrapperStyles = {
+  const headerWrapperStyles = useMemo(() => ({
     position: 'relative',
     zIndex: 100
-  };
+  }), []);
 
-  // Footer wrapper styles
-  const footerWrapperStyles = {
+  const footerWrapperStyles = useMemo(() => ({
     position: 'relative',
     zIndex: 1,
     marginTop: 0
-  };
+  }), []);
 
   return (
     <>
@@ -358,6 +365,6 @@ const Home = () => {
       </div>
     </>
   );
-};
+});
 
 export default Home;
