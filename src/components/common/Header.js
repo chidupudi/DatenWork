@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logoSrc from '../../assets/image.png';
+import { useTheme } from '../../contexts/ThemeContext';
 
 // Updated brand colors with dark header theme
 const brandColors = {
@@ -242,6 +243,7 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const currentPath = location.pathname;
+  const theme = useTheme();
 
   // Responsive hook
   useEffect(() => {
@@ -502,6 +504,23 @@ const Header = () => {
     transition: 'all 0.3s ease'
   };
 
+  // Theme toggle button styles
+  const themeToggleStyles = {
+    width: '44px',
+    height: '44px',
+    borderRadius: '50%',
+    border: 'none',
+    background: brandColors.headerHover,
+    color: brandColors.headerText,
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '18px',
+    transition: 'all 0.3s ease',
+    marginRight: isMobile ? '0' : '12px'
+  };
+
   return (
     <>
       <TopBar />
@@ -560,9 +579,24 @@ const Header = () => {
             </nav>
           )}
 
-          {/* Desktop CTA Button */}
+          {/* Desktop Theme Toggle and CTA Button */}
           {!isMobile && (
             <div style={{ display: 'flex', alignItems: 'center' }}>
+              <button
+                style={themeToggleStyles}
+                onClick={theme.toggleTheme}
+                onMouseEnter={(e) => {
+                  e.target.style.background = brandColors.primary;
+                  e.target.style.transform = 'scale(1.05)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = brandColors.headerHover;
+                  e.target.style.transform = 'scale(1)';
+                }}
+                title={theme.isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              >
+                {theme.isDarkMode ? '☀️' : '🌙'}
+              </button>
               <div
                 style={ctaButtonStyles}
                 onClick={() => handleNavClick('/contact')}
@@ -625,6 +659,25 @@ const Header = () => {
                 </li>
               ))}
               
+              {/* Mobile Theme Toggle */}
+              <li style={{ width: '100%', marginBottom: '16px' }}>
+                <button
+                  style={{
+                    ...themeToggleStyles,
+                    width: '100%',
+                    borderRadius: '8px',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    fontSize: '16px',
+                    padding: '12px'
+                  }}
+                  onClick={theme.toggleTheme}
+                >
+                  {theme.isDarkMode ? '☀️' : '🌙'}
+                  <span>{theme.isDarkMode ? 'Light Mode' : 'Dark Mode'}</span>
+                </button>
+              </li>
+
               {/* Mobile CTA Button */}
               <li style={{ width: '100%' }}>
                 <div

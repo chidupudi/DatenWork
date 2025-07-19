@@ -148,3 +148,68 @@
   --z-popover: 1050;
   --z-tooltip: 1060;
 }
+
+/* Dark Theme Variables */
+.dark-theme {
+  /* Background colors */
+  --background-primary: #0f172a;
+  --background-secondary: #1e293b;
+  --background-tertiary: #334155;
+  
+  /* Surface colors */
+  --surface-primary: #1e293b;
+  --surface-elevated: #334155;
+  
+  /* Text colors */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  
+  /* Border colors */
+  --border-primary: #334155;
+  --border-light: #475569;
+  
+  /* Shadows */
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --shadow-medium: rgba(0, 0, 0, 0.7);
+  --shadow-large: rgba(0, 0, 0, 0.9);
+  
+  /* Hover states */
+  --hover-background: #475569;
+  --active-background: #475569;
+}
+
+/* Light Theme Variables */
+.light-theme {
+  /* Background colors */
+  --background-primary: #ffffff;
+  --background-secondary: #f8fafc;
+  --background-tertiary: #f1f5f9;
+  
+  /* Surface colors */
+  --surface-primary: #ffffff;
+  --surface-elevated: #ffffff;
+  
+  /* Text colors */
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  
+  /* Border colors */
+  --border-primary: #e2e8f0;
+  --border-light: #f1f5f9;
+  
+  /* Shadows */
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-medium: rgba(0, 0, 0, 0.15);
+  --shadow-large: rgba(0, 0, 0, 0.25);
+  
+  /* Hover states */
+  --hover-background: #f1f5f9;
+  --active-background: #e2e8f0;
+}
+
+/* Ensure smooth transitions */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}

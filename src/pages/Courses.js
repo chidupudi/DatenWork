@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/common/Header';
 import Footer from '../components/sections/Footer';
 import Card from '../components/common/Card';
+import { coursesService } from '../services/firebaseData';
 
 const Courses = () => {
   const [ref, inView] = useInView({
@@ -15,182 +16,50 @@ const Courses = () => {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState('all');
   const [hoveredCard, setHoveredCard] = useState(null);
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Updated categories with accurate counts
-  const categories = [
-    { id: 'all', name: 'All Courses', count: 9 },
-    { id: 'frontend', name: 'Frontend', count: 2 },
-    { id: 'backend', name: 'Backend', count: 2 },
-    { id: 'fullstack', name: 'Full Stack', count: 1 },
-    { id: 'data', name: 'Data Science', count: 3 },
-    { id: 'mobile', name: 'Mobile', count: 1 }
-  ];
+  // Fetch courses from Firebase
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        setLoading(true);
+        const coursesData = await coursesService.getAll();
+        setCourses(coursesData.filter(course => course.isActive !== false));
+      } catch (err) {
+        console.error('Error fetching courses:', err);
+        setError('Failed to load courses. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  // All courses with consistent pricing similar to first 2 courses from TrainingCourses
-  const courses = [
-    {
-      id: 1,
-      title: 'Mainframe Training & Placement Program',
-      category: 'backend',
-      duration: '40 hours',
-      level: 'Beginner to Job-Ready',
-      technologies: ['COBOL', 'JCL', 'DB2', 'CICS', 'IBM z/OS', 'VSAM'],
-      price: '₹30,000',
-      originalPrice: '₹60,000',
-      discount: '50% OFF',
-      icon: '🖥️',
-      gradient: 'linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)',
-      rating: 4.8,
-      students: 187,
-      instructor: 'Robert Kumar',
-      nextStart: 'March 25, 2024',
-      features: ['Job Guarantee', 'Industry Mentors', 'Real Projects', 'Certification']
-    },
-    {
-      id: 2,
-      title: 'Data Science with Python',
-      category: 'data',
-      duration: '60 hours',
-      level: 'Beginner to Advanced',
-      technologies: ['Python', 'Pandas', 'TensorFlow', 'Scikit-learn', 'SQL'],
-      price: '₹50,000',
-      originalPrice: '₹60,000',
-      discount: '17% OFF',
-      icon: '🤖',
-      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-      rating: 4.9,
-      students: 88,
-      instructor: 'Dr. Emily Rodriguez',
-      nextStart: 'April 5, 2024',
-      features: ['Real Datasets', 'ML Projects', 'Data Visualization', 'Career Support']
-    },
-    {
-      id: 3,
-      title: 'Full Stack Web Development Bootcamp',
-      category: 'fullstack',
-      duration: '80 hours',
-      level: 'Beginner to Advanced',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'JavaScript', 'HTML/CSS'],
-      price: '₹75,000',
-      originalPrice: '₹1,00,000',
-      discount: '25% OFF',
-      icon: '🚀',
-      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      rating: 4.9,
-      students: 1250,
-      instructor: 'Sarah Johnson',
-      nextStart: 'March 15, 2024',
-      features: ['1-on-1 Mentorship', 'Job Placement', 'Personal Mentor', 'Lifetime Access']
-    },
-    {
-      id: 4,
-      title: 'React.js Mastery Course',
-      category: 'frontend',
-      duration: '45 hours',
-      level: 'Intermediate',
-      technologies: ['React', 'Redux', 'TypeScript', 'Jest', 'React Router', 'Styled Components'],
-      price: '₹40,000',
-      originalPrice: '₹55,000',
-      discount: '27% OFF',
-      icon: '⚛️',
-      gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-      rating: 4.8,
-      students: 890,
-      instructor: 'Michael Chen',
-      nextStart: 'March 22, 2024',
-      features: ['1-on-1 Sessions', 'Personal Mentor', 'Performance', 'Live Projects']
-    },
-    {
-      id: 5,
-      title: 'Node.js Backend Development',
-      category: 'backend',
-      duration: '50 hours',
-      level: 'Intermediate',
-      technologies: ['Node.js', 'Express', 'PostgreSQL', 'MongoDB', 'Docker', 'AWS'],
-      price: '₹45,000',
-      originalPrice: '₹65,000',
-      discount: '31% OFF',
-      icon: '⚙️',
-      gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
-      rating: 4.7,
-      students: 654,
-      instructor: 'David Park',
-      nextStart: 'March 29, 2024',
-      features: ['API Design', 'Database Design', 'Security', 'Deployment']
-    },
-    {
-      id: 6,
-      title: 'Modern JavaScript Fundamentals',
-      category: 'frontend',
-      duration: '35 hours',
-      level: 'Beginner',
-      technologies: ['JavaScript', 'ES6+', 'DOM', 'Fetch API', 'Async/Await', 'Modules'],
-      price: '₹25,000',
-      originalPrice: '₹40,000',
-      discount: '38% OFF',
-      icon: '💻',
-      gradient: 'linear-gradient(135deg, #a8eaaa 0%, #867165 90%)',
-      rating: 4.6,
-      students: 1120,
-      instructor: 'Alex Thompson',
-      nextStart: 'March 18, 2024',
-      features: ['Interactive Coding', 'Projects', 'Code Review', 'Community']
-    },
-    {
-      id: 7,
-      title: 'React Native Mobile Development',
-      category: 'mobile',
-      duration: '55 hours',
-      level: 'Intermediate',
-      technologies: ['React Native', 'Expo', 'Redux', 'Navigation', 'Firebase', 'App Store'],
-      price: '₹50,000',
-      originalPrice: '₹70,000',
-      discount: '29% OFF',
-      icon: '📱',
-      gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      rating: 4.8,
-      students: 432,
-      instructor: 'Lisa Wang',
-      nextStart: 'April 12, 2024',
-      features: ['Cross Platform', 'Native Features', 'App Store Deploy', 'Portfolio Apps']
-    },
-    {
-      id: 8,
-      title: 'Advanced Python Programming',
-      category: 'data',
-      duration: '65 hours',
-      level: 'Advanced',
-      technologies: ['Python', 'Django', 'Flask', 'REST APIs', 'PostgreSQL', 'Machine Learning'],
-      price: '₹55,000',
-      originalPrice: '₹75,000',
-      discount: '27% OFF',
-      icon: '🐍',
-      gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-      rating: 4.7,
-      students: 298,
-      instructor: 'Priya Sharma',
-      nextStart: 'April 8, 2024',
-      features: ['Advanced Concepts', 'Web Frameworks', 'API Development', 'Deployment']
-    },
-    {
-      id: 9,
-      title: 'Machine Learning Specialization',
-      category: 'data',
-      duration: '90 hours',
-      level: 'Advanced',
-      technologies: ['Python', 'TensorFlow', 'PyTorch', 'Scikit-learn', 'Keras', 'Deep Learning'],
-      price: '₹65,000',
-      originalPrice: '₹90,000',
-      discount: '28% OFF',
-      icon: '🧠',
-      gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-      rating: 4.9,
-      students: 156,
-      instructor: 'Dr. Raj Patel',
-      nextStart: 'April 15, 2024',
-      features: ['Advanced ML', 'Deep Learning', 'Neural Networks', 'Industry Projects']
+    fetchCourses();
+  }, []);
+
+  // Calculate categories dynamically based on courses
+  const categories = React.useMemo(() => {
+    if (!courses.length) {
+      return [{ id: 'all', name: 'All Courses', count: 0 }];
     }
-  ];
+
+    const categoryCount = courses.reduce((acc, course) => {
+      acc[course.category] = (acc[course.category] || 0) + 1;
+      return acc;
+    }, {});
+
+    const categoryList = [
+      { id: 'all', name: 'All Courses', count: courses.length },
+      { id: 'frontend', name: 'Frontend', count: categoryCount.frontend || 0 },
+      { id: 'backend', name: 'Backend', count: categoryCount.backend || 0 },
+      { id: 'fullstack', name: 'Full Stack', count: categoryCount.fullstack || 0 },
+      { id: 'data', name: 'Data Science', count: categoryCount.data || 0 },
+      { id: 'mobile', name: 'Mobile', count: categoryCount.mobile || 0 }
+    ];
+
+    return categoryList.filter(cat => cat.id === 'all' || cat.count > 0);
+  }, [courses]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -577,14 +446,44 @@ const Courses = () => {
             </p>
           </motion.div>
 
+          {/* Loading State */}
+          {loading && (
+            <div style={{ textAlign: 'center', padding: '80px 0' }}>
+              <div style={{ fontSize: '2rem', marginBottom: '16px' }}>⏳</div>
+              <p style={{ fontSize: '1.2rem', color: '#6b7280' }}>Loading courses...</p>
+            </div>
+          )}
+
+          {/* Error State */}
+          {error && (
+            <div style={{ textAlign: 'center', padding: '80px 0' }}>
+              <div style={{ fontSize: '2rem', marginBottom: '16px' }}>❌</div>
+              <p style={{ fontSize: '1.2rem', color: '#ef4444', marginBottom: '16px' }}>{error}</p>
+              <button 
+                onClick={() => window.location.reload()} 
+                style={{
+                  padding: '12px 24px',
+                  background: 'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer'
+                }}
+              >
+                Try Again
+              </button>
+            </div>
+          )}
+
           {/* Courses Grid */}
-          <motion.div 
-            style={coursesGridStyles}
-            variants={containerVariants}
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
-          >
-            {filteredCourses.map((course) => (
+          {!loading && !error && (
+            <motion.div 
+              style={coursesGridStyles}
+              variants={containerVariants}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+            >
+              {filteredCourses.map((course) => (
               <motion.div
                 key={course.id}
                 variants={cardVariants}
@@ -592,9 +491,9 @@ const Courses = () => {
                 onMouseLeave={() => setHoveredCard(null)}
               >
                 <Card style={courseCardStyles(hoveredCard === course.id)} hover={false}>
-                  <div style={courseHeaderStyles(course.gradient)}>
-                    <div style={discountBadgeStyles}>{course.discount}</div>
-                    <div style={courseIconStyles}>{course.icon}</div>
+                  <div style={courseHeaderStyles(course.gradient || 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)')}>
+                    <div style={discountBadgeStyles}>{course.discount || 'SPECIAL'}</div>
+                    <div style={courseIconStyles}>{course.icon || '📚'}</div>
                     <h3 style={courseTitleStyles}>{course.title}</h3>
                     <div style={courseDurationStyles}>
                       <span>⏱️</span>
@@ -657,7 +556,31 @@ const Courses = () => {
                 </Card>
               </motion.div>
             ))}
+            
+            {/* No courses found state */}
+            {filteredCourses.length === 0 && (
+              <div style={{ 
+                gridColumn: '1 / -1',
+                textAlign: 'center', 
+                padding: '60px 0',
+                background: 'white',
+                borderRadius: '16px',
+                border: '1px solid #e5e7eb'
+              }}>
+                <div style={{ fontSize: '3rem', marginBottom: '16px' }}>📚</div>
+                <h3 style={{ fontSize: '1.5rem', marginBottom: '8px', color: '#1f2937' }}>
+                  No courses found
+                </h3>
+                <p style={{ color: '#6b7280' }}>
+                  {activeCategory === 'all' 
+                    ? 'No courses available at the moment.' 
+                    : `No courses available in the ${categories.find(c => c.id === activeCategory)?.name} category.`
+                  }
+                </p>
+              </div>
+            )}
           </motion.div>
+          )}
         </div>
       </section>
 

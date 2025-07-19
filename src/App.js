@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import RouteWrapper from './components/common/RouteWrapper';
 import { AuthProvider } from './contexts/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
@@ -27,7 +28,8 @@ import './utils/runMigration';
 
 function App() {
   return (
-    <AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
       <Router>
         <div className="App">
           <RouteWrapper>
@@ -54,7 +56,8 @@ function App() {
           </RouteWrapper>
         </div>
       </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

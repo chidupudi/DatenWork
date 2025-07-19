@@ -31,32 +31,4 @@ export const createDefaultAdmin = async () => {
   }
 };
 
-// Alternative admin credentials (in case first one fails)
-export const alternativeAdminCredentials = {
-  email: 'admin@test.com',
-  password: 'Test123456'
-};
-
-export const createAlternativeAdmin = async () => {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(
-      auth, 
-      alternativeAdminCredentials.email, 
-      alternativeAdminCredentials.password
-    );
-
-    console.log('Alternative admin user created successfully:', userCredential.user.email);
-    return {
-      success: true,
-      email: alternativeAdminCredentials.email,
-      password: alternativeAdminCredentials.password,
-      user: userCredential.user
-    };
-  } catch (error) {
-    console.error('Error creating alternative admin user:', error);
-    return {
-      success: false,
-      error: error.message
-    };
-  }
-};
+// Note: Alternative admin creation removed for security

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Header from '../components/common/Header';
 import Footer from '../components/sections/Footer';
-// Mock components since they're not available in this environment
+import { programsService } from '../services/firebaseData';
 
 
 
@@ -23,120 +23,53 @@ const Courses = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [hoveredCard, setHoveredCard] = useState(null);
   const [hoveredTech, setHoveredTech] = useState(null);
+  const [programs, setPrograms] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const categories = [
-    { id: 'all', name: 'All Courses', count: 12 },
-    { id: 'frontend', name: 'Frontend', count: 4 },
-    { id: 'backend', name: 'Backend', count: 3 },
-    { id: 'fullstack', name: 'Full Stack', count: 2 },
-    { id: 'data', name: 'Data Science', count: 2 },
-    { id: 'mobile', name: 'Mobile', count: 1 }
-  ];
+  // Fetch programs from Firebase
+  useEffect(() => {
+    const fetchPrograms = async () => {
+      try {
+        setLoading(true);
+        const programsData = await programsService.getAll();
+        setPrograms(programsData.filter(program => program.isActive !== false));
+      } catch (err) {
+        console.error('Error fetching programs:', err);
+        setError('Failed to load programs. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const courses = [
-    {
-      id: 1,
-      title: 'Full Stack Web Development Bootcamp',
-      category: 'fullstack',
-      duration: '16 weeks',
-      level: 'Beginner to Advanced',
-      price: '₹2,49,000',
-      originalPrice: '₹4,15,000',
-      rating: 4.9,
-      students: 1250,
-      description: 'Master modern web development with React, Node.js, and MongoDB. Build real-world projects and get job-ready.',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'JavaScript', 'HTML/CSS'],
-      features: ['1-on-1 Mentorship', 'Job Placement', 'Personal Mentor', 'Lifetime Access'],
-      instructor: 'Sarah Johnson',
-      nextStart: 'March 15, 2024',
-      emoji: '🚀'
-    },
-    {
-      id: 2,
-      title: 'React.js Mastery Course',
-      category: 'frontend',
-      duration: '10 weeks',
-      level: 'Intermediate',
-      price: '₹2,49,000',
-      originalPrice: '₹2,71,000',
-      rating: 4.8,
-      students: 890,
-      description: 'Deep dive into React.js ecosystem including hooks, context, Redux, and testing. Build production-ready applications.',
-      technologies: ['React', 'Redux', 'TypeScript', 'Jest', 'React Router', 'Styled Components'],
-      features: ['1-on-1 Sessions', 'Personal Mentor', 'Performance', 'Live Projects'],
-      instructor: 'Michael Chen',
-      nextStart: 'March 22, 2024',
-      emoji: '⚛️'
-    },
-    {
-      id: 3,
-      title: 'Node.js Backend Development',
-      category: 'backend',
-      duration: '12 weeks',
-      level: 'Intermediate',
-      price: '₹2,49,000',
-      originalPrice: '₹2,66,000',
-      rating: 4.7,
-      students: 654,
-      description: 'Build scalable backend applications with Node.js, Express, and databases. Learn API development and deployment.',
-      technologies: ['Node.js', 'Express', 'PostgreSQL', 'MongoDB', 'Docker', 'AWS'],
-      features: ['API Design', 'Database Design', 'Security', 'Deployment'],
-      instructor: 'David Park',
-      nextStart: 'March 29, 2024',
-      emoji: '⚙️'
-    },
-    {
-      id: 4,
-      title: 'Data Science with Python',
-      category: 'data',
-      duration: '14 weeks',
-      level: 'Beginner to Advanced',
-      price: '₹2,49,000',
-      originalPrice: '₹3,24,000',
-      rating: 4.9,
-      students: 543,
-      description: 'Master data science fundamentals, machine learning, and data visualization with Python and popular libraries.',
-      technologies: ['Python', 'Pandas', 'NumPy', 'Scikit-learn', 'TensorFlow', 'Matplotlib'],
-      features: ['Real Datasets', 'ML Projects', 'Data Visualization', 'Career Support'],
-      instructor: 'Dr. Emily Rodriguez',
-      nextStart: 'April 5, 2024',
-      emoji: '📊'
-    },
-    {
-      id: 5,
-      title: 'Modern JavaScript Fundamentals',
-      category: 'frontend',
-      duration: '8 weeks',
-      level: 'Beginner',
-      price: '₹2,49,000',
-      originalPrice: '₹2,68,000',
-      rating: 4.6,
-      students: 1120,
-      description: 'Learn JavaScript from basics to advanced concepts including ES6+, async programming, and DOM manipulation.',
-      technologies: ['JavaScript', 'ES6+', 'DOM', 'Fetch API', 'Async/Await', 'Modules'],
-      features: ['Interactive Coding', 'Projects', 'Code Review', 'Community'],
-      instructor: 'Alex Thompson',
-      nextStart: 'March 18, 2024',
-      emoji: '💻'
-    },
-    {
-      id: 6,
-      title: 'React Native Mobile Development',
-      category: 'mobile',
-      duration: '12 weeks',
-      level: 'Intermediate',
-      price: '₹2,49,000',
-      originalPrice: '₹2,83,000',
-      rating: 4.8,
-      students: 432,
-      description: 'Build cross-platform mobile apps with React Native. Learn navigation, state management, and app deployment.',
-      technologies: ['React Native', 'Expo', 'Redux', 'Navigation', 'Firebase', 'App Store'],
-      features: ['Cross Platform', 'Native Features', 'App Store Deploy', 'Portfolio Apps'],
-      instructor: 'Lisa Wang',
-      nextStart: 'April 12, 2024',
-      emoji: '📱'
+    fetchPrograms();
+  }, []);
+
+  // Calculate categories dynamically based on programs
+  const categories = React.useMemo(() => {
+    if (!programs.length) {
+      return [{ id: 'all', name: 'All Programs', count: 0 }];
     }
-  ];
+
+    const categoryCount = programs.reduce((acc, program) => {
+      const category = program.category || 'other';
+      acc[category] = (acc[category] || 0) + 1;
+      return acc;
+    }, {});
+
+    const categoryList = [
+      { id: 'all', name: 'All Programs', count: programs.length },
+      { id: 'frontend', name: 'Frontend', count: categoryCount.frontend || 0 },
+      { id: 'backend', name: 'Backend', count: categoryCount.backend || 0 },
+      { id: 'fullstack', name: 'Full Stack', count: categoryCount.fullstack || 0 },
+      { id: 'data', name: 'Data Science', count: categoryCount.data || 0 },
+      { id: 'mobile', name: 'Mobile', count: categoryCount.mobile || 0 },
+      { id: 'devops', name: 'DevOps', count: categoryCount.devops || 0 },
+      { id: 'other', name: 'Other', count: categoryCount.other || 0 }
+    ];
+
+    return categoryList.filter(cat => cat.id === 'all' || cat.count > 0);
+  }, [programs]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -161,9 +94,9 @@ const Courses = () => {
     }
   };
 
-  const filteredCourses = activeCategory === 'all'
-    ? courses
-    : courses.filter(course => course.category === activeCategory);
+  const filteredPrograms = activeCategory === 'all'
+    ? programs
+    : programs.filter(program => (program.category || 'other') === activeCategory);
 
   const keyColor = '#413C58';
 
@@ -558,56 +491,86 @@ const heroSectionStyles = {
             ))}
           </motion.div>
 
-          {/* Courses Grid */}
-          <motion.div 
-            style={coursesGridStyles}
-            className="courses-grid"
-            variants={containerVariants}
-            initial="hidden"
-            animate={inView ? "visible" : "hidden"}
-          >
-            {filteredCourses.map((course, index) => (
+          {/* Loading State */}
+          {loading && (
+            <div style={{ textAlign: 'center', padding: '80px 0' }}>
+              <div style={{ fontSize: '2rem', marginBottom: '16px' }}>⏳</div>
+              <p style={{ fontSize: '1.2rem', color: '#6b7280' }}>Loading programs...</p>
+            </div>
+          )}
+
+          {/* Error State */}
+          {error && (
+            <div style={{ textAlign: 'center', padding: '80px 0' }}>
+              <div style={{ fontSize: '2rem', marginBottom: '16px' }}>❌</div>
+              <p style={{ fontSize: '1.2rem', color: '#ef4444', marginBottom: '16px' }}>{error}</p>
+              <button 
+                onClick={() => window.location.reload()} 
+                style={{
+                  padding: '12px 24px',
+                  background: 'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer'
+                }}
+              >
+                Try Again
+              </button>
+            </div>
+          )}
+
+          {/* Programs Grid */}
+          {!loading && !error && (
+            <motion.div 
+              style={coursesGridStyles}
+              className="courses-grid"
+              variants={containerVariants}
+              initial="hidden"
+              animate={inView ? "visible" : "hidden"}
+            >
+              {filteredPrograms.map((program, index) => (
               <motion.div
-                key={course.id}
+                key={program.id}
                 variants={cardVariants}
                 whileHover={{ y: -4, scale: 1.01 }}
                 transition={{ duration: 0.2 }}
-                onMouseEnter={() => setHoveredCard(course.id)}
+                onMouseEnter={() => setHoveredCard(program.id)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
                 <Card 
-                  style={courseCardStyles(hoveredCard === course.id)}
+                  style={courseCardStyles(hoveredCard === program.id)}
                   className="course-card"
                   hover={false}
                 >
-                  {/* Course Header */}
+                  {/* Program Header */}
                   <div style={courseHeaderStyles}>
                     <div style={courseMetaStyles}>
-                      <span style={levelTagStyles}>{course.level}</span>
+                      <span style={levelTagStyles}>{program.level || 'All Levels'}</span>
                     </div>
                     <div style={studentsCountStyles}>
-                      {course.students} students
+                      {program.students || 0} students
                     </div>
                   </div>
 
-                  {/* Course Content */}
+                  {/* Program Content */}
                   <div style={courseContentStyles}>
                     <div>
                       <h3 style={courseTitleStyles}>
-                        <span style={{ fontSize: '1.2rem' }}>{course.emoji}</span>
-                        {course.title}
+                        <span style={{ fontSize: '1.2rem' }}>{program.icon || '🎓'}</span>
+                        {program.title}
                       </h3>
                      
-                      {/* Technologies */}
+                      {/* Technologies/Curriculum */}
                       <div style={technologiesStyles}>
                         <div style={techTagsStyles}>
-                          {course.technologies.map((tech, i) => (
+                          {(program.technologies || program.curriculum || []).map((tech, i) => (
                             <motion.span 
                               key={i} 
-                              style={techTagStyles(hoveredTech === `${course.id}-${i}`)}
+                              style={techTagStyles(hoveredTech === `${program.id}-${i}`)}
                               whileHover={{ scale: 1.05 }}
                               transition={{ duration: 0.1 }}
-                              onMouseEnter={() => setHoveredTech(`${course.id}-${i}`)}
+                              onMouseEnter={() => setHoveredTech(`${program.id}-${i}`)}
                               onMouseLeave={() => setHoveredTech(null)}
                             >
                               {tech}
@@ -616,30 +579,30 @@ const heroSectionStyles = {
                         </div>
                       </div>
                       
-                      {/* Course Details */}
+                      {/* Program Details */}
                       <div style={courseDetailsStyles}>
                         <div style={detailItemStyles}>
                           <span style={detailLabelStyles}>💰 Price:</span>
                           <div style={priceContainerStyles}>
-                            <span style={priceStyles}>{course.price}</span>
-                            <span style={originalPriceStyles}>{course.originalPrice}</span>
+                            <span style={priceStyles}>{program.price || 'Contact for pricing'}</span>
+                            <span style={originalPriceStyles}>{program.originalPrice}</span>
                           </div>
                         </div>
                         <div style={detailItemStyles}>
                           <span style={detailLabelStyles}>⏱️ Duration:</span>
-                          <span style={detailValueStyles}>{course.duration}</span>
+                          <span style={detailValueStyles}>{program.duration || 'Flexible'}</span>
                         </div>
                         <div style={{...detailItemStyles, borderBottom: 'none'}}>
                           <span style={detailLabelStyles}>⭐ Rating:</span>
-                          <span style={detailValueStyles}>{course.rating}/5.0</span>
+                          <span style={detailValueStyles}>{program.rating || 4.5}/5.0</span>
                         </div>
                       </div>
 
                       {/* Features */}
                       <div style={featuresStyles}>
-                        <h4 style={techTitleStyles}>Course Features:</h4>
+                        <h4 style={techTitleStyles}>Program Features:</h4>
                         <div style={featureTagsStyles}>
-                          {course.features.map((feature, i) => (
+                          {(program.features || []).map((feature, i) => (
                             <span key={i} style={featureTagStyles}>
                               ✓ {feature}
                             </span>
@@ -651,7 +614,7 @@ const heroSectionStyles = {
                     {/* Next Start & Actions */}
                     <div>
                       <div style={nextStartStyles}>
-                        <strong>Next Batch Starts:</strong> {course.nextStart}
+                        <strong>Next Batch Starts:</strong> {program.nextStart || 'Contact for dates'}
                       </div>
                       
                       <div style={courseActionsStyles}>
@@ -673,6 +636,31 @@ const heroSectionStyles = {
                 </Card>
               </motion.div>
             ))}
+            
+            {/* No programs found state */}
+            {filteredPrograms.length === 0 && (
+              <div style={{ 
+                gridColumn: '1 / -1',
+                textAlign: 'center', 
+                padding: '60px 0',
+                background: 'white',
+                borderRadius: '16px',
+                border: '1px solid #e5e7eb'
+              }}>
+                <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🎓</div>
+                <h3 style={{ fontSize: '1.5rem', marginBottom: '8px', color: '#1f2937' }}>
+                  No programs found
+                </h3>
+                <p style={{ color: '#6b7280' }}>
+                  {activeCategory === 'all' 
+                    ? 'No programs available at the moment.' 
+                    : `No programs available in the ${categories.find(c => c.id === activeCategory)?.name} category.`
+                  }
+                </p>
+              </div>
+            )}
+          </motion.div>
+          )}
           </motion.div>
         </div>
       </section>
