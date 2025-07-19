@@ -1,0 +1,96 @@
+// Firestore Security Rules for Datenwork Platform
+// Copy these rules to your Firebase Console > Firestore Database > Rules
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Allow read access to all users for public content
+    match /hero_content/{document} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+    
+    match /courses/{document} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+    
+    match /programs/{document} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+    
+    match /industry_jobs/{document} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+    
+    match /company_info/{document} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+    
+    // Analytics - allow read/write for authenticated admins
+    match /analytics/{document} {
+      allow read, write: if request.auth != null && request.auth.token.admin == true;
+      // Allow public write for page views (but limit to specific fields)
+      allow create: if request.auth == null && 
+                   request.resource.data.keys().hasAll(['type', 'page', 'timestamp']) &&
+                   request.resource.data.type == 'page_view';
+    }
+    
+    // Form submissions - allow public create, admin read
+    match /form_submissions/{document} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null && request.auth.token.admin == true;
+    }
+    
+    // Admin users collection - only admins can read/write
+    match /admin_users/{document} {
+      allow read, write: if request.auth != null && request.auth.token.admin == true;
+    }
+    
+    // Default deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+// Firebase Authentication Rules (if using Auth rules)
+// These are optional but recommended for additional security
+
+// Storage Rules (if using Firebase Storage)
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Allow public read for images
+    match /images/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+    
+    // Default deny
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+/*
+SETUP INSTRUCTIONS:
+
+1. Go to Firebase Console > Project Settings > Service Accounts
+2. Generate a new private key and download the JSON file
+3. Place it in your project root (DO NOT commit to git)
+
+4. Go to Firebase Console > Authentication > Users
+5. Create an admin user manually
+6. Go to Authentication > Custom Claims
+7. Add custom claim: { "admin": true } to your admin user
+
+8. Copy the above rules to Firebase Console > Firestore Database > Rules
+9. Publish the rules
+
+10. Test the migration by running the migration function in your app
+*/

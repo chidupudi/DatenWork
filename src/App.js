@@ -17,8 +17,12 @@ import Dashboard from './pages/admin/Dashboard';
 import HeroManagement from './pages/admin/HeroManagement';
 import FormResponses from './pages/admin/FormResponses';
 import CourseManagement from './pages/admin/CourseManagement';
+import ProgramManagement from './pages/admin/ProgramManagement';
+import AnalyticsManagement from './pages/admin/AnalyticsManagement';
+import CompanyManagement from './pages/admin/CompanyManagement';
 import JobsManagement from './pages/admin/JobsManagement';
 import './styles/global.css';
+import './utils/runMigration';
 
 
 function App() {
@@ -42,6 +46,9 @@ function App() {
               <Route path="/admin/responses" element={<ProtectedRoute><FormResponses /></ProtectedRoute>} />
               <Route path="/admin/hero" element={<ProtectedRoute><HeroManagement /></ProtectedRoute>} />
               <Route path="/admin/courses" element={<ProtectedRoute><CourseManagement /></ProtectedRoute>} />
+              <Route path="/admin/programs" element={<ProtectedRoute><ProgramManagement /></ProtectedRoute>} />
+              <Route path="/admin/analytics" element={<ProtectedRoute><AnalyticsManagement /></ProtectedRoute>} />
+              <Route path="/admin/settings" element={<ProtectedRoute><CompanyManagement /></ProtectedRoute>} />
               <Route path="/admin/jobs" element={<ProtectedRoute><JobsManagement /></ProtectedRoute>} />
             </Routes>
           </RouteWrapper>

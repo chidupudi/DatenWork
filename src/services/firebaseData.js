@@ -14,6 +14,7 @@ import { db } from '../firebase';
 export const COLLECTIONS = {
   HERO_CONTENT: 'hero_content',
   COURSES: 'courses',
+  PROGRAMS: 'programs',
   INDUSTRY_JOBS: 'industry_jobs',
   COMPANY_INFO: 'company_info',
   ANALYTICS: 'analytics'
@@ -177,6 +178,74 @@ export const migrateInitialData = async () => {
       await addDoc(collection(db, COLLECTIONS.COURSES), course);
     }
 
+    // Programs data
+    const programsData = [
+      {
+        title: 'Full Stack Development Bootcamp',
+        description: 'Comprehensive 16-week program covering frontend, backend, and deployment technologies',
+        duration: '16 weeks',
+        level: 'Beginner to Job-Ready',
+        price: '₹1,50,000',
+        originalPrice: '₹2,50,000',
+        discount: '40% OFF',
+        icon: '🚀',
+        gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        rating: 4.9,
+        students: 450,
+        instructor: 'Team of Experts',
+        nextStart: 'April 1, 2024',
+        features: ['Job Guarantee', 'Industry Mentors', '1-on-1 Support', 'Portfolio Development'],
+        curriculum: ['HTML/CSS/JavaScript', 'React.js', 'Node.js', 'MongoDB', 'DevOps', 'Project Work'],
+        isActive: true,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      },
+      {
+        title: 'Data Science & AI Program',
+        description: 'Master data science, machine learning, and AI with Python and industry tools',
+        duration: '20 weeks',
+        level: 'Beginner to Advanced',
+        price: '₹1,75,000',
+        originalPrice: '₹3,00,000',
+        discount: '42% OFF',
+        icon: '🤖',
+        gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+        rating: 4.8,
+        students: 320,
+        instructor: 'Dr. Priya Sharma',
+        nextStart: 'March 25, 2024',
+        features: ['Real Datasets', 'Industry Projects', 'Certification', 'Job Assistance'],
+        curriculum: ['Python Programming', 'Statistics', 'Machine Learning', 'Deep Learning', 'NLP', 'Computer Vision'],
+        isActive: true,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      },
+      {
+        title: 'Cloud DevOps Engineer Program',
+        description: 'Become a DevOps engineer with hands-on experience in AWS, Docker, and Kubernetes',
+        duration: '14 weeks',
+        level: 'Intermediate to Advanced',
+        price: '₹1,25,000',
+        originalPrice: '₹2,00,000',
+        discount: '38% OFF',
+        icon: '☁️',
+        gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+        rating: 4.7,
+        students: 280,
+        instructor: 'Raj Kumar',
+        nextStart: 'April 8, 2024',
+        features: ['AWS Certification', 'Hands-on Labs', 'Industry Mentorship', 'Job Support'],
+        curriculum: ['Linux & Networking', 'AWS Services', 'Docker & Kubernetes', 'CI/CD Pipelines', 'Monitoring', 'Security'],
+        isActive: true,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      }
+    ];
+
+    for (const program of programsData) {
+      await addDoc(collection(db, COLLECTIONS.PROGRAMS), program);
+    }
+
     // Industry jobs data
     const jobsData = [
       {
@@ -282,6 +351,33 @@ export const coursesService = {
   
   delete: async (id) => {
     const docRef = doc(db, COLLECTIONS.COURSES, id);
+    await deleteDoc(docRef);
+  }
+};
+
+// CRUD operations for Programs
+export const programsService = {
+  getAll: async () => {
+    const querySnapshot = await getDocs(collection(db, COLLECTIONS.PROGRAMS));
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  },
+  
+  add: async (programData) => {
+    const docRef = await addDoc(collection(db, COLLECTIONS.PROGRAMS), {
+      ...programData,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    });
+    return docRef.id;
+  },
+  
+  update: async (id, data) => {
+    const docRef = doc(db, COLLECTIONS.PROGRAMS, id);
+    await updateDoc(docRef, { ...data, updatedAt: serverTimestamp() });
+  },
+  
+  delete: async (id) => {
+    const docRef = doc(db, COLLECTIONS.PROGRAMS, id);
     await deleteDoc(docRef);
   }
 };

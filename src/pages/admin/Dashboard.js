@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Row, Col, Statistic, Progress, Table, Tag, Button } from 'antd';
+import { Card, Row, Col, Statistic, Progress, Table, Tag, Button, message } from 'antd';
 import { 
   UserOutlined, 
   BookOutlined, 
@@ -7,16 +7,19 @@ import {
   DollarCircleOutlined,
   ArrowUpOutlined,
   EyeOutlined,
-  PlusOutlined
+  PlusOutlined,
+  DatabaseOutlined,
+  CloudSyncOutlined
 } from '@ant-design/icons';
 import AdminDashboard from '../../components/admin/AdminDashboard';
-import { analyticsService, coursesService, jobsService } from '../../services/firebaseData';
+import { analyticsService, coursesService, jobsService, migrateInitialData } from '../../services/firebaseData';
 
 const Dashboard = () => {
   const [analytics, setAnalytics] = useState([]);
   const [courses, setCourses] = useState([]);
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [migrating, setMigrating] = useState(false);
 
   useEffect(() => {
     loadDashboardData();
@@ -38,6 +41,29 @@ const Dashboard = () => {
       console.error('Error loading dashboard data:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleMigration = async () => {
+    try {
+      setMigrating(true);
+      message.loading('Starting database migration...', 0);
+      
+      const success = await migrateInitialData();
+      
+      message.destroy();
+      if (success) {
+        message.success('Database migration completed successfully! All initial data has been migrated to Firebase.');
+        await loadDashboardData(); // Reload data to show migrated content
+      } else {
+        message.error('Database migration failed. Please check console for errors.');
+      }
+    } catch (error) {
+      message.destroy();
+      console.error('Migration error:', error);
+      message.error('Migration error: ' + error.message);
+    } finally {
+      setMigrating(false);
     }
   };
 
@@ -200,19 +226,37 @@ const Dashboard = () => {
                 Welcome back! Here's what's happening with your platform.
               </p>
             </div>
-            <Button 
-              type="primary" 
-              icon={<PlusOutlined />}
-              style={{
-                background: 'linear-gradient(135deg, #1890ff 0%, #096dd9 100%)',
-                border: 'none',
-                borderRadius: '8px',
-                height: '40px',
-                fontWeight: '600'
-              }}
-            >
-              Quick Action
-            </Button>
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <Button 
+                type="default"
+                icon={<DatabaseOutlined />}
+                onClick={handleMigration}
+                loading={migrating}
+                style={{
+                  borderRadius: '8px',
+                  height: '40px',
+                  fontWeight: '600',
+                  background: '#f6ffed',
+                  borderColor: '#52c41a',
+                  color: '#52c41a'
+                }}
+              >
+                {migrating ? 'Migrating...' : 'Migrate to DB'}
+              </Button>
+              <Button 
+                type="primary" 
+                icon={<PlusOutlined />}
+                style={{
+                  background: 'linear-gradient(135deg, #1890ff 0%, #096dd9 100%)',
+                  border: 'none',
+                  borderRadius: '8px',
+                  height: '40px',
+                  fontWeight: '600'
+                }}
+              >
+                Quick Action
+              </Button>
+            </div>
           </div>
         </div>
 
