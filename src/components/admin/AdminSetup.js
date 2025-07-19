@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Button, Alert, Typography, Divider, Space, Input, message } from 'antd';
 import { UserAddOutlined, DatabaseOutlined, CheckCircleOutlined } from '@ant-design/icons';
-import { createDefaultAdmin, createAlternativeAdmin } from '../../utils/createAdminUser';
+import { createDefaultAdmin } from '../../utils/createAdminUser';
 import { migrateInitialData } from '../../services/firebaseData';
 
 const { Title, Paragraph, Text } = Typography;
@@ -15,14 +15,7 @@ const AdminSetup = () => {
   const handleCreateAdmin = async () => {
     setLoading(true);
     try {
-      // Try creating default admin first
-      let result = await createDefaultAdmin();
-      
-      if (!result.success) {
-        // If default fails, try alternative
-        console.log('Trying alternative admin credentials...');
-        result = await createAlternativeAdmin();
-      }
+      const result = await createDefaultAdmin();
 
       if (result.success) {
         setAdminCredentials({
