@@ -1,0 +1,38 @@
+.admin-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+}
+
+.admin-login-card {
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.admin-login-card .ant-card-head-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1890ff;
+}
+
+.admin-login-card .ant-form-item-label > label {
+  font-weight: 500;
+  color: #333;
+}
+
+.admin-login-card .ant-btn-primary {
+  background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+  border: none;
+  font-weight: 500;
+}
+
+.admin-login-card .ant-btn-primary:hover {
+  background: linear-gradient(135deg, #40a9ff 0%, #1890ff 100%);
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+}
