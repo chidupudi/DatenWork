@@ -101,6 +101,14 @@ const Dashboard = () => {
       bgColor: 'rgba(82, 196, 26, 0.1)'
     },
     {
+      title: 'Placement Enrollments',
+      value: 156,
+      icon: <TrophyOutlined />,
+      trend: '+25.4%',
+      color: '#722ed1',
+      bgColor: 'rgba(114, 46, 209, 0.1)'
+    },
+    {
       title: 'Job Openings',
       value: jobs.length || 12,
       icon: <TrophyOutlined />,
@@ -195,6 +203,14 @@ const Dashboard = () => {
       status: '9 active courses',
       icon: <BookOutlined />,
       color: '#1890ff'
+    },
+    {
+      title: 'Placement Program',
+      description: 'Manage placement program enrollments and pricing',
+      progress: 89,
+      status: '156 active enrollments',
+      icon: <TrophyOutlined />,
+      color: '#722ed1'
     },
     {
       title: 'Traffic Analytics',

@@ -286,23 +286,32 @@ const serviceDescStyles = {
       id: 1,
       icon: '🎓',
       title: 'Professional Training',
-      description: 'Comprehensive programs to bridge the gap between academic knowledge and real-world skills.'
+      description: 'Comprehensive programs to bridge the gap between academic knowledge and real-world skills.',
+      link: '/courses'
     },
     {
       id: 2,
       icon: '🚀',
       title: 'Elite Placement',
-      description: 'Your gateway to top-tier tech companies with strategic career placement services.'
+      description: 'Your gateway to top-tier tech companies with strategic career placement services.',
+      link: '/placement-program'
     },
     {
       id: 3,
+      icon: '💼',
+      title: 'Full Time Placement Program',
+      description: 'Guaranteed job placement with comprehensive career support, resume preparation, and interview training.',
+      link: '/placement-program'
+    },
+    {
+      id: 4,
       icon: '⚙️',
       title: 'Product Engineering',
       description: 'Bespoke services to build, launch, and scale your robust and beautiful digital products.'
     },
     {
-      id: 4,
-      icon: '💼',
+      id: 5,
+      icon: '🔧',
       title: 'IT Consulting',
       description: 'End-to-end technology consulting to help enterprises modernize, scale, and stay competitive.'
     }
@@ -360,11 +369,27 @@ const serviceDescStyles = {
           whileHover={{ scale: 1.02, y: -8 }}
           onMouseEnter={() => setHoveredService(service.id)}
           onMouseLeave={() => setHoveredService(null)}
+          onClick={() => service.link && (window.location.href = service.link)}
+          style={{ cursor: service.link ? 'pointer' : 'default' }}
         >
           <Card style={serviceCardStyles(hoveredService === service.id)}>
             <span style={serviceIconStyles}>{service.icon}</span>
             <h3 style={serviceTitleStyles}>{service.title}</h3>
             <p style={serviceDescStyles}>{service.description}</p>
+            {service.link && (
+              <div style={{
+                marginTop: '16px',
+                color: '#3b82f6',
+                fontSize: '14px',
+                fontWeight: '600',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '4px'
+              }}>
+                Learn More →
+              </div>
+            )}
           </Card>
         </motion.div>
       ))}

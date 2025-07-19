@@ -9,6 +9,7 @@ import Services from './pages/Services';
 import Programs from './pages/Programs';
 import Courses1 from './pages/Courses';
 import Contact from './pages/Contact';
+import PlacementProgram from './pages/PlacementProgram';
 import TermsAndConditions from './pages/Terms'; 
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import AdminLogin from './components/admin/AdminLogin';
@@ -22,6 +23,7 @@ import ProgramManagement from './pages/admin/ProgramManagement';
 import AnalyticsManagement from './pages/admin/AnalyticsManagement';
 import CompanyManagement from './pages/admin/CompanyManagement';
 import JobsManagement from './pages/admin/JobsManagement';
+import PlacementManagement from './pages/admin/PlacementManagement';
 import './styles/global.css';
 import './utils/runMigration';
 
@@ -39,6 +41,7 @@ function App() {
               <Route path="/services" element={<Services />} />
               <Route path="/programs" element={< Programs  />} />
               <Route path="/courses" element={< Courses1  />} />
+              <Route path="/placement-program" element={<PlacementProgram />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/terms" element={<TermsAndConditions />} /> 
               <Route path="/privacy" element={<PrivacyPolicy />} />
@@ -52,6 +55,7 @@ function App() {
               <Route path="/admin/analytics" element={<ProtectedRoute><AnalyticsManagement /></ProtectedRoute>} />
               <Route path="/admin/settings" element={<ProtectedRoute><CompanyManagement /></ProtectedRoute>} />
               <Route path="/admin/jobs" element={<ProtectedRoute><JobsManagement /></ProtectedRoute>} />
+              <Route path="/admin/placement" element={<ProtectedRoute><PlacementManagement /></ProtectedRoute>} />
             </Routes>
           </RouteWrapper>
         </div>

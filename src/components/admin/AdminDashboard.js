@@ -11,7 +11,8 @@ import {
   LogoutOutlined,
   UserOutlined,
   MenuFoldOutlined,
-  MenuUnfoldOutlined
+  MenuUnfoldOutlined,
+  TrophyOutlined
 } from '@ant-design/icons';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -63,6 +64,12 @@ const AdminDashboard = ({ children, activeKey = 'dashboard' }) => {
       icon: <BranchesOutlined />,
       label: 'Programs',
       onClick: () => navigate('/admin/programs')
+    },
+    {
+      key: 'placement',
+      icon: <TrophyOutlined />,
+      label: 'Placement Program',
+      onClick: () => navigate('/admin/placement')
     },
     {
       key: 'jobs',
