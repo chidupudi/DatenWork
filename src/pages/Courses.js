@@ -437,14 +437,8 @@ const Courses = () => {
             animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            <h2 style={titleStyles}>
-              {activeCategory === 'all' ? 'All Training Courses' : 
-               categories.find(cat => cat.id === activeCategory)?.name + ' Courses'}
-              <span style={titleUnderlineStyles}></span>
-            </h2>
-            <p style={subtitleStyles}>
-              Industry-relevant courses designed to make you Job-Ready
-            </p>
+           
+           
           </motion.div>
 
           {/* Loading State */}
