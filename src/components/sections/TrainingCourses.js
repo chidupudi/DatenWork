@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useNavigate } from 'react-router-dom';
 import Card from '../common/Card';
-import Button from '../common/Button'; // 
+import Button from '../common/Button';
 
 const TrainingCourses = () => {
   const [ref, inView] = useInView({
@@ -14,7 +14,15 @@ const TrainingCourses = () => {
   const navigate = useNavigate();
   const [hoveredCourse, setHoveredCourse] = useState(null);
 
-  // Only keeping first 2 courses
+  // GOOGLE FORM URL - centralized
+  const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe2mqWXkm0W43PxgYna5nFPwCOMshtsYhc9NPEBQCocdTiCEQ/viewform?usp=header";
+  
+  // Function to handle Enroll Now button clicks
+  const handleEnrollClick = () => {
+    window.open(GOOGLE_FORM_URL, '_blank');
+  };
+
+  // Training courses with corporate training options
   const courses = [
     {
       id: 1,
@@ -28,7 +36,8 @@ const TrainingCourses = () => {
       icon: '🖥️',
       gradient: 'linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)',
       rating: 4.8,
-      students: 187
+      students: 187,
+      trainingTypes: ['Individual', 'Batch Training', 'Corporate Training']
     },
     {
       id: 2,
@@ -42,7 +51,8 @@ const TrainingCourses = () => {
       icon: '🤖',
       gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
       rating: 4.9,
-      students: 88
+      students: 88,
+      trainingTypes: ['Individual', 'Batch Training', 'Corporate Training']
     }
   ];
 
@@ -418,6 +428,30 @@ const TrainingCourses = () => {
                     <span style={levelDotStyles(course.level)} />
                     <span>{course.level}</span>
                   </div>
+
+                  {/* Training Types */}
+                  <div style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '6px',
+                    marginBottom: '12px'
+                  }}>
+                    {course.trainingTypes.map((type, index) => (
+                      <span key={index} style={{
+                        background: type === 'Corporate Training' ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : '#f0f9ff',
+                        color: type === 'Corporate Training' ? 'white' : '#0369a1',
+                        padding: '3px 8px',
+                        borderRadius: '10px',
+                        fontSize: '0.7rem',
+                        fontWeight: '600',
+                        border: type === 'Corporate Training' ? 'none' : '1px solid #bae6fd',
+                        boxShadow: type === 'Corporate Training' ? '0 2px 6px rgba(16, 185, 129, 0.3)' : 'none'
+                      }}>
+                        {type === 'Corporate Training' ? '🏢 ' : ''}
+                        {type}
+                      </span>
+                    ))}
+                  </div>
                   
                   <div style={technologiesStyles}>
                     {course.technologies.map((tech, index) => (
@@ -441,6 +475,7 @@ const TrainingCourses = () => {
                     style={courseButtonStyles}
                     whileHover={courseButtonHoverStyles}
                     whileTap={{ scale: 0.98 }}
+                    onClick={handleEnrollClick}
                   >
                     Enroll Now
                   </motion.button>

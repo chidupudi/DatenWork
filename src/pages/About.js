@@ -104,7 +104,7 @@ const About = () => {
     {
       icon: '💡',
       title: 'Our Approach',
-      description: 'Combining theoretical knowledge with practical application, ensuring graduates are industry-ready professionals.',
+      description: 'Combining theoretical knowledge with practical application through individual mentoring, batch training, and corporate programs, ensuring graduates are industry-ready professionals.',
       gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
     }
   ];
@@ -119,7 +119,7 @@ const About = () => {
     },
     {
       title: 'Industry Partnership',
-      description: 'Strong collaborations with 50+ tech companies including startups, MNCs, and product companies ensure our training meets real market demands.',
+      description: 'Strong collaborations with 50+ tech companies including startups, MNCs, and product companies ensure our individual, batch, and corporate training meets real market demands.',
       icon: '🤝',
       color: '#14b8a6'
     },
@@ -148,7 +148,7 @@ const About = () => {
     {
       icon: '🎓',
       title: 'Expert Faculty',
-      description: 'Learn from industry professionals with years of real-world experience',
+      description: 'Learn from industry professionals with years of real-world experience through individual mentoring, batch classes, and corporate training programs',
       stats: '37+ Expert Trainers'
     },
     {
@@ -196,6 +196,11 @@ const About = () => {
       icon: '💡',
       title: 'Innovation Labs',
       description: 'Access to cutting-edge labs with latest hardware, cloud credits, and collaboration spaces.'
+    },
+    {
+      icon: '🏢',
+      title: 'Corporate Training Excellence',
+      description: 'Specialized corporate training programs designed to upskill entire teams with customized curriculum and flexible scheduling options.'
     }
   ];
 

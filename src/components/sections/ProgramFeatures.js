@@ -31,7 +31,8 @@ const FeaturedPrograms = () => {
       students: 1250,
       instructor: 'Sarah Johnson',
       nextStart: 'March 15, 2024',
-      features: ['1-on-1 Mentorship', 'Job Placement', 'Personal Mentor', 'Lifetime Access']
+      features: ['1-on-1 Mentorship', 'Job Placement', 'Personal Mentor', 'Lifetime Access'],
+      trainingTypes: ['Individual', 'Batch Training', 'Corporate Training']
     },
     {
       id: 2,
@@ -48,7 +49,8 @@ const FeaturedPrograms = () => {
       students: 890,
       instructor: 'Michael Chen',
       nextStart: 'March 22, 2024',
-      features: ['1-on-1 Sessions', 'Personal Mentor', 'Performance', 'Live Projects']
+      features: ['1-on-1 Sessions', 'Personal Mentor', 'Performance', 'Live Projects'],
+      trainingTypes: ['Individual', 'Batch Training', 'Corporate Training']
     }
   ];
 
@@ -132,6 +134,7 @@ const FeaturedPrograms = () => {
     gap: '32px'
   };
 
+  // UPDATED: Fixed height and more compact design
   const programCardStyles = (isHovered) => ({
     background: 'white',
     borderRadius: '20px',
@@ -142,68 +145,79 @@ const FeaturedPrograms = () => {
     border: '1px solid rgba(0, 0, 0, 0.05)',
     transition: 'all 0.3s ease',
     transform: isHovered ? 'translateY(-8px)' : 'translateY(0)',
-    height: '100%',
+    height: window.innerWidth <= 768 ? 'auto' : '500px', // FIXED HEIGHT: 500px instead of auto
+    maxHeight: '500px', // MAXIMUM HEIGHT CONSTRAINT
     display: 'flex',
     flexDirection: 'column'
   });
 
   const programHeaderStyles = (gradient) => ({
     background: gradient,
-    padding: '24px',
+    padding: window.innerWidth <= 768 ? '20px' : '20px', // REDUCED padding from 24px
     position: 'relative',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    minHeight: '120px', // FIXED minimum header height
+    maxHeight: '120px'  // FIXED maximum header height
   });
 
   const programIconStyles = {
-    fontSize: '2.5rem',
-    marginBottom: '12px',
+    fontSize: '2rem', // REDUCED from 2.5rem
+    marginBottom: '8px', // REDUCED from 12px
     filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2))'
   };
 
   const programTitleStyles = {
-    fontSize: '1.5rem',
+    fontSize: '1.25rem', // REDUCED from 1.5rem
     fontWeight: '700',
     color: 'white',
-    marginBottom: '8px',
-    textShadow: '0 2px 4px rgba(0, 0, 0, 0.2)'
+    marginBottom: '6px', // REDUCED from 8px
+    textShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+    lineHeight: '1.2',
+    display: '-webkit-box',
+    WebkitLineClamp: 2, // LIMIT to 2 lines
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden'
   };
 
   const programDurationStyles = {
-    fontSize: '0.875rem',
+    fontSize: '0.8rem', // REDUCED from 0.875rem
     color: 'rgba(255, 255, 255, 0.9)',
     display: 'flex',
     alignItems: 'center',
-    gap: '8px'
+    gap: '6px' // REDUCED from 8px
   };
 
   const discountBadgeStyles = {
     position: 'absolute',
-    top: '16px',
-    right: '16px',
+    top: '12px', // REDUCED from 16px
+    right: '12px', // REDUCED from 16px
     background: 'rgba(255, 255, 255, 0.2)',
     backdropFilter: 'blur(10px)',
     border: '1px solid rgba(255, 255, 255, 0.3)',
     color: 'white',
-    padding: '4px 12px',
-    borderRadius: '20px',
-    fontSize: '0.75rem',
+    padding: '3px 10px', // REDUCED padding
+    borderRadius: '16px', // REDUCED from 20px
+    fontSize: '0.7rem', // REDUCED from 0.75rem
     fontWeight: '700'
   };
 
+  // UPDATED: More compact body with controlled spacing
   const programBodyStyles = {
-    padding: '24px',
+    padding: window.innerWidth <= 768 ? '16px' : '18px', // REDUCED from 24px
     flex: 1,
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    overflow: 'hidden' // PREVENT content overflow
   };
 
   const programLevelStyles = {
-    fontSize: '0.875rem',
+    fontSize: '0.8rem', // REDUCED from 0.875rem
     color: '#6b7280',
-    marginBottom: '16px',
+    marginBottom: '12px', // REDUCED from 16px
     display: 'flex',
     alignItems: 'center',
-    gap: '8px'
+    gap: '6px' // REDUCED from 8px
   };
 
   const levelDotStyles = (level) => {
@@ -215,73 +229,78 @@ const FeaturedPrograms = () => {
     };
     
     return {
-      width: '8px',
-      height: '8px',
+      width: '6px', // REDUCED from 8px
+      height: '6px',
       borderRadius: '50%',
       background: colors[level] || '#6b7280'
     };
   };
 
+  // UPDATED: More compact technology display
   const technologiesStyles = {
     display: 'flex',
     flexWrap: 'wrap',
-    gap: '8px',
-    marginBottom: '20px',
-    flex: 1
+    gap: '6px', // REDUCED from 8px
+    marginBottom: '12px', // REDUCED from 20px
+    maxHeight: '60px', // LIMIT height
+    overflow: 'hidden'
   };
 
   const techBadgeStyles = {
     background: '#f3f4f6',
     color: '#4b5563',
-    padding: '4px 12px',
-    borderRadius: '12px',
-    fontSize: '0.75rem',
+    padding: '3px 8px', // REDUCED padding
+    borderRadius: '8px', // REDUCED from 12px
+    fontSize: '0.7rem', // REDUCED from 0.75rem
     fontWeight: '500',
     border: '1px solid #e5e7eb'
   };
 
   const instructorStyles = {
-    fontSize: '0.875rem',
+    fontSize: '0.8rem', // REDUCED from 0.875rem
     color: '#6b7280',
-    marginBottom: '12px',
+    marginBottom: '8px', // REDUCED from 12px
     display: 'flex',
     alignItems: 'center',
-    gap: '8px'
+    gap: '6px' // REDUCED from 8px
   };
 
+  // UPDATED: Compact features section
   const featuresStyles = {
-    marginBottom: '16px'
+    marginBottom: '12px' // REDUCED from 16px
   };
 
   const featureListStyles = {
     display: 'flex',
     flexWrap: 'wrap',
-    gap: '6px'
+    gap: '4px', // REDUCED from 6px
+    maxHeight: '50px', // LIMIT height
+    overflow: 'hidden'
   };
 
   const featureTagStyles = {
     background: '#f0fdf4',
     color: '#166534',
-    padding: '4px 8px',
-    borderRadius: '8px',
-    fontSize: '0.7rem',
+    padding: '2px 6px', // REDUCED padding
+    borderRadius: '6px', // REDUCED from 8px
+    fontSize: '0.65rem', // REDUCED from 0.7rem
     fontWeight: '500',
     border: '1px solid #bbf7d0'
   };
 
   const priceContainerStyles = {
-    marginBottom: '16px'
+    marginBottom: '12px' // REDUCED from 16px
   };
 
   const programPriceStyles = {
-    fontSize: '1.5rem',
+    fontSize: '1.25rem', // REDUCED from 1.5rem
     fontWeight: '700',
     color: '#1f2937',
-    marginBottom: '4px'
+    marginBottom: '3px' // REDUCED from 4px
   };
 
   const originalPriceStyles = {
-    fontSize: '1rem',
+    fontSize: '0.9rem', // REDUCED from 1rem
     color: '#9ca3af',
     textDecoration: 'line-through'
   };
@@ -290,31 +309,31 @@ const FeaturedPrograms = () => {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '16px',
-    fontSize: '0.875rem',
+    marginBottom: '12px', // REDUCED from 16px
+    fontSize: '0.8rem', // REDUCED from 0.875rem
     color: '#6b7280'
   };
 
   const nextStartStyles = {
     background: '#f0f9ff',
     color: '#0369a1',
-    padding: '8px 12px',
-    borderRadius: '8px',
-    fontSize: '0.8rem',
+    padding: '6px 10px', // REDUCED padding
+    borderRadius: '6px', // REDUCED from 8px
+    fontSize: '0.75rem', // REDUCED from 0.8rem
     fontWeight: '500',
     textAlign: 'center',
-    marginBottom: '16px',
+    marginBottom: '12px', // REDUCED from 16px
     border: '1px solid #bae6fd'
   };
 
   const programButtonStyles = {
     width: '100%',
-    padding: '12px 24px',
+    padding: '10px 20px', // REDUCED padding
     background: 'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)',
     color: 'white',
     border: 'none',
-    borderRadius: '12px',
-    fontSize: '0.95rem',
+    borderRadius: '10px', // REDUCED from 12px
+    fontSize: '0.9rem', // REDUCED from 0.95rem
     fontWeight: '600',
     cursor: 'pointer',
     transition: 'all 0.3s ease',
@@ -326,7 +345,7 @@ const FeaturedPrograms = () => {
     boxShadow: '0 6px 20px rgba(79, 70, 229, 0.4)'
   };
 
-  // View More Card Styles
+  // View More Card Styles - ALSO REDUCED HEIGHT
   const viewMoreCardStyles = (isHovered) => ({
     background: 'linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%)',
     borderRadius: '20px',
@@ -337,12 +356,13 @@ const FeaturedPrograms = () => {
     border: '2px dashed #6b7280',
     transition: 'all 0.3s ease',
     transform: isHovered ? 'translateY(-8px) scale(1.02)' : 'translateY(0) scale(1)',
-    height: '100%',
+    height: window.innerWidth <= 768 ? 'auto' : '500px', // SAME HEIGHT as program cards
+    maxHeight: '500px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: '48px',
+    padding: window.innerWidth <= 768 ? '32px' : '40px', // REDUCED padding
     cursor: 'pointer',
     position: 'relative',
     overflow: 'hidden'
@@ -359,8 +379,8 @@ const FeaturedPrograms = () => {
   };
 
   const viewMoreIconContainerStyles = (isHovered) => ({
-    width: '80px',
-    height: '80px',
+    width: '70px', // REDUCED from 80px
+    height: '70px',
     background: isHovered 
       ? 'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)'
       : 'white',
@@ -368,46 +388,46 @@ const FeaturedPrograms = () => {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: '24px',
+    marginBottom: '20px', // REDUCED from 24px
     boxShadow: '0 8px 24px rgba(0, 0, 0, 0.1)',
     transition: 'all 0.3s ease',
     transform: isHovered ? 'rotate(180deg)' : 'rotate(0deg)'
   });
 
   const viewMoreIconStyles = (isHovered) => ({
-    fontSize: '2rem',
+    fontSize: '1.8rem', // REDUCED from 2rem
     color: isHovered ? 'white' : '#4f46e5',
     transition: 'all 0.3s ease'
   });
 
   const viewMoreTextStyles = {
-    fontSize: '1.5rem',
+    fontSize: '1.3rem', // REDUCED from 1.5rem
     fontWeight: '700',
     color: '#1f2937',
-    marginBottom: '8px'
+    marginBottom: '6px' // REDUCED from 8px
   };
 
   const viewMoreSubtextStyles = {
-    fontSize: '1rem',
+    fontSize: '0.9rem', // REDUCED from 1rem
     color: '#6b7280',
-    marginBottom: '24px'
+    marginBottom: '20px' // REDUCED from 24px
   };
 
   const viewMoreButtonStyles = (isHovered) => ({
-    padding: '12px 32px',
+    padding: '10px 28px', // REDUCED padding
     background: isHovered 
       ? 'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)'
       : 'white',
     color: isHovered ? 'white' : '#4f46e5',
     border: `2px solid ${isHovered ? 'transparent' : '#4f46e5'}`,
-    borderRadius: '12px',
-    fontSize: '1rem',
+    borderRadius: '10px', // REDUCED from 12px
+    fontSize: '0.9rem', // REDUCED from 1rem
     fontWeight: '600',
     cursor: 'pointer',
     transition: 'all 0.3s ease',
     display: 'flex',
     alignItems: 'center',
-    gap: '8px',
+    gap: '6px', // REDUCED from 8px
     boxShadow: isHovered ? '0 6px 20px rgba(79, 70, 229, 0.4)' : 'none'
   });
 
@@ -415,6 +435,14 @@ const FeaturedPrograms = () => {
     transition: 'all 0.3s ease',
     transform: isHovered ? 'translateX(4px)' : 'translateX(0)'
   });
+
+  // GOOGLE FORM URL - centralized
+  const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe2mqWXkm0W43PxgYna5nFPwCOMshtsYhc9NPEBQCocdTiCEQ/viewform?usp=header";
+  
+  // Function to handle Enroll Now button clicks
+  const handleEnrollClick = () => {
+    window.open(GOOGLE_FORM_URL, '_blank');
+  };
 
   return (
     <section style={sectionStyles} id="featured-programs">
@@ -460,55 +488,81 @@ const FeaturedPrograms = () => {
                 </div>
                 
                 <div style={programBodyStyles}>
-                  <div style={programLevelStyles}>
-                    <span style={levelDotStyles(program.level)} />
-                    <span>{program.level}</span>
-                  </div>
+                  <div>
+                    <div style={programLevelStyles}>
+                      <span style={levelDotStyles(program.level)} />
+                      <span>{program.level}</span>
+                    </div>
 
-                  <div style={instructorStyles}>
-                    <span>👨‍🏫</span>
-                    <span>Instructor: {program.instructor}</span>
-                  </div>
-                  
-                  <div style={technologiesStyles}>
-                    {program.technologies.map((tech, index) => (
-                      <span key={index} style={techBadgeStyles}>
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
+                    <div style={instructorStyles}>
+                      <span>👨‍🏫</span>
+                      <span>Instructor: {program.instructor}</span>
+                    </div>
 
-                  <div style={featuresStyles}>
-                    <div style={featureListStyles}>
-                      {program.features.map((feature, index) => (
-                        <span key={index} style={featureTagStyles}>
-                          ✓ {feature}
+                    {/* Training Types */}
+                    <div style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      gap: '4px',
+                      marginBottom: '10px'
+                    }}>
+                      {program.trainingTypes.map((type, index) => (
+                        <span key={index} style={{
+                          background: type === 'Corporate Training' ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : '#f0f9ff',
+                          color: type === 'Corporate Training' ? 'white' : '#0369a1',
+                          padding: '2px 6px',
+                          borderRadius: '8px',
+                          fontSize: '0.65rem',
+                          fontWeight: '600',
+                          border: type === 'Corporate Training' ? 'none' : '1px solid #bae6fd',
+                          boxShadow: type === 'Corporate Training' ? '0 1px 4px rgba(16, 185, 129, 0.3)' : 'none'
+                        }}>
+                          {type === 'Corporate Training' ? '🏢 ' : ''}
+                          {type}
                         </span>
                       ))}
                     </div>
+                    
+                    <div style={technologiesStyles}>
+                      {program.technologies.slice(0, 4).map((tech, index) => ( // LIMIT to 4 technologies
+                        <span key={index} style={techBadgeStyles}>
+                          {tech}
+                        </span>
+                      ))}
+                      {program.technologies.length > 4 && (
+                        <span style={{...techBadgeStyles, background: '#e5e7eb', color: '#6b7280'}}>
+                          +{program.technologies.length - 4}
+                        </span>
+                      )}
+                    </div>
+
+                    
                   </div>
                   
-                  <div style={priceContainerStyles}>
-                    <div style={programPriceStyles}>{program.price}</div>
-                    <div style={originalPriceStyles}>{program.originalPrice}</div>
-                  </div>
+                  <div>
+                    <div style={priceContainerStyles}>
+                      <div style={programPriceStyles}>{program.price}</div>
+                      <div style={originalPriceStyles}>{program.originalPrice}</div>
+                    </div>
 
-                  <div style={programStatsStyles}>
-                    <span>⭐ {program.rating}</span>
-                    <span>👥 {program.students.toLocaleString()} students</span>
-                  </div>
+                    <div style={programStatsStyles}>
+                      <span>⭐ {program.rating}</span>
+                      <span>👥 {program.students.toLocaleString()}</span>
+                    </div>
 
-                  <div style={nextStartStyles}>
-                    <strong>Next Batch:</strong> {program.nextStart}
+                    <div style={nextStartStyles}>
+                      <strong>Next:</strong> {program.nextStart}
+                    </div>
+                    
+                    <motion.button
+                      style={programButtonStyles}
+                      whileHover={programButtonHoverStyles}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={handleEnrollClick}
+                    >
+                      Enroll Now
+                    </motion.button>
                   </div>
-                  
-                  <motion.button
-                    style={programButtonStyles}
-                    whileHover={programButtonHoverStyles}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    Enroll Now
-                  </motion.button>
                 </div>
               </Card>
             </motion.div>

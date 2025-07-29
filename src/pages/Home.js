@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import Header from '../components/common/Header';
 import Hero from '../components/sections/Hero';
 import TrainingCourses from '../components/sections/TrainingCourses';
-import FeaturedPrograms from '../components/sections/ProgramFeatures'; // <-- Added import
+import FeaturedPrograms from '../components/sections/ProgramFeatures';
 import PlacementServices from '../components/sections/PlacementServices';
 import TransformationStories from '../components/sections/TransformationStories';
 import IndustryRequirements from '../components/sections/IndustryRequirements';
@@ -45,7 +45,7 @@ const CircuitBoardBackground = React.memo(() => {
     zIndex: -1,
     opacity: isVisible ? 0.3 : 0,
     transition: 'opacity 0.3s ease',
-    willChange: 'opacity' // Performance hint
+    willChange: 'opacity'
   };
 
   const svgStyle = {
@@ -83,7 +83,6 @@ const CircuitBoardBackground = React.memo(() => {
     filter: 'url(#glow)'
   };
 
-
   const gridPatternStyle = {
     stroke: '#dbeafe',
     strokeWidth: '0.5',
@@ -107,7 +106,7 @@ const CircuitBoardBackground = React.memo(() => {
   `;
 
   if (!isVisible) {
-    return null; // Don't render when not visible for better performance
+    return null;
   }
 
   return (
@@ -124,13 +123,11 @@ const CircuitBoardBackground = React.memo(() => {
             </feMerge>
           </filter>
           
-          {/* Define paths for particle animation */}
           {circuitPaths.map((path, i) => (
             <path key={`path-def-${i}`} id={`circuit-path-${i}`} d={path} />
           ))}
         </defs>
         
-        {/* Grid Background */}
         <g opacity="0.3">
           {Array.from({ length: 20 }, (_, i) => (
             <line
@@ -154,7 +151,6 @@ const CircuitBoardBackground = React.memo(() => {
           ))}
         </g>
         
-        {/* Circuit Paths */}
         {circuitPaths.map((path, i) => (
           <path
             key={`circuit-line-${i}`}
@@ -166,7 +162,6 @@ const CircuitBoardBackground = React.memo(() => {
           />
         ))}
         
-        {/* Circuit Nodes */}
         {nodePositions.map((pos, i) => (
           <circle
             key={`node-${i}`}
@@ -181,7 +176,6 @@ const CircuitBoardBackground = React.memo(() => {
           />
         ))}
         
-        {/* Moving Particles */}
         {particles.map(particle => (
           <circle
             key={`moving-particle-${particle.id}`}
@@ -207,7 +201,6 @@ const CircuitBoardBackground = React.memo(() => {
           </circle>
         ))}
         
-        {/* Additional decorative circuit elements */}
         <g opacity="0.4">
           <rect x="100" y="50" width="60" height="40" rx="5" 
                 fill="none" stroke="#60a5fa" strokeWidth="1" />
@@ -216,13 +209,11 @@ const CircuitBoardBackground = React.memo(() => {
           <rect x="350" y="250" width="80" height="50" rx="5" 
                 fill="none" stroke="#60a5fa" strokeWidth="1" />
           
-          {/* Additional small circuit components */}
           <circle cx="120" cy="120" r="8" fill="none" stroke="#60a5fa" strokeWidth="1" />
           <circle cx="680" cy="520" r="6" fill="none" stroke="#60a5fa" strokeWidth="1" />
           <rect x="45" y="95" width="15" height="15" fill="none" stroke="#60a5fa" strokeWidth="1" />
         </g>
         
-        {/* Glowing connection points */}
         <g>
           {[
             {x: 300, y: 200}, {x: 500, y: 100}, {x: 350, y: 400}, 
@@ -262,7 +253,7 @@ const Home = React.memo(() => {
     overflow: 'hidden',
     position: 'relative',
     background: 'linear-gradient(135deg, #ffffff 0%, #f9fafb 100%)',
-    willChange: 'transform' // Performance hint
+    willChange: 'transform'
   }), []);
 
   // Memoized styles for better performance
@@ -273,24 +264,29 @@ const Home = React.memo(() => {
     zIndex: 1
   }), []);
 
+  // UPDATED: Much more aggressive gap reduction
   const sectionWrapperStyles = useMemo(() => ({
     width: '100%',
     position: 'relative',
     zIndex: 1,
-    background: 'transparent'
+    background: 'transparent',
+    marginBottom: '-40px' // INCREASED negative margin
   }), []);
 
   const heroWrapperStyles = useMemo(() => ({
     ...sectionWrapperStyles,
     background: 'transparent',
     position: 'relative',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    marginBottom: '-50px' // INCREASED negative gap after hero
   }), [sectionWrapperStyles]);
 
+  // UPDATED: More aggressive spacing reduction
   const standardSectionWrapper = useMemo(() => ({
     ...sectionWrapperStyles,
     margin: 0,
-    padding: 0
+    padding: 0,
+    marginBottom: '-40px' // INCREASED negative spacing
   }), [sectionWrapperStyles]);
 
   const headerWrapperStyles = useMemo(() => ({
@@ -301,7 +297,7 @@ const Home = React.memo(() => {
   const footerWrapperStyles = useMemo(() => ({
     position: 'relative',
     zIndex: 1,
-    marginTop: 0
+    marginTop: '-40px' // INCREASED gap reduction before footer
   }), []);
 
   return (
@@ -322,40 +318,35 @@ const Home = React.memo(() => {
             <Hero />
           </div>
           
-          {/* Training Courses Section */}
+          {/* Training Courses Section - REDUCED GAP */}
           <div style={standardSectionWrapper}>
             <TrainingCourses />
           </div>
           
-          {/* Featured Programs Section - Added here */}
+          {/* Featured Programs Section - REDUCED GAP */}
           <div style={standardSectionWrapper}>
             <FeaturedPrograms />
           </div>
           
-          {/* Placement Services Section */}
+          {/* Placement Services Section - REDUCED GAP */}
           <div style={standardSectionWrapper}>
             <PlacementServices />
           </div>
 
-          {/* Transformation Stories Section */}
+          {/* Transformation Stories Section - REDUCED GAP */}
           <div style={standardSectionWrapper}>
             <TransformationStories />
           </div>
           
-          {/* Industry Requirements Section */}
+          {/* Industry Requirements Section - REDUCED GAP */}
           <div style={standardSectionWrapper}>
             <IndustryRequirements />
           </div>
           
-          {/* IT Consultancy Section */}
+          {/* IT Consultancy Section - REDUCED GAP */}
           <div style={standardSectionWrapper}>
             <ITConsultancy />
           </div>
-          
-          {/* Testimonials Section */}
-          {/* <div style={standardSectionWrapper}>
-            <Testimonials />
-          </div> */}
         </main>
         
         {/* Footer */}

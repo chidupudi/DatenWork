@@ -172,19 +172,21 @@ const heroSectionStyles = {
   const coursesContainerStyles = {
     maxWidth: '1400px',
     margin: '0 auto',
-    padding: window.innerWidth <= 768 ? '0 16px' : '0 24px',
+    padding: window.innerWidth <= 480 ? '0 12px' : window.innerWidth <= 768 ? '0 16px' : '0 24px',
     position: 'relative',
     zIndex: 1
   };
 
   const coursesGridStyles = {
     display: 'grid',
-    gridTemplateColumns: window.innerWidth <= 768 
+    gridTemplateColumns: window.innerWidth <= 480
+      ? '1fr'
+      : window.innerWidth <= 768 
       ? '1fr' 
       : window.innerWidth <= 1024
       ? 'repeat(2, 1fr)'
       : 'repeat(3, 1fr)',
-    gap: window.innerWidth <= 768 ? '16px' : '24px',
+    gap: window.innerWidth <= 480 ? '12px' : window.innerWidth <= 768 ? '16px' : '24px',
     marginBottom: '50px',
     maxWidth: '1300px',
     margin: '0 auto 50px auto'
@@ -212,12 +214,12 @@ const heroSectionStyles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: window.innerWidth <= 768 ? 'flex-start' : 'center',
-    padding: '12px 16px',
+    padding: window.innerWidth <= 480 ? '10px 12px' : '12px 16px',
     background: '#f3f0fa',
     borderBottom: `1.5px solid ${keyColor}22`,
     flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
     gap: window.innerWidth <= 768 ? '6px' : '8px',
-    minHeight: '50px'
+    minHeight: window.innerWidth <= 480 ? '45px' : '50px'
   };
 
   const courseMetaStyles = {
@@ -246,7 +248,7 @@ const heroSectionStyles = {
   };
 
   const courseContentStyles = {
-    padding: window.innerWidth <= 768 ? '12px 16px' : '16px',
+    padding: window.innerWidth <= 480 ? '10px 12px' : window.innerWidth <= 768 ? '12px 16px' : '16px',
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
@@ -367,7 +369,7 @@ const heroSectionStyles = {
 
   const courseActionsStyles = {
     display: 'flex',
-    gap: '8px',
+    gap: window.innerWidth <= 480 ? '6px' : '8px',
     flexDirection: window.innerWidth <= 768 ? 'column' : 'row',
     marginTop: 'auto'
   };
@@ -381,13 +383,13 @@ const heroSectionStyles = {
         : '#ffffff',
       color: isPrimary ? '#fff' : keyColor,
       border: isPrimary ? 'none' : `2px solid ${keyColor}`,
-      padding: '8px 12px',
+      padding: window.innerWidth <= 480 ? '6px 10px' : '8px 12px',
       borderRadius: '6px',
       fontWeight: '600',
       cursor: 'pointer',
       transition: 'all 0.2s ease',
       boxShadow: isPrimary ? `0 3px 5px ${keyColor}44` : 'none',
-      fontSize: '0.8rem',
+      fontSize: window.innerWidth <= 480 ? '0.75rem' : '0.8rem',
       letterSpacing: '0.5px'
     };
   };
@@ -416,12 +418,13 @@ const heroSectionStyles = {
     <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto' }}>
       <motion.h1 
         style={{ 
-          fontSize: window.innerWidth <= 768 ? '2.5rem' : 'clamp(2.5rem, 5vw, 3.8rem)',
+          fontSize: window.innerWidth <= 480 ? '2rem' : window.innerWidth <= 768 ? '2.5rem' : 'clamp(2.5rem, 5vw, 3.8rem)',
           fontWeight: '700',
           lineHeight: '1.1',
           marginBottom: '24px',
           color: '#1f2937',
-          position: 'relative'
+          position: 'relative',
+          padding: window.innerWidth <= 480 ? '0 16px' : '0'
         }}
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -431,19 +434,20 @@ const heroSectionStyles = {
       </motion.h1>
       <motion.p 
         style={{ 
-          fontSize: window.innerWidth <= 768 ? '1.125rem' : '1.3rem',
+          fontSize: window.innerWidth <= 480 ? '1rem' : window.innerWidth <= 768 ? '1.125rem' : '1.3rem',
           marginBottom: '36px',
           color: '#6b7280',
           lineHeight: '1.6',
           fontWeight: '400',
-          opacity: '0.95'
+          opacity: '0.95',
+          padding: window.innerWidth <= 480 ? '0 16px' : '0'
         }}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
         Master in-demand skills with our comprehensive, industry-aligned courses designed by experts. 
-        Get hands-on experience and guaranteed job placement support.
+        Available in individual, batch, and corporate training formats. Get hands-on experience and guaranteed job placement support.
       </motion.p>
     </div>
   </div>
@@ -473,13 +477,14 @@ const heroSectionStyles = {
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
                 style={{
-                  padding: '12px 24px',
+                  padding: window.innerWidth <= 480 ? '8px 16px' : '12px 24px',
                   border: activeCategory === category.id ? '2px solid #4facfe' : '2px solid #e2e8f0',
                   borderRadius: '25px',
                   background: activeCategory === category.id ? '#4facfe' : 'white',
                   color: activeCategory === category.id ? 'white' : '#4a5568',
                   cursor: 'pointer',
                   fontWeight: '500',
+                  fontSize: window.innerWidth <= 480 ? '0.8rem' : '0.9rem',
                   transition: 'all 0.3s ease',
                   boxShadow: activeCategory === category.id ? '0 4px 12px rgba(79, 172, 254, 0.3)' : '0 2px 4px rgba(0,0,0,0.1)'
                 }}

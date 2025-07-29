@@ -583,7 +583,7 @@ const Header = () => {
           {/* Desktop Theme Toggle and CTA Button */}
           {!isMobile && (
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <button
+              {/* <button
                 style={themeToggleStyles}
                 onClick={theme.toggleTheme}
                 onMouseEnter={(e) => {
@@ -597,7 +597,7 @@ const Header = () => {
                 title={theme.isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
               >
                 {theme.isDarkMode ? '☀️' : '🌙'}
-              </button>
+              </button> */}
               <div
                 style={ctaButtonStyles}
                 onClick={() => handleNavClick('/contact')}
@@ -662,7 +662,7 @@ const Header = () => {
               
               {/* Mobile Theme Toggle */}
               <li style={{ width: '100%', marginBottom: '16px' }}>
-                <button
+                {/* <button
                   style={{
                     ...themeToggleStyles,
                     width: '100%',
@@ -676,7 +676,7 @@ const Header = () => {
                 >
                   {theme.isDarkMode ? '☀️' : '🌙'}
                   <span>{theme.isDarkMode ? 'Light Mode' : 'Dark Mode'}</span>
-                </button>
+                </button> */}
               </li>
 
               {/* Mobile CTA Button */}

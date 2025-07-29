@@ -2,9 +2,16 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const TransformationStories = () => {
-  // Styles needed for this component
+  // GOOGLE FORM URL - centralized
+  const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe2mqWXkm0W43PxgYna5nFPwCOMshtsYhc9NPEBQCocdTiCEQ/viewform?usp=header";
+  
+  // Function to handle Enroll Now button clicks
+  const handleEnrollClick = () => {
+    window.open(GOOGLE_FORM_URL, '_blank');
+  };
+  // UPDATED: Drastically reduced section padding from 80px to 30px
   const sectionStyles = {
-    padding: window.innerWidth <= 768 ? '60px 0' : '80px 0',
+    padding: window.innerWidth <= 768 ? '30px 0' : '30px 0', // REDUCED from 60px/80px
     position: 'relative',
     background: 'linear-gradient(135deg, #ffffff 0%, #f9fafb 100%)'
   };
@@ -19,7 +26,7 @@ const TransformationStories = () => {
 
   const sectionHeaderStyles = {
     textAlign: 'center',
-    marginBottom: window.innerWidth <= 768 ? '40px' : '60px'
+    marginBottom: window.innerWidth <= 768 ? '30px' : '40px' // REDUCED from 40px/60px
   };
 
   const sectionTitleStyles = {

@@ -70,7 +70,7 @@ const Hero = () => {
   
   const [heroContent, setHeroContent] = useState({
     title: "Empowering Talent, Driving Global Tech Success",
-    subtitle: "Transform your career with expert training, guaranteed placements, and world-class consultancy services",
+    subtitle: "Transform your career with expert training (individual, batch & corporate), guaranteed placements, and world-class consultancy services",
     formTitle: "Start Your Journey",
     formSubtitle: "Join thousands of successful tech professionals",
     statistics: [
@@ -94,6 +94,9 @@ const Hero = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // 'success', 'error', or null
+  
+  // GOOGLE FORM URL - centralized
+  const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe2mqWXkm0W43PxgYna5nFPwCOMshtsYhc9NPEBQCocdTiCEQ/viewform?usp=header";
   
   // Load hero content from Firebase
   useEffect(() => {
@@ -192,6 +195,22 @@ const Hero = () => {
       // Clear status after 5 seconds
       setTimeout(() => setSubmitStatus(null), 5000);
     }
+  };
+
+  // UPDATED: Function to handle button clicks with Google Form integration
+  const handleButtonClick = (button) => {
+    if (button.link?.startsWith('http')) {
+      // External link - open in new tab
+      window.open(button.link, '_blank');
+    } else {
+      // Internal link - navigate within app
+      window.location.href = button.link;
+    }
+  };
+
+  // UPDATED: Handle "Get Started Free" button to open Google Form
+  const handleGetStartedClick = () => {
+    window.open(GOOGLE_FORM_URL, '_blank');
   };
 
   const containerVariants = {
@@ -509,13 +528,7 @@ const Hero = () => {
                   <Button 
                     variant={button.variant || "primary"} 
                     size="large"
-                    onClick={() => {
-                      if (button.link?.startsWith('http')) {
-                        window.open(button.link, '_blank');
-                      } else {
-                        window.location.href = button.link;
-                      }
-                    }}
+                    onClick={() => handleButtonClick(button)}
                   >
                     {button.text}
                   </Button>
@@ -665,8 +678,9 @@ const Hero = () => {
                   ))}
                 </motion.select>
                 
+                {/* UPDATED: Button now opens Google Form instead of submitting form */}
                 <motion.button
-                  type="submit"
+                  type="button"
                   style={submitButtonStyles}
                   whileHover={!isSubmitting ? { 
                     scale: 1.02, 
@@ -674,12 +688,10 @@ const Hero = () => {
                     background: 'linear-gradient(135deg, #1e40af 0%, #2563eb 100%)'
                   } : {}}
                   whileTap={!isSubmitting ? { scale: 0.98 } : {}}
-                  disabled={isSubmitting}
+                  onClick={handleGetStartedClick}
+                  disabled={false}
                 >
-                  {isSubmitting && (
-                    <span style={{ animation: 'pulse 1s infinite' }}>⏳</span>
-                  )}
-                  {getButtonText()}
+                  🚀 Get Started Free
                 </motion.button>
               </form>
             </motion.div>

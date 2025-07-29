@@ -106,7 +106,7 @@ const Courses = () => {
   const containerStyles = {
     maxWidth: '1200px',
     margin: '0 auto',
-    padding: '0 24px'
+    padding: window.innerWidth <= 480 ? '0 16px' : window.innerWidth <= 768 ? '0 20px' : '0 24px'
   };
 
   const headerStyles = {
@@ -115,7 +115,7 @@ const Courses = () => {
   };
 
   const titleStyles = {
-    fontSize: window.innerWidth <= 768 ? '1.8rem' : '2.2rem', // Reduced font sizes
+    fontSize: window.innerWidth <= 480 ? '1.5rem' : window.innerWidth <= 768 ? '1.8rem' : '2.2rem',
     marginBottom: '16px',
     color: '#1f2937',
     fontWeight: '600',
@@ -136,21 +136,25 @@ const Courses = () => {
   };
 
   const subtitleStyles = {
-    fontSize: '1.1rem', // Reduced from 1.25rem
+    fontSize: window.innerWidth <= 480 ? '0.95rem' : '1.1rem',
     color: '#6b7280',
     maxWidth: '600px',
     margin: '0 auto',
-    lineHeight: '1.6'
+    lineHeight: '1.6',
+    padding: window.innerWidth <= 480 ? '0 16px' : '0'
   };
 
   const coursesGridStyles = {
     display: 'grid',
-    gridTemplateColumns: window.innerWidth <= 768 
+    gridTemplateColumns: window.innerWidth <= 480
+      ? '1fr'
+      : window.innerWidth <= 768 
       ? '1fr' 
       : window.innerWidth <= 1024 
       ? 'repeat(2, 1fr)' 
       : 'repeat(3, 1fr)',
-    gap: '20px' // Reduced from 32px to 20px
+    gap: window.innerWidth <= 480 ? '16px' : '20px',
+    padding: window.innerWidth <= 480 ? '0 8px' : '0'
   };
 
   const courseCardStyles = (isHovered) => ({
@@ -359,11 +363,12 @@ const Courses = () => {
           <div style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto', padding: '0 24px' }}>
             <motion.h1 
               style={{ 
-                fontSize: window.innerWidth <= 768 ? '2.5rem' : 'clamp(2.5rem, 5vw, 3.8rem)',
+                fontSize: window.innerWidth <= 480 ? '2rem' : window.innerWidth <= 768 ? '2.5rem' : 'clamp(2.5rem, 5vw, 3.8rem)',
                 fontWeight: '700',
                 lineHeight: '1.1',
                 marginBottom: '10px',
-                position: 'relative'
+                position: 'relative',
+                padding: window.innerWidth <= 480 ? '0 16px' : '0'
               }}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -373,11 +378,12 @@ const Courses = () => {
             </motion.h1>
             <motion.p 
               style={{ 
-                fontSize: window.innerWidth <= 768 ? '1.125rem' : '1.3rem',
+                fontSize: window.innerWidth <= 480 ? '1rem' : window.innerWidth <= 768 ? '1.125rem' : '1.3rem',
                 marginBottom: '10px',
                 lineHeight: '1.6',
                 fontWeight: '400',
-                opacity: '0.95'
+                opacity: '0.95',
+                padding: window.innerWidth <= 480 ? '0 16px' : '0'
               }}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -411,14 +417,14 @@ const Courses = () => {
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
                 style={{
-                  padding: '10px 20px', // Reduced padding
+                  padding: window.innerWidth <= 480 ? '8px 16px' : '10px 20px',
                   border: activeCategory === category.id ? '2px solid #4f46e5' : '2px solid #e2e8f0',
-                  borderRadius: '20px', // Reduced from 25px
+                  borderRadius: '20px',
                   background: activeCategory === category.id ? '#4f46e5' : 'white',
                   color: activeCategory === category.id ? 'white' : '#4a5568',
                   cursor: 'pointer',
                   fontWeight: '500',
-                  fontSize: '0.9rem', // Added smaller font size
+                  fontSize: window.innerWidth <= 480 ? '0.8rem' : '0.9rem',
                   transition: 'all 0.3s ease',
                   boxShadow: activeCategory === category.id ? '0 4px 12px rgba(79, 70, 229, 0.3)' : '0 2px 4px rgba(0,0,0,0.1)'
                 }}

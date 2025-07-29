@@ -121,7 +121,7 @@ const Services = () => {
   const heroContainerStyles = {
     maxWidth: '1200px',
     margin: '0 auto',
-    padding: '0 24px',
+    padding: window.innerWidth <= 480 ? '0 16px' : window.innerWidth <= 768 ? '0 20px' : '0 24px',
     position: 'relative',
     zIndex: 2,
     textAlign: 'center'
@@ -129,29 +129,31 @@ const Services = () => {
   
 
   const heroTitleStyles = {
-    fontSize: window.innerWidth <= 768 ? '2.5rem' : 'clamp(2.5rem, 5vw, 3.8rem)',
+    fontSize: window.innerWidth <= 480 ? '2rem' : window.innerWidth <= 768 ? '2.5rem' : 'clamp(2.5rem, 5vw, 3.8rem)',
     fontWeight: '700',
     lineHeight: '1.1',
     marginBottom: '24px',
-    color: '#1f2937'
+    color: '#1f2937',
+    padding: window.innerWidth <= 480 ? '0 16px' : '0'
   };
 
   const heroSubtitleStyles = {
-    fontSize: window.innerWidth <= 768 ? '1.125rem' : '1.3rem',
+    fontSize: window.innerWidth <= 480 ? '1rem' : window.innerWidth <= 768 ? '1.125rem' : '1.3rem',
     marginBottom: '48px',
     color: '#6b7280',
     lineHeight: '1.6',
     fontWeight: '400',
     opacity: '0.95',
     maxWidth: '600px',
-    margin: '0 auto 48px auto'
+    margin: '0 auto 48px auto',
+    padding: window.innerWidth <= 480 ? '0 16px' : '0'
   };
 
   // Main services grid in hero
   const servicesGridStyles = {
     display: 'grid',
-    gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(2, 1fr)',
-    gap: '32px',
+    gridTemplateColumns: window.innerWidth <= 480 ? '1fr' : window.innerWidth <= 768 ? '1fr' : 'repeat(2, 1fr)',
+    gap: window.innerWidth <= 480 ? '20px' : '32px',
     marginTop: '20px'
   };
 
@@ -160,7 +162,7 @@ const serviceCardStyles = (isHovered) => ({
   background: '#ffffff',
   border: isHovered ? '2px solid #3b82f6' : '1px solid #e5e7eb',
   borderRadius: '20px',
-  padding: '12px 24px',
+  padding: window.innerWidth <= 480 ? '16px 20px' : '12px 24px',
   textAlign: 'center',
   transition: 'all 0.3s ease',
   transform: isHovered ? 'translateY(-8px) scale(1.02)' : 'translateY(0) scale(1)',
@@ -170,22 +172,22 @@ const serviceCardStyles = (isHovered) => ({
 });
 
 const serviceIconStyles = {
-  fontSize: '4rem',
-  marginBottom: '24px',
+  fontSize: window.innerWidth <= 480 ? '3rem' : '4rem',
+  marginBottom: window.innerWidth <= 480 ? '16px' : '24px',
   display: 'block'
 };
 
 const serviceTitleStyles = {
-  fontSize: '1.5rem',
+  fontSize: window.innerWidth <= 480 ? '1.2rem' : '1.5rem',
   fontWeight: '600',
-  marginBottom: '16px',
+  marginBottom: window.innerWidth <= 480 ? '12px' : '16px',
   color: '#1f2937'
 };
 
 const serviceDescStyles = {
   color: '#6b7280',
   lineHeight: '1.6',
-  fontSize: '0.95rem'
+  fontSize: window.innerWidth <= 480 ? '0.85rem' : '0.95rem'
 };
 
   // Certifications section styles
@@ -198,7 +200,7 @@ const serviceDescStyles = {
   const certContainerStyles = {
     maxWidth: '1200px',
     margin: '0 auto',
-    padding: window.innerWidth <= 768 ? '0 20px' : '0 24px'
+    padding: window.innerWidth <= 480 ? '0 16px' : window.innerWidth <= 768 ? '0 20px' : '0 24px'
   };
 
   const certHeaderStyles = {
@@ -207,7 +209,7 @@ const serviceDescStyles = {
   };
 
   const certTitleStyles = {
-    fontSize: window.innerWidth <= 768 ? '2rem' : '2.5rem',
+    fontSize: window.innerWidth <= 480 ? '1.7rem' : window.innerWidth <= 768 ? '2rem' : '2.5rem',
     fontWeight: '700',
     marginBottom: '16px',
     background: 'linear-gradient(135deg, #4f46e5 0%, #14b8a6 100%)',
@@ -219,7 +221,7 @@ const serviceDescStyles = {
   const certContentStyles = {
     display: 'grid',
     gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : '1fr 1fr',
-    gap: window.innerWidth <= 768 ? '32px' : '48px',
+    gap: window.innerWidth <= 480 ? '24px' : window.innerWidth <= 768 ? '32px' : '48px',
     alignItems: 'center'
   };
 
@@ -230,8 +232,8 @@ const serviceDescStyles = {
   const certLogosStyles = {
     order: window.innerWidth <= 768 ? 1 : 2,
     display: 'grid',
-    gridTemplateColumns: window.innerWidth <= 768 ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
-    gap: window.innerWidth <= 768 ? '16px' : '24px'
+    gridTemplateColumns: window.innerWidth <= 480 ? 'repeat(2, 1fr)' : window.innerWidth <= 768 ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
+    gap: window.innerWidth <= 480 ? '12px' : window.innerWidth <= 768 ? '16px' : '24px'
   };
 
   const certLogoStyles = (isHovered) => ({
@@ -286,7 +288,7 @@ const serviceDescStyles = {
       id: 1,
       icon: '🎓',
       title: 'Professional Training',
-      description: 'Comprehensive programs to bridge the gap between academic knowledge and real-world skills.',
+      description: 'Comprehensive programs including individual, batch, and corporate training to bridge the gap between academic knowledge and real-world skills.',
       link: '/courses'
     },
     {
@@ -314,6 +316,13 @@ const serviceDescStyles = {
       icon: '🔧',
       title: 'IT Consulting',
       description: 'End-to-end technology consulting to help enterprises modernize, scale, and stay competitive.'
+    },
+    {
+      id: 6,
+      icon: '🏢',
+      title: 'Corporate Training Solutions',
+      description: 'Customized enterprise training programs designed for teams and organizations to upskill their workforce in cutting-edge technologies.',
+      link: '/courses'
     }
   ];
 
@@ -369,7 +378,18 @@ const serviceDescStyles = {
           whileHover={{ scale: 1.02, y: -8 }}
           onMouseEnter={() => setHoveredService(service.id)}
           onMouseLeave={() => setHoveredService(null)}
-          onClick={() => service.link && (window.location.href = service.link)}
+          onClick={() => {
+            if (service.link) {
+              // Use React Router navigation instead of window.location.href to prevent page refresh
+              if (service.link.startsWith('/')) {
+                // Internal navigation - you might want to use navigate() from react-router-dom
+                // For now, keeping the original behavior but this could be improved
+                window.location.href = service.link;
+              } else {
+                window.open(service.link, '_blank');
+              }
+            }
+          }}
           style={{ cursor: service.link ? 'pointer' : 'default' }}
         >
           <Card style={serviceCardStyles(hoveredService === service.id)}>
@@ -407,7 +427,7 @@ const serviceDescStyles = {
             transition={{ duration: 0.6 }}
           >
             <h2 style={certTitleStyles}>Certificate Assistance</h2>
-            <p style={{ fontSize: window.innerWidth <= 768 ? '1rem' : '1.125rem', color: '#6b7280', maxWidth: '600px', margin: '0 auto' }}>
+            <p style={{ fontSize: window.innerWidth <= 480 ? '0.9rem' : window.innerWidth <= 768 ? '1rem' : '1.125rem', color: '#6b7280', maxWidth: '600px', margin: '0 auto' }}>
               Boost your career with industry-recognized certifications from leading technology companies
             </p>
           </motion.div>
@@ -419,32 +439,32 @@ const serviceDescStyles = {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <div style={certInfoStyles}>
-              <h3 style={{ fontSize: window.innerWidth <= 768 ? '1.5rem' : '2rem', fontWeight: '600', marginBottom: '24px', color: '#1f2937' }}>
+              <h3 style={{ fontSize: window.innerWidth <= 480 ? '1.3rem' : window.innerWidth <= 768 ? '1.5rem' : '2rem', fontWeight: '600', marginBottom: '24px', color: '#1f2937' }}>
                 Why Certifications Matter
               </h3>
               <div style={{ marginBottom: '24px' }}>
-                <h4 style={{ fontSize: window.innerWidth <= 768 ? '1.1rem' : '1.25rem', fontWeight: '600', marginBottom: '12px', color: '#4f46e5' }}>
+                <h4 style={{ fontSize: window.innerWidth <= 480 ? '1rem' : window.innerWidth <= 768 ? '1.1rem' : '1.25rem', fontWeight: '600', marginBottom: '12px', color: '#4f46e5' }}>
                   Career Advancement
                 </h4>
-                <p style={{ color: '#6b7280', lineHeight: '1.6', fontSize: window.innerWidth <= 768 ? '0.9rem' : '1rem' }}>
+                <p style={{ color: '#6b7280', lineHeight: '1.6', fontSize: window.innerWidth <= 480 ? '0.8rem' : window.innerWidth <= 768 ? '0.9rem' : '1rem' }}>
                   Industry certifications validate your skills and significantly increase your market value, 
                   leading to better job opportunities and higher salaries.
                 </p>
               </div>
               <div style={{ marginBottom: '24px' }}>
-                <h4 style={{ fontSize: window.innerWidth <= 768 ? '1.1rem' : '1.25rem', fontWeight: '600', marginBottom: '12px', color: '#4f46e5' }}>
+                <h4 style={{ fontSize: window.innerWidth <= 480 ? '1rem' : window.innerWidth <= 768 ? '1.1rem' : '1.25rem', fontWeight: '600', marginBottom: '12px', color: '#4f46e5' }}>
                   Industry Recognition
                 </h4>
-                <p style={{ color: '#6b7280', lineHeight: '1.6', fontSize: window.innerWidth <= 768 ? '0.9rem' : '1rem' }}>
+                <p style={{ color: '#6b7280', lineHeight: '1.6', fontSize: window.innerWidth <= 480 ? '0.8rem' : window.innerWidth <= 768 ? '0.9rem' : '1rem' }}>
                   Certifications from AWS, Salesforce, Microsoft, and other leaders are globally recognized 
                   and preferred by employers worldwide.
                 </p>
               </div>
               <div style={{ marginBottom: '32px' }}>
-                <h4 style={{ fontSize: window.innerWidth <= 768 ? '1.1rem' : '1.25rem', fontWeight: '600', marginBottom: '12px', color: '#4f46e5' }}>
+                <h4 style={{ fontSize: window.innerWidth <= 480 ? '1rem' : window.innerWidth <= 768 ? '1.1rem' : '1.25rem', fontWeight: '600', marginBottom: '12px', color: '#4f46e5' }}>
                   Skill Validation
                 </h4>
-                <p style={{ color: '#6b7280', lineHeight: '1.6', fontSize: window.innerWidth <= 768 ? '0.9rem' : '1rem' }}>
+                <p style={{ color: '#6b7280', lineHeight: '1.6', fontSize: window.innerWidth <= 480 ? '0.8rem' : window.innerWidth <= 768 ? '0.9rem' : '1rem' }}>
                   Prove your expertise with hands-on, practical certifications that demonstrate 
                   real-world problem-solving abilities.
                 </p>
@@ -468,9 +488,9 @@ const serviceDescStyles = {
                   onMouseLeave={() => setHoveredCert(null)}
                 >
                   <div style={{ textAlign: 'center' }}>
-                    <div style={{ fontSize: window.innerWidth <= 768 ? '2rem' : '3rem', marginBottom: '8px' }}>{cert.logo}</div>
-                    <div style={{ fontWeight: '600', color: '#1f2937', fontSize: window.innerWidth <= 768 ? '0.75rem' : '0.875rem' }}>{cert.name}</div>
-                    <div style={{ color: '#6b7280', fontSize: window.innerWidth <= 768 ? '0.7rem' : '0.75rem' }}>{cert.desc}</div>
+                    <div style={{ fontSize: window.innerWidth <= 480 ? '1.5rem' : window.innerWidth <= 768 ? '2rem' : '3rem', marginBottom: '8px' }}>{cert.logo}</div>
+                    <div style={{ fontWeight: '600', color: '#1f2937', fontSize: window.innerWidth <= 480 ? '0.7rem' : window.innerWidth <= 768 ? '0.75rem' : '0.875rem' }}>{cert.name}</div>
+                    <div style={{ color: '#6b7280', fontSize: window.innerWidth <= 480 ? '0.65rem' : window.innerWidth <= 768 ? '0.7rem' : '0.75rem' }}>{cert.desc}</div>
                   </div>
                 </motion.div>
               ))}
@@ -491,8 +511,8 @@ const serviceDescStyles = {
           >
             <h2 style={certTitleStyles}>IT Consulting & Workforce Solutions</h2>
             <p style={{ fontSize: window.innerWidth <= 768 ? '1rem' : '1.125rem', color: '#6b7280', maxWidth: '800px', margin: '0 auto' }}>
-              Strategic technology consulting and skilled workforce solutions to help enterprises scale, 
-              modernize, and achieve their digital transformation goals through qualified IT professionals.
+              Strategic technology consulting, skilled workforce solutions, and corporate training programs to help enterprises scale, 
+              modernize, and achieve their digital transformation goals through qualified IT professionals and upskilled teams.
             </p>
           </motion.div>
 
@@ -517,7 +537,7 @@ const serviceDescStyles = {
             
             <div style={{
               display: 'grid',
-              gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : 'repeat(3, 1fr)',
+              gridTemplateColumns: window.innerWidth <= 768 ? '1fr' : window.innerWidth <= 1024 ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
               gap: window.innerWidth <= 768 ? '20px' : '24px'
             }}>
               {[
@@ -538,6 +558,12 @@ const serviceDescStyles = {
                   title: 'Data & Analytics',
                   description: 'Data scientists, analysts, and business intelligence professionals.',
                   skills: ['Data Science/ML', 'Business Intelligence', 'Data Engineering', 'Analytics Platforms']
+                },
+                {
+                  icon: '🏢',
+                  title: 'Corporate Training',
+                  description: 'Comprehensive team training programs and skill development solutions.',
+                  skills: ['Custom Curriculum', 'Team Workshops', 'Skill Assessment', 'Progress Tracking']
                 }
               ].map((category, index) => (
                 <motion.div

@@ -148,10 +148,10 @@ const PlacementServices = () => {
     }
   };
 
-  // Styles
+  // UPDATED: Drastically reduced padding from 80px to 40px
   const sectionStyles = {
     background: 'transparent',
-    padding: '80px 0',
+    padding: window.innerWidth <= 768 ? '30px 0' : '40px 0', // REDUCED from 80px
     position: 'relative',
     overflow: 'hidden'
   };
@@ -164,7 +164,7 @@ const PlacementServices = () => {
 
   const headerStyles = {
     textAlign: 'center',
-    marginBottom: '64px'
+    marginBottom: window.innerWidth <= 768 ? '32px' : '40px' // REDUCED from 64px
   };
 
   const titleStyles = {
@@ -204,7 +204,7 @@ const PlacementServices = () => {
       ? 'repeat(2, 1fr)' 
       : 'repeat(4, 1fr)',
     gap: '24px',
-    marginBottom: '80px'
+    marginBottom: window.innerWidth <= 768 ? '40px' : '50px' // REDUCED from 80px
   };
 
   const statCardStyles = {
@@ -286,51 +286,6 @@ const PlacementServices = () => {
     transition: 'width 0.3s ease'
   };
 
-  const ctaSectionStyles = {
-    textAlign: 'center',
-    background: 'linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%)',
-    borderRadius: '24px',
-    padding: '48px',
-    position: 'relative',
-    overflow: 'hidden'
-  };
-
-  const ctaTitleStyles = {
-    fontSize: '2rem',
-    marginBottom: '16px',
-    color: '#1f2937',
-    fontWeight: '600'
-  };
-
-  const ctaDescriptionStyles = {
-    fontSize: '1.125rem',
-    color: '#6b7280',
-    marginBottom: '32px',
-    maxWidth: '600px',
-    margin: '0 auto 32px'
-  };
-
-  const ctaButtonStyles = {
-    background: 'linear-gradient(135deg, #4f46e5 0%, #6366f1 100%)',
-    color: 'white',
-    padding: '14px 32px',
-    borderRadius: '12px',
-    fontSize: '1rem',
-    fontWeight: '600',
-    border: 'none',
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    boxShadow: '0 4px 12px rgba(79, 70, 229, 0.3)',
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: '8px'
-  };
-
-  const ctaButtonHoverStyles = {
-    transform: 'translateY(-2px)',
-    boxShadow: '0 6px 20px rgba(79, 70, 229, 0.4)'
-  };
-
   return (
     <section style={sectionStyles} id="placement-services">
       <div style={containerStyles}>
@@ -383,8 +338,6 @@ const PlacementServices = () => {
             </motion.div>
           ))}
         </motion.div>
-
-        
       </div>
     </section>
   );
