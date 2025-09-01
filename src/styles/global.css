@@ -9,11 +9,17 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  scroll-padding-top: 80px;
 }
 
 /* Enhanced scroll behavior for better UX */
 @media (prefers-reduced-motion: no-preference) {
   html {
+    scroll-behavior: smooth;
+  }
+  
+  * {
     scroll-behavior: smooth;
   }
 }
@@ -26,7 +32,9 @@ body {
   background-color: var(--background-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: scroll-position;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -92,6 +100,8 @@ section {
   padding: var(--space-24) 0;
   position: relative;
   overflow: hidden;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 /* Ensure proper section spacing */
@@ -111,23 +121,65 @@ section {
   box-sizing: border-box;
 }
 
-/* Global scroll-triggered animations */
+/* Global scroll-triggered animations with GPU acceleration */
 .scroll-fade-in {
   opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s ease-out;
+  transform: translate3d(0, 40px, 0);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 .scroll-fade-in.in-view {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
 }
 
-/* Enhanced button hover effects */
+/* Additional smooth animation classes */
+.scroll-slide-left {
+  opacity: 0;
+  transform: translate3d(-50px, 0, 0);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+.scroll-slide-left.in-view {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.scroll-slide-right {
+  opacity: 0;
+  transform: translate3d(50px, 0, 0);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+.scroll-slide-right.in-view {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.scroll-scale-in {
+  opacity: 0;
+  transform: translate3d(0, 0, 0) scale(0.8);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+.scroll-scale-in.in-view {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* Enhanced button hover effects with butter smooth animations */
 button, .btn {
   position: relative;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 button::before, .btn::before {
@@ -137,12 +189,23 @@ button::before, .btn::before {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  transition: left 0.5s;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: left;
+}
+
+button:hover, .btn:hover {
+  transform: translateY(-2px) translateZ(0);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 button:hover::before, .btn:hover::before {
   left: 100%;
+}
+
+button:active, .btn:active {
+  transform: translateY(-1px) translateZ(0) scale(0.98);
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Glassmorphism effects */
@@ -158,71 +221,250 @@ button:hover::before, .btn:hover::before {
   box-shadow: 
     0 4px 6px rgba(0, 0, 0, 0.05),
     0 10px 25px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 .modern-card:hover {
   box-shadow: 
-    0 8px 12px rgba(0, 0, 0, 0.1),
-    0 20px 40px rgba(0, 0, 0, 0.12);
-  transform: translateY(-8px);
+    0 12px 20px rgba(0, 0, 0, 0.12),
+    0 25px 50px rgba(0, 0, 0, 0.15);
+  transform: translateY(-12px) translateZ(0) scale(1.02);
 }
 
-/* Animation Classes */
+/* Animation Classes with improved timing */
 .animate-fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
+  animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .animate-slide-up {
-  animation: slideUp 0.8s ease-out forwards;
+  animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
 .animate-fade-in-delayed {
-  animation: fadeIn 0.8s ease-out 0.4s forwards;
+  animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
 }
 
 .animate-scale-in {
-  animation: scaleIn 0.6s ease-out forwards;
+  animation: scaleIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
+.animate-bounce-in {
+  animation: bounceIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Card-specific animations */
+.card-hover-effect {
+  position: relative;
+  transform: translateZ(0);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow;
+  backface-visibility: hidden;
+}
+
+.card-hover-effect:hover {
+  transform: translateY(-8px) translateZ(0) scale(1.03);
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.15),
+    0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.card-hover-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+  background-size: 200% 200%;
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.card-hover-effect:hover::before {
+  opacity: 1;
+  animation: shimmer 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Link animations */
+a {
+  position: relative;
+  display: inline-block;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: currentColor;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+a:hover::after {
+  width: 100%;
+}
+
+/* Optimized keyframes with GPU acceleration */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translate3d(0, 30px, 0);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translate3d(0, 50px, 0);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes scaleIn {
   from {
     opacity: 0;
-    transform: scale(0.9);
+    transform: translate3d(0, 0, 0) scale(0.85);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 
-/* Smooth scroll enhancement */
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1.05);
+  }
+  70% {
+    transform: translate3d(0, 0, 0) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Smooth scroll enhancement with GPU acceleration */
 @media (prefers-reduced-motion: no-preference) {
   * {
     scroll-behavior: smooth;
   }
+  
+  html, body {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    transform: translateZ(0);
+    will-change: scroll-position;
+  }
+  
+  /* GPU acceleration for smooth animations */
+  .modern-card,
+  .scroll-fade-in,
+  button,
+  .btn,
+  a {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+}
+
+/* Performance optimizations for all elements */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+input, textarea, [contenteditable] {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* Butter smooth scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Loading states with smooth transitions */
+.loading-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Enhanced focus states */
+*:focus-visible {
+  outline: 2px solid var(--primary-blue, #3b82f6);
+  outline-offset: 2px;
+  transition: outline 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Image loading with smooth fade-in */
+img {
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+img.loaded {
+  opacity: 1;
 }
 
 @media (max-width: 768px) {
@@ -240,5 +482,25 @@ button:hover::before, .btn:hover::before {
   
   h2 {
     font-size: var(--section-title-mobile);
+  }
+  
+  /* Reduce animations on mobile for better performance */
+  .modern-card:hover {
+    transform: translateY(-4px) translateZ(0);
+  }
+  
+  .card-hover-effect:hover {
+    transform: translateY(-4px) translateZ(0) scale(1.01);
+  }
+  
+  /* Disable hover effects on touch devices */
+  @media (hover: none) and (pointer: coarse) {
+    .modern-card:hover,
+    .card-hover-effect:hover,
+    button:hover,
+    .btn:hover {
+      transform: none;
+      box-shadow: inherit;
+    }
   }
 }

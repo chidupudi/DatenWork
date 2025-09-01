@@ -1,6 +1,7 @@
 import { 
   collection, 
   getDocs, 
+  getDoc,
   addDoc, 
   updateDoc, 
   deleteDoc, 
@@ -17,7 +18,9 @@ export const COLLECTIONS = {
   PROGRAMS: 'programs',
   INDUSTRY_JOBS: 'industry_jobs',
   COMPANY_INFO: 'company_info',
-  ANALYTICS: 'analytics'
+  ANALYTICS: 'analytics',
+  PLACEMENT_PLANS: 'placement_plans',
+  PLACEMENT_CONTENT: 'placement_content'
 };
 
 // Initial data migration function
@@ -306,6 +309,143 @@ export const migrateInitialData = async () => {
     };
     await setDoc(doc(db, COLLECTIONS.COMPANY_INFO, 'main'), companyData);
 
+    // Placement Plans data (Professional design - only 2 plans)
+    const placementPlansData = [
+      {
+        id: 'professional',
+        name: 'Professional',
+        subtitle: 'Perfect for career starters',
+        prePlacementCost: 2300,
+        postPlacementPercentage: 17,
+        monthlyEquivalent: '$192/month',
+        yearlyEquivalent: '$2,300/year',
+        popular: false,
+        icon: '🎯',
+        badge: null,
+        features: {
+          paymentTerms: '4 EMI',
+          resumePrep: 'Professional Resume + LinkedIn',
+          supportSessions: '10 Support Sessions',
+          interviewTraining: 'Mock Interview Training',
+          support: 'Email & Chat Support',
+          jobGuarantee: '180 Days',
+          recruiterType: 'Certified Recruiter',
+          linkedinOptimization: true,
+          profileMarketing: true,
+          backgroundCheck: true,
+          personalBranding: false,
+          dedicatedManager: false
+        },
+        bulletFeatures: [
+          { text: 'Professional Resume + LinkedIn', enabled: true },
+          { text: '10 Support Sessions', enabled: true },
+          { text: 'Mock Interview Training', enabled: true },
+          { text: '180 Days Job Guarantee', enabled: true },
+          { text: 'Certified Recruiter', enabled: true }
+        ],
+        isActive: true,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      },
+      {
+        id: 'elite',
+        name: 'Elite',
+        subtitle: 'Most popular choice',
+        prePlacementCost: 3300,
+        postPlacementPercentage: 15,
+        monthlyEquivalent: '$275/month',
+        yearlyEquivalent: '$3,300/year',
+        popular: true,
+        icon: '🚀',
+        badge: 'Most Popular',
+        features: {
+          paymentTerms: '4 EMI',
+          resumePrep: 'Premium Resume + Portfolio',
+          supportSessions: '20 Support + Advanced Training',
+          interviewTraining: 'Advanced Interview Coaching',
+          support: 'Priority Support + Phone',
+          jobGuarantee: '180 Days',
+          recruiterType: 'Senior Recruiter',
+          linkedinOptimization: true,
+          profileMarketing: true,
+          backgroundCheck: true,
+          personalBranding: true,
+          dedicatedManager: true
+        },
+        bulletFeatures: [
+          { text: 'Premium Resume + Portfolio', enabled: true },
+          { text: '20 Support + Advanced Training', enabled: true },
+          { text: 'Advanced Interview Coaching', enabled: true },
+          { text: '180 Days Job Guarantee', enabled: true },
+          { text: 'Senior Recruiter', enabled: true },
+          { text: 'Personal Branding', enabled: true },
+          { text: 'Dedicated Account Manager', enabled: true }
+        ],
+        isActive: true,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp()
+      }
+    ];
+
+    for (const plan of placementPlansData) {
+      await setDoc(doc(db, COLLECTIONS.PLACEMENT_PLANS, plan.id), plan);
+    }
+
+    // Placement Program Content (editable content for the page)
+    const placementContentData = {
+      hero: {
+        title: 'US-IT Placement Program',
+        subtitle: 'Transform your career with guaranteed placement in top US companies. Expert guidance, proven results, and comprehensive support for your US tech career journey.',
+        badges: [
+          { icon: '🎯', text: '100% Job Guarantee', color: '#059669' },
+          { icon: '🇺🇸', text: 'US Market Focus', color: '#2563eb' },
+          { icon: '⚡', text: 'Fast Track', color: '#06b6d4' }
+        ]
+      },
+      features: [
+        {
+          icon: '🎯',
+          title: 'Guaranteed Placement',
+          description: 'Legal commitment to place you in a US company within 180 days or full refund'
+        },
+        {
+          icon: '🧠', 
+          title: 'Expert Mentorship',
+          description: 'One-on-one guidance from US industry professionals and hiring managers'
+        },
+        {
+          icon: '📝',
+          title: 'US-Ready Resume',
+          description: 'ATS-optimized resume and LinkedIn profile tailored for US job market'
+        },
+        {
+          icon: '🤝',
+          title: 'Interview Mastery',
+          description: 'Comprehensive training for US technical and behavioral interviews'
+        }
+      ],
+      guaranteeTerms: [
+        "If Datenwork is unable to find the candidate a job within 180 days, we will refund the Pre-Placement cost paid by candidate if demanded.",
+        "After refunding, Datenwork will continue to provide services (Resume marketing, LinkedIn optimization, background clearance) for 1 year.",
+        "After getting the job, candidate pays only the Post-Placement cost (Commission) of first year salary in 4 easy installments.",
+        "Commission is payable in first 4 months from joining date with flexible payment options.",
+        "All commitments documented in comprehensive legal agreement with transparent terms and conditions.",
+        "Guarantee period starts from first day of active marketing and job search activities for candidate's profile.",
+        "Extended service includes continuous resume marketing, LinkedIn optimization, interview prep, and background verification.",
+        "Datenwork provides dedicated career counseling, industry insights, and personalized job matching based on skills and aspirations.",
+        "Transparent dispute resolution process with candidate satisfaction as primary goal."
+      ],
+      stats: [
+        { stat: '100%', label: 'Success Rate', icon: '🎯', color: '#059669' },
+        { stat: '45 Days', label: 'Avg. Placement', icon: '⚡', color: '#06b6d4' },
+        { stat: '$85K+', label: 'Avg. Salary', icon: '💰', color: '#f59e0b' },
+        { stat: '500+', label: 'Placements', icon: '👥', color: '#2563eb' }
+      ],
+      updatedAt: serverTimestamp()
+    };
+
+    await setDoc(doc(db, COLLECTIONS.PLACEMENT_CONTENT, 'main'), placementContentData);
+
     console.log('Initial data migration completed successfully');
     return true;
   } catch (error) {
@@ -438,5 +578,58 @@ export const analyticsService = {
   getAnalytics: async (days = 30) => {
     const querySnapshot = await getDocs(collection(db, COLLECTIONS.ANALYTICS));
     return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  }
+};
+
+// CRUD operations for Placement Plans
+export const placementPlansService = {
+  getAll: async () => {
+    const querySnapshot = await getDocs(collection(db, COLLECTIONS.PLACEMENT_PLANS));
+    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  },
+  
+  get: async (id) => {
+    const docRef = doc(db, COLLECTIONS.PLACEMENT_PLANS, id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return { id: docSnap.id, ...docSnap.data() };
+    }
+    return null;
+  },
+  
+  update: async (id, data) => {
+    const docRef = doc(db, COLLECTIONS.PLACEMENT_PLANS, id);
+    await updateDoc(docRef, { ...data, updatedAt: serverTimestamp() });
+  },
+  
+  add: async (planData) => {
+    const docRef = await addDoc(collection(db, COLLECTIONS.PLACEMENT_PLANS), {
+      ...planData,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    });
+    return docRef.id;
+  },
+  
+  delete: async (id) => {
+    const docRef = doc(db, COLLECTIONS.PLACEMENT_PLANS, id);
+    await deleteDoc(docRef);
+  }
+};
+
+// CRUD operations for Placement Content
+export const placementContentService = {
+  get: async () => {
+    const docRef = doc(db, COLLECTIONS.PLACEMENT_CONTENT, 'main');
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return { id: docSnap.id, ...docSnap.data() };
+    }
+    return null;
+  },
+  
+  update: async (data) => {
+    const docRef = doc(db, COLLECTIONS.PLACEMENT_CONTENT, 'main');
+    await updateDoc(docRef, { ...data, updatedAt: serverTimestamp() });
   }
 };
